@@ -6,8 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/29 12:47:53 by vfurmane         ###   ########.fr       */
-/*   Updated: 2022/03/11 14:02:36 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/29 12:48:14 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,12 +197,17 @@ void	is_integral_testing(void)
 class TestHelper
 {
 	public:
-		TestHelper()
+		typedef TestHelper reference;
+		typedef TestHelper const_reference;
+		typedef TestHelper pointer;
+		typedef TestHelper const_pointer;
+
+		TestHelper(void)
 		{
 		}
-		void greet()
+		void greet(void) const
 		{
-			std::cout << "greetings from class" << std::endl;
+			std::cout << "greetings" << std::endl;
 		}
 };
 
@@ -214,13 +218,40 @@ void	vector_testing(void)
 	NAMESPACE::vector< int, std::allocator<int> >	obj_with_allocator;
 	(void)obj;
 	(void)obj_with_allocator;
+	std::cout << "Member types" << std::endl;
 	{
 		NAMESPACE::vector< TestHelper >::value_type th;
+		std::cout << " value_type      : ";
 		th.greet();
 	}
 	{
 		NAMESPACE::vector< int, std::allocator<TestHelper> >::allocator_type::value_type th;
+		std::cout << " allocator_type  : ";
 		th.greet();
+	}
+	{
+		NAMESPACE::vector<TestHelper>::value_type ref_th;
+		NAMESPACE::vector<TestHelper>::reference th = ref_th;
+		std::cout << " reference       : ";
+		th.greet();
+	}
+	{
+		NAMESPACE::vector<TestHelper>::value_type ref_th;
+		NAMESPACE::vector<TestHelper>::const_reference th = ref_th;
+		std::cout << " const_reference : ";
+		th.greet();
+	}
+	{
+		NAMESPACE::vector<TestHelper>::value_type ptr_th;
+		NAMESPACE::vector<TestHelper>::pointer th = &ptr_th;
+		std::cout << " pointer         : ";
+		th->greet();
+	}
+	{
+		NAMESPACE::vector<TestHelper>::value_type ptr_th;
+		NAMESPACE::vector<TestHelper>::const_pointer th = &ptr_th;
+		std::cout << " const_pointer   : ";
+		th->greet();
 	}
 }
 
