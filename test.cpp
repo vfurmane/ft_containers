@@ -6,7 +6,8 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/29 12:46:04 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/29 12:47:53 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:02:36 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +195,18 @@ void	is_integral_testing(void)
 	}
 }
 
+class TestHelper
+{
+	public:
+		TestHelper()
+		{
+		}
+		void greet()
+		{
+			std::cout << "greetings from class" << std::endl;
+		}
+};
+
 void	vector_testing(void)
 {
 	std::cout << "========== VECTOR ==========" << std::endl;
@@ -201,6 +214,14 @@ void	vector_testing(void)
 	NAMESPACE::vector< int, std::allocator<int> >	obj_with_allocator;
 	(void)obj;
 	(void)obj_with_allocator;
+	{
+		NAMESPACE::vector< TestHelper >::value_type th;
+		th.greet();
+	}
+	{
+		NAMESPACE::vector< int, std::allocator<TestHelper> >::allocator_type::value_type th;
+		th.greet();
+	}
 }
 
 int	main(void)
