@@ -6,11 +6,12 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/29 12:48:14 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/29 12:48:30 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <typeinfo>
 
 // Default value for the USE_STD macro
 #ifndef USE_STD
@@ -220,38 +221,66 @@ void	vector_testing(void)
 	(void)obj_with_allocator;
 	std::cout << "Member types" << std::endl;
 	{
-		NAMESPACE::vector< TestHelper >::value_type th;
-		std::cout << " value_type      : ";
-		th.greet();
+		std::cout << " value_type             : ";
+		if (typeid(NAMESPACE::vector<TestHelper>::value_type) == typeid(TestHelper))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
 	}
 	{
-		NAMESPACE::vector< int, std::allocator<TestHelper> >::allocator_type::value_type th;
-		std::cout << " allocator_type  : ";
-		th.greet();
+		std::cout << " allocator_type         : ";
+		if (typeid(NAMESPACE::vector< int, std::allocator<TestHelper> >::allocator_type::value_type) == typeid(TestHelper))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
 	}
 	{
-		NAMESPACE::vector<TestHelper>::value_type ref_th;
-		NAMESPACE::vector<TestHelper>::reference th = ref_th;
-		std::cout << " reference       : ";
-		th.greet();
+		std::cout << " reference              : ";
+		if (typeid(NAMESPACE::vector<TestHelper>::reference) == typeid(TestHelper &))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
 	}
 	{
-		NAMESPACE::vector<TestHelper>::value_type ref_th;
-		NAMESPACE::vector<TestHelper>::const_reference th = ref_th;
-		std::cout << " const_reference : ";
-		th.greet();
+		std::cout << " const_reference        : ";
+		if (typeid(NAMESPACE::vector<TestHelper>::const_reference) == typeid(const TestHelper &))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
 	}
 	{
-		NAMESPACE::vector<TestHelper>::value_type ptr_th;
-		NAMESPACE::vector<TestHelper>::pointer th = &ptr_th;
-		std::cout << " pointer         : ";
-		th->greet();
+		std::cout << " pointer                : ";
+		if (typeid(NAMESPACE::vector<TestHelper>::pointer) == typeid(TestHelper *))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
 	}
 	{
-		NAMESPACE::vector<TestHelper>::value_type ptr_th;
-		NAMESPACE::vector<TestHelper>::const_pointer th = &ptr_th;
-		std::cout << " const_pointer   : ";
-		th->greet();
+		std::cout << " const_pointer          : ";
+		if (typeid(NAMESPACE::vector<TestHelper>::const_pointer) == typeid(const TestHelper *))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		NAMESPACE::vector<TestHelper>::iterator var;
+		(void)var;
+		std::cout << " iterator               : exists" << std::endl;
+	}
+	{
+		NAMESPACE::vector<TestHelper>::const_iterator var;
+		(void)var;
+		std::cout << " const_iterator         : exists" << std::endl;
+	}
+	{
+		NAMESPACE::vector<TestHelper>::reverse_iterator var;
+		(void)var;
+		std::cout << " reverse_iterator       : exists" << std::endl;
+	}
+	{
+		NAMESPACE::vector<TestHelper>::const_reverse_iterator var;
+		(void)var;
+		std::cout << " const_reverse_iterator : exists" << std::endl;
 	}
 }
 
