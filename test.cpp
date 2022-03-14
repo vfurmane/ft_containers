@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/29 12:48:30 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/29 12:48:44 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,16 @@ void	vector_testing(void)
 		NAMESPACE::vector<TestHelper>::const_reverse_iterator var;
 		(void)var;
 		std::cout << " const_reverse_iterator : exists" << std::endl;
+	}
+	{
+		NAMESPACE::vector<TestHelper>::difference_type var;
+		(void)var;
+		std::cout << " difference_type        : not working yet" << std::endl;
+	}
+	{
+		NAMESPACE::vector<TestHelper>::size_type var;
+		(void)var;
+		std::cout << " size_type              : not working yet" << std::endl;
 	}
 }
 
