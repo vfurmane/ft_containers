@@ -6,13 +6,14 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/12 12:08:16 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/14 14:42:22 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+# include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 
 namespace ft
@@ -35,6 +36,8 @@ namespace ft
 			typedef _vector_iterator<const T>				const_iterator;
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
+			typedef size_t size_type;
 	};
 };
 
