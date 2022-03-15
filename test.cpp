@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/29 12:48:44 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/29 12:48:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,10 +215,8 @@ class TestHelper
 void	vector_testing(void)
 {
 	std::cout << "========== VECTOR ==========" << std::endl;
-	NAMESPACE::vector<int>	obj;
-	NAMESPACE::vector< int, std::allocator<int> >	obj_with_allocator;
-	(void)obj;
-	(void)obj_with_allocator;
+	std::cout << "with ints               : OK" << std::endl;
+	std::cout << "with allocator          : OK" << std::endl;
 	std::cout << "Member types" << std::endl;
 	{
 		std::cout << " value_type             : ";
@@ -291,6 +289,37 @@ void	vector_testing(void)
 		NAMESPACE::vector<TestHelper>::size_type var;
 		(void)var;
 		std::cout << " size_type              : not working yet" << std::endl;
+	}
+	std::cout << "Constructors" << std::endl;
+	{
+		NAMESPACE::vector<int> obj;
+		(void)obj;
+		std::cout << " (void)                  : OK" << std::endl;
+	}
+	{
+		std::allocator<int> alloc;
+		NAMESPACE::vector<int> obj(alloc);
+		(void)obj;
+		std::cout << " (const allocator_type&) : OK" << std::endl;
+	}
+	{
+		NAMESPACE::vector<int> obj(5);
+		(void)obj;
+		std::cout << " (size_type)             : OK" << std::endl;
+	}
+	{
+		NAMESPACE::vector<int> obj(5, 0);
+		(void)obj;
+		std::cout << " (size_type," << std::endl;
+		std::cout << "  const value_type&)     : OK" << std::endl;
+	}
+	{
+		std::allocator<int> alloc;
+		NAMESPACE::vector<int> obj(5, 0, alloc);
+		(void)obj;
+		std::cout << " (size_type," << std::endl;
+		std::cout << "  const value_type&," << std::endl;
+		std::cout << "  const allocator_type&) : OK" << std::endl;
 	}
 }
 
