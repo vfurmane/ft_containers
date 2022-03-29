@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/15 17:35:06 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/29 16:02:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,42 @@ namespace ft
 			{
 				_arr = _alloc.allocate(_n);
 			}
-			explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _n(n), _arr(NULL), _alloc(alloc)
+			explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _n(0), _arr(NULL), _alloc(alloc)
 			{
+				_dispatch_ctr(n, val, ft::true_type());
+			}
+			template <class InputIterator>
+			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : _n(0), _arr(NULL), _alloc(alloc)
+			{
+				_dispatch_ctr(first, last, typename ft::is_integral<InputIterator>::type());
+			}
+
+		private:
+			size_type		_n;
+			T			   	*_arr;
+			allocator_type	_alloc;
+
+			void	_dispatch_ctr(size_type n, const value_type &val, ft::true_type sub)
+			{
+				(void)sub;
+				_n = n;
 				_arr = _alloc.allocate(_n);
 				for (size_type i = 0; i < _n; i++)
 				{
 					_arr[i] = val;
 				}
 			}
-
-		private:
-			const size_type			_n;
-			T						*_arr;
-			allocator_type	_alloc;
+			template <class InputIterator>
+			void	_dispatch_ctr(InputIterator first, InputIterator last, ft::false_type sub)
+			{
+				(void)sub;
+				for (InputIterator it = first; it != last; it++)
+					_n++;
+				_arr = _alloc.allocate(_n);
+				size_type i = 0;
+				for (InputIterator it = first; it != last; it++)
+					_arr[i++] = *it;
+			}
 	};
 };
 
