@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/29 16:16:15 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/29 16:23:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ class TestHelper
 
 void	vector_testing(void)
 {
-	std::cout << "========== VECTOR ==========" << std::endl;
+	std::cout << "============== VECTOR ==============" << std::endl;
 	std::cout << "with ints               : OK" << std::endl;
 	std::cout << "with allocator          : OK" << std::endl;
 	std::cout << "Member types" << std::endl;
@@ -355,6 +355,12 @@ void	vector_testing(void)
 		std::cout << "  InputIterator," << std::endl;
 		std::cout << "  const allocator_type&) <int *> : OK" << std::endl;
 		std::cout << " -> TODO print the array" << std::endl;
+	}
+	{
+		NAMESPACE::vector<int> obj(5, 0);
+		NAMESPACE::vector<int> copy(obj);
+		(void)copy;
+		std::cout << " (const vector &)                : OK" << std::endl;
 	}
 }
 int	main(void)
