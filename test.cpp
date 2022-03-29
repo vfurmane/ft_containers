@@ -6,12 +6,13 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/29 12:48:54 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/29 16:16:15 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <typeinfo>
+# include <vector>
 
 // Default value for the USE_STD macro
 #ifndef USE_STD
@@ -25,7 +26,6 @@
 # include "vector.hpp"
 #else
 # define NAMESPACE std
-# include <vector>
 #endif
 
 #include <iostream>
@@ -294,24 +294,24 @@ void	vector_testing(void)
 	{
 		NAMESPACE::vector<int> obj;
 		(void)obj;
-		std::cout << " (void)                  : OK" << std::endl;
+		std::cout << " (void)                          : OK" << std::endl;
 	}
 	{
 		std::allocator<int> alloc;
 		NAMESPACE::vector<int> obj(alloc);
 		(void)obj;
-		std::cout << " (const allocator_type&) : OK" << std::endl;
+		std::cout << " (const allocator_type&)         : OK" << std::endl;
 	}
 	{
 		NAMESPACE::vector<int> obj(5);
 		(void)obj;
-		std::cout << " (size_type)             : OK" << std::endl;
+		std::cout << " (size_type)                     : OK" << std::endl;
 	}
 	{
 		NAMESPACE::vector<int> obj(5, 0);
 		(void)obj;
 		std::cout << " (size_type," << std::endl;
-		std::cout << "  const value_type&)     : OK" << std::endl;
+		std::cout << "  const value_type&)             : OK" << std::endl;
 	}
 	{
 		std::allocator<int> alloc;
@@ -319,10 +319,44 @@ void	vector_testing(void)
 		(void)obj;
 		std::cout << " (size_type," << std::endl;
 		std::cout << "  const value_type&," << std::endl;
-		std::cout << "  const allocator_type&) : OK" << std::endl;
+		std::cout << "  const allocator_type&)         : OK" << std::endl;
+	}
+	{
+		int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		(void)obj;
+		std::cout << " (InputIterator," << std::endl;
+		std::cout << "  InputIterator) <int *>         : OK" << std::endl;
+		std::cout << " -> TODO print the array" << std::endl;
+	}
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		(void)obj;
+		std::cout << " (const InputIterator," << std::endl;
+		std::cout << "  const InputIterator) <int *>   : OK" << std::endl;
+		std::cout << " -> TODO print the array" << std::endl;
+	}
+	{
+		int arr[5] = {1, 2, 3, 4, 5};
+		std::vector<int> src(arr, arr + sizeof arr);
+		NAMESPACE::vector<int> obj(src.begin(), src.end());
+		(void)obj;
+		std::cout << " (InputIterator," << std::endl;
+		std::cout << "  InputIterator) <iterator>      : OK" << std::endl;
+		std::cout << " -> TODO print the array" << std::endl;
+	}
+	{
+		std::allocator<int> alloc;
+		int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + sizeof arr, alloc);
+		(void)obj;
+		std::cout << " (InputIterator," << std::endl;
+		std::cout << "  InputIterator," << std::endl;
+		std::cout << "  const allocator_type&) <int *> : OK" << std::endl;
+		std::cout << " -> TODO print the array" << std::endl;
 	}
 }
-
 int	main(void)
 {
 	integral_contant_testing();
