@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/29 16:21:23 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/30 14:40:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,13 @@ namespace ft
 			{
 				_dispatch_ctr(first, last, typename ft::is_integral<InputIterator>::type());
 			}
-			vector (const vector &x) : _n(x._n), _arr(x._arr), _alloc(x._alloc)
+			vector (const vector &x) : _n(x._n), _arr(NULL), _alloc(x._alloc)
 			{
+				_dispatch_ctr(x._arr, x._arr + x._n, ft::false_type());
+			}
+			~vector()
+			{
+				_alloc.deallocate(_arr, _n);
 			}
 
 		private:
