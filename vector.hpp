@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/30 14:40:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:07:53 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ namespace ft
 			~vector()
 			{
 				_alloc.deallocate(_arr, _n);
+			}
+
+			vector &operator=(const vector &x)
+			{
+				_alloc.deallocate(_arr, _n);
+				_alloc = x._alloc;
+				_dispatch_ctr(x._arr, x._arr + x._n, ft::false_type());
+				return *this;
 			}
 
 		private:

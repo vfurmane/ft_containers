@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/29 16:23:39 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:15:50 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,6 +361,19 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> copy(obj);
 		(void)copy;
 		std::cout << " (const vector &)                : OK" << std::endl;
+	}
+	std::cout << "Assignation operator" << std::endl;
+	{
+		NAMESPACE::vector<int> src;
+		NAMESPACE::vector<int> copy = src;
+		(void)copy;
+		std::cout << " -> TODO print the array" << std::endl;
+	}
+	{
+		NAMESPACE::vector<int> src;
+		NAMESPACE::vector<int> copy = src;
+		(void)copy;
+		std::cout << " -> TODO compare values in both" << std::endl;
 	}
 }
 int	main(void)
