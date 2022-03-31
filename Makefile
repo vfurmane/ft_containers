@@ -6,7 +6,7 @@
 #    By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/11 09:51:12 by vfurmane          #+#    #+#              #
-#    Updated: 2022/06/02 11:54:20 by vfurmane         ###   ########.fr        #
+#    Updated: 2022/06/02 12:28:12 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ DEPS			= $(SRCS:.cpp=.dep)
 OBJS			= $(SRCS:.cpp=.o)
 TESTS			= $(OBJS:.o=)
 CC				= c++
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			+= -Wall -Wextra -Werror
 RM				= rm -f
 
 n				= std

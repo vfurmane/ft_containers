@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/30 17:15:50 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/31 14:22:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@
 
 #include <iostream>
 #include <typeinfo>
+
+template <class T, typename size_type>
+void print_container(T obj, size_type n)
+{
+	std::cout << " { ";
+	for (size_type i = 0; i < n; i++)
+		std::cout << obj[i] << (i < n - 1 ? ", " : "");
+	std::cout << " }" << std::endl;
+}
 
 void	integral_contant_testing(void)
 {
@@ -324,37 +333,33 @@ void	vector_testing(void)
 	{
 		int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
-		(void)obj;
 		std::cout << " (InputIterator," << std::endl;
 		std::cout << "  InputIterator) <int *>         : OK" << std::endl;
-		std::cout << " -> TODO print the array" << std::endl;
+		print_container(obj, 5);
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
-		(void)obj;
 		std::cout << " (const InputIterator," << std::endl;
 		std::cout << "  const InputIterator) <int *>   : OK" << std::endl;
-		std::cout << " -> TODO print the array" << std::endl;
+		print_container(obj, 5);
 	}
 	{
 		int arr[5] = {1, 2, 3, 4, 5};
 		std::vector<int> src(arr, arr + sizeof arr);
 		NAMESPACE::vector<int> obj(src.begin(), src.end());
-		(void)obj;
 		std::cout << " (InputIterator," << std::endl;
 		std::cout << "  InputIterator) <iterator>      : OK" << std::endl;
-		std::cout << " -> TODO print the array" << std::endl;
+		print_container(obj, 5);
 	}
 	{
 		std::allocator<int> alloc;
 		int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + sizeof arr, alloc);
-		(void)obj;
 		std::cout << " (InputIterator," << std::endl;
 		std::cout << "  InputIterator," << std::endl;
 		std::cout << "  const allocator_type&) <int *> : OK" << std::endl;
-		std::cout << " -> TODO print the array" << std::endl;
+		print_container(obj, 5);
 	}
 	{
 		NAMESPACE::vector<int> obj(5, 0);
@@ -364,16 +369,16 @@ void	vector_testing(void)
 	}
 	std::cout << "Assignation operator" << std::endl;
 	{
-		NAMESPACE::vector<int> src;
-		NAMESPACE::vector<int> copy = src;
-		(void)copy;
-		std::cout << " -> TODO print the array" << std::endl;
+		NAMESPACE::vector<int> src(5, 0);
+		print_container(src, 5);
 	}
 	{
-		NAMESPACE::vector<int> src;
+		NAMESPACE::vector<int> src(5, 0);
 		NAMESPACE::vector<int> copy = src;
-		(void)copy;
-		std::cout << " -> TODO compare values in both" << std::endl;
+		src[2] = 6;
+		copy[2] = 7;
+		print_container(src, 5);
+		print_container(copy, 5);
 	}
 }
 int	main(void)
