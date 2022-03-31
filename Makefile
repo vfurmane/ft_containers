@@ -6,7 +6,7 @@
 #    By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/11 09:51:12 by vfurmane          #+#    #+#              #
-#    Updated: 2022/05/30 15:55:27 by vfurmane         ###   ########.fr        #
+#    Updated: 2022/05/30 15:59:47 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRCS			= $(addprefix tests/, \
 					value_type\(\)-int-11))
 TESTS			= $(SRCS:.cpp=)
 CC				= c++
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			+= -Wall -Wextra -Werror
 RM				= rm -f
 
 n				= std

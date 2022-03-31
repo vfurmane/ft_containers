@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/30 17:07:53 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:02:30 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ namespace ft
 				_alloc = x._alloc;
 				_dispatch_ctr(x._arr, x._arr + x._n, ft::false_type());
 				return *this;
+			}
+
+			reference operator[] (size_type n)
+			{
+				if (n > _n) throw std::exception();
+				return _arr[n];
+			}
+			const_reference operator[] (size_type n) const
+			{
+				if (n > _n) throw std::exception();
+				return _arr[n];
 			}
 
 		private:
