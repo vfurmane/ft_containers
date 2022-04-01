@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/01 15:18:58 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:16:02 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -410,6 +410,30 @@ void	vector_testing(void)
 		} catch (std::exception &error) {
 			std::cout << " >> Did throw" << std::endl;
 		}
+	}
+	std::cout << "front()" << std::endl;
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		std::cout << " >> " << obj.front() << std::endl;
+	}
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		obj.front() = 6;
+		std::cout << " >> " << obj.front() << std::endl;
+	}
+	std::cout << "back()" << std::endl;
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		std::cout << " >> " << obj.back() << std::endl;
+	}
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		obj.back() = 6;
+		std::cout << " >> " << obj.back() << std::endl;
 	}
 }
 int	main(void)
