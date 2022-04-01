@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/01 11:27:19 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:20:44 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,24 @@ namespace ft
 			{
 				if (n >= _n) throw std::out_of_range("n is out of bounds");
 				return (*this)[n];
+			}
+
+			reference front()
+			{
+				return (*this)[0];
+			}
+			const_reference front() const
+			{
+				return (*this)[0];
+			}
+
+			reference back()
+			{
+				return (*this)[_n - 1];
+			}
+			const_reference back() const
+			{
+				return (*this)[_n - 1];
 			}
 
 		private:
