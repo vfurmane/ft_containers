@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/31 14:22:39 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:18:58 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,20 @@
 #include <typeinfo>
 
 template <class T, typename size_type>
-void print_container(T obj, size_type n)
+void print_container_access_operator(T obj, size_type n)
 {
 	std::cout << " { ";
 	for (size_type i = 0; i < n; i++)
 		std::cout << obj[i] << (i < n - 1 ? ", " : "");
+	std::cout << " }" << std::endl;
+}
+
+template <class T, typename size_type>
+void print_container_at(T obj, size_type n)
+{
+	std::cout << " { ";
+	for (size_type i = 0; i < n; i++)
+		std::cout << obj.at(i) << (i < n - 1 ? ", " : "");
 	std::cout << " }" << std::endl;
 }
 
@@ -335,14 +344,14 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
 		std::cout << " (InputIterator," << std::endl;
 		std::cout << "  InputIterator) <int *>         : OK" << std::endl;
-		print_container(obj, 5);
+		print_container_access_operator(obj, 5);
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
 		std::cout << " (const InputIterator," << std::endl;
 		std::cout << "  const InputIterator) <int *>   : OK" << std::endl;
-		print_container(obj, 5);
+		print_container_access_operator(obj, 5);
 	}
 	{
 		int arr[5] = {1, 2, 3, 4, 5};
@@ -350,7 +359,7 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> obj(src.begin(), src.end());
 		std::cout << " (InputIterator," << std::endl;
 		std::cout << "  InputIterator) <iterator>      : OK" << std::endl;
-		print_container(obj, 5);
+		print_container_access_operator(obj, 5);
 	}
 	{
 		std::allocator<int> alloc;
@@ -359,7 +368,7 @@ void	vector_testing(void)
 		std::cout << " (InputIterator," << std::endl;
 		std::cout << "  InputIterator," << std::endl;
 		std::cout << "  const allocator_type&) <int *> : OK" << std::endl;
-		print_container(obj, 5);
+		print_container_access_operator(obj, 5);
 	}
 	{
 		NAMESPACE::vector<int> obj(5, 0);
@@ -370,15 +379,37 @@ void	vector_testing(void)
 	std::cout << "Assignation operator" << std::endl;
 	{
 		NAMESPACE::vector<int> src(5, 0);
-		print_container(src, 5);
+		print_container_access_operator(src, 5);
 	}
 	{
 		NAMESPACE::vector<int> src(5, 0);
 		NAMESPACE::vector<int> copy = src;
 		src[2] = 6;
 		copy[2] = 7;
-		print_container(src, 5);
-		print_container(copy, 5);
+		print_container_access_operator(src, 5);
+		print_container_access_operator(copy, 5);
+	}
+	std::cout << "at()" << std::endl;
+	{
+		NAMESPACE::vector<int> src(5, 0);
+		print_container_at(src, 5);
+	}
+	{
+		NAMESPACE::vector<int> src(5, 0);
+		NAMESPACE::vector<int> copy = src;
+		src.at(2) = 6;
+		copy.at(2) = 7;
+		print_container_at(src, 5);
+		print_container_at(copy, 5);
+	}
+	{
+		NAMESPACE::vector<int> src(5, 0);
+		try {
+			src.at(5) = 6;
+			std::cout << "Did not throw" << std::endl;
+		} catch (std::exception &error) {
+			std::cout << " >> Did throw" << std::endl;
+		}
 	}
 }
 int	main(void)
