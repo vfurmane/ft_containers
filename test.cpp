@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/01 17:16:02 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/02 12:00:32 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,6 +375,11 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> copy(obj);
 		(void)copy;
 		std::cout << " (const vector &)                : OK" << std::endl;
+	}
+	std::cout << "size()" << std::endl;
+	{
+		NAMESPACE::vector<int> src(5, 0);
+		std::cout << src.size() << std::endl;
 	}
 	std::cout << "Assignation operator" << std::endl;
 	{
