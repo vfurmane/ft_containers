@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/02 12:00:32 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/02 13:40:47 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,21 +341,21 @@ void	vector_testing(void)
 	}
 	{
 		int arr[5] = {1, 2, 3, 4, 5};
-		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		std::cout << " (InputIterator," << std::endl;
 		std::cout << "  InputIterator) <int *>         : OK" << std::endl;
 		print_container_access_operator(obj, 5);
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
-		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		std::cout << " (const InputIterator," << std::endl;
 		std::cout << "  const InputIterator) <int *>   : OK" << std::endl;
 		print_container_access_operator(obj, 5);
 	}
 	{
 		int arr[5] = {1, 2, 3, 4, 5};
-		std::vector<int> src(arr, arr + sizeof arr);
+		std::vector<int> src(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		NAMESPACE::vector<int> obj(src.begin(), src.end());
 		std::cout << " (InputIterator," << std::endl;
 		std::cout << "  InputIterator) <iterator>      : OK" << std::endl;
@@ -364,7 +364,7 @@ void	vector_testing(void)
 	{
 		std::allocator<int> alloc;
 		int arr[5] = {1, 2, 3, 4, 5};
-		NAMESPACE::vector<int> obj(arr, arr + sizeof arr, alloc);
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)), alloc);
 		std::cout << " (InputIterator," << std::endl;
 		std::cout << "  InputIterator," << std::endl;
 		std::cout << "  const allocator_type&) <int *> : OK" << std::endl;
@@ -380,6 +380,11 @@ void	vector_testing(void)
 	{
 		NAMESPACE::vector<int> src(5, 0);
 		std::cout << src.size() << std::endl;
+	}
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		std::cout << " >> " << obj.size() << std::endl;
 	}
 	std::cout << "Assignation operator" << std::endl;
 	{
@@ -419,24 +424,24 @@ void	vector_testing(void)
 	std::cout << "front()" << std::endl;
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
-		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		std::cout << " >> " << obj.front() << std::endl;
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
-		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.front() = 6;
 		std::cout << " >> " << obj.front() << std::endl;
 	}
 	std::cout << "back()" << std::endl;
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
-		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		std::cout << " >> " << obj.back() << std::endl;
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
-		NAMESPACE::vector<int> obj(arr, arr + sizeof arr);
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.back() = 6;
 		std::cout << " >> " << obj.back() << std::endl;
 	}
