@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/02 11:59:48 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/04 09:39:35 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ namespace ft
 			size_type size() const
 			{
 				return _n;
+			}
+
+			size_type max_size() const
+			{
+				return _alloc.max_size();
 			}
 
 			reference operator[] (size_type n)
