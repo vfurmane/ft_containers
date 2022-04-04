@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/02 13:40:47 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/04 09:40:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,6 +385,15 @@ void	vector_testing(void)
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		std::cout << " >> " << obj.size() << std::endl;
+	}
+	std::cout << "max_size()" << std::endl;
+	{
+		NAMESPACE::vector<int> src;
+		std::cout << src.max_size() << std::endl;
+	}
+	{
+		NAMESPACE::vector<double> src;
+		std::cout << src.max_size() << std::endl;
 	}
 	std::cout << "Assignation operator" << std::endl;
 	{
