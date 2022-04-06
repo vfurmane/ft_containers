@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/04 09:40:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:09:23 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,6 +394,28 @@ void	vector_testing(void)
 	{
 		NAMESPACE::vector<double> src;
 		std::cout << src.max_size() << std::endl;
+	}
+	std::cout << "resize()" << std::endl;
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		obj.resize(3);
+		std::cout << obj.size() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		obj.resize(5);
+		std::cout << obj.size() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		obj.resize(8);
+		std::cout << obj.size() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "Assignation operator" << std::endl;
 	{
