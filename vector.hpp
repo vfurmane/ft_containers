@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/04 09:39:35 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:07:13 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,34 @@ namespace ft
 			size_type max_size() const
 			{
 				return _alloc.max_size();
+			}
+
+			void resize(size_type n, value_type val = value_type())
+			{
+				if (n < size())
+				{
+					T *new_arr = _alloc.allocate(n);
+					for (size_type i = 0; i < n; i++)
+						new_arr[i] = _arr[i];
+					_alloc.deallocate(_arr, size());
+					_arr = new_arr;
+					_n = n;
+				}
+				else if (n > size())
+				{
+					T *new_arr = _alloc.allocate(n);
+					size_type i = 0;
+					while (i < size())
+					{
+						new_arr[i] = _arr[i];
+						i++;
+					}
+					while (i < n)
+						new_arr[i++] = val;
+					_alloc.deallocate(_arr, size());
+					_arr = new_arr;
+					_n = n;
+				}
 			}
 
 			reference operator[] (size_type n)
