@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/06 16:09:23 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/12 11:28:44 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,6 +415,23 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.resize(8);
 		std::cout << obj.size() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	std::cout << "capacity()" << std::endl;
+	{
+		NAMESPACE::vector<int> obj(5, 0);
+		std::cout << obj.capacity() << std::endl;
+	}
+	{
+		NAMESPACE::vector<int> obj(5, 0);
+		obj.resize(16, 3);
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		NAMESPACE::vector<int> obj(5, 0);
+		obj.resize(3, 3);
+		std::cout << obj.capacity() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "Assignation operator" << std::endl;

@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/06 16:07:13 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/12 11:35:28 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,26 @@ namespace ft
 			typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
 			typedef size_t size_type;
 
-			explicit vector(const allocator_type &alloc = allocator_type()) : _n(0), _arr(NULL), _alloc(alloc)
+			explicit vector(const allocator_type &alloc = allocator_type()) : _n(0), _capacity(0), _arr(NULL), _alloc(alloc)
 			{
 				_arr = _alloc.allocate(_n);
 			}
-			explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _n(0), _arr(NULL), _alloc(alloc)
+			explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _n(0), _capacity(0), _arr(NULL), _alloc(alloc)
 			{
 				_dispatch_ctr(n, val, ft::true_type());
 			}
 			template <class InputIterator>
-			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : _n(0), _arr(NULL), _alloc(alloc)
+			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()) : _n(0), _capacity(0), _arr(NULL), _alloc(alloc)
 			{
 				_dispatch_ctr(first, last, typename ft::is_integral<InputIterator>::type());
 			}
-			vector (const vector &x) : _n(x._n), _arr(NULL), _alloc(x._alloc)
+			vector (const vector &x) : _n(x._n), _capacity(0), _arr(NULL), _alloc(x._alloc)
 			{
 				_dispatch_ctr(x._arr, x._arr + x._n, ft::false_type());
 			}
 			~vector()
 			{
-				_alloc.deallocate(_arr, _n);
+				_alloc.deallocate(_arr, capacity());
 			}
 
 			vector &operator=(const vector &x)
@@ -82,30 +82,32 @@ namespace ft
 
 			void resize(size_type n, value_type val = value_type())
 			{
-				if (n < size())
+				T* current_arr;
+				size_type i = 0;
+
+				if (n > capacity())
+					current_arr = _alloc.allocate(n);
+				else
+					current_arr = _arr;
+				while (i < size() && i < n)
 				{
-					T *new_arr = _alloc.allocate(n);
-					for (size_type i = 0; i < n; i++)
-						new_arr[i] = _arr[i];
-					_alloc.deallocate(_arr, size());
-					_arr = new_arr;
-					_n = n;
+					current_arr[i] = _arr[i];
+					i++;
 				}
-				else if (n > size())
+				while (i < n)
+					current_arr[i++] = val;
+				if (n > capacity())
 				{
-					T *new_arr = _alloc.allocate(n);
-					size_type i = 0;
-					while (i < size())
-					{
-						new_arr[i] = _arr[i];
-						i++;
-					}
-					while (i < n)
-						new_arr[i++] = val;
-					_alloc.deallocate(_arr, size());
-					_arr = new_arr;
-					_n = n;
+					_alloc.deallocate(_arr, capacity());
+					_capacity = n;
 				}
+				_arr = current_arr;
+				_n = n;
+			}
+
+			size_type capacity() const
+			{
+				return _capacity;
 			}
 
 			reference operator[] (size_type n)
@@ -148,6 +150,7 @@ namespace ft
 
 		private:
 			size_type		_n;
+			size_type		_capacity;
 			T			   	*_arr;
 			allocator_type	_alloc;
 
@@ -155,6 +158,7 @@ namespace ft
 			{
 				(void)sub;
 				_n = n;
+				_capacity = _n;
 				_arr = _alloc.allocate(_n);
 				for (size_type i = 0; i < _n; i++)
 				{
@@ -168,6 +172,7 @@ namespace ft
 				for (InputIterator it = first; it != last; it++)
 					_n++;
 				_arr = _alloc.allocate(_n);
+				_capacity = _n;
 				size_type i = 0;
 				for (InputIterator it = first; it != last; it++)
 					_arr[i++] = *it;
