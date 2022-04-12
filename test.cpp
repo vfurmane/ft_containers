@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/12 15:18:23 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/12 15:39:40 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -455,6 +455,25 @@ void	vector_testing(void)
 			std::cout << "empty" << std::endl;
 		else
 			std::cout << "not empty" << std::endl;
+	}
+	std::cout << "reserve()" << std::endl;
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.reserve(3);
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.reserve(5);
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.reserve(16);
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "Assignation operator" << std::endl;
 	{
