@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/12 11:35:28 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/12 15:11:38 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,11 @@ namespace ft
 			size_type capacity() const
 			{
 				return _capacity;
+			}
+
+			bool empty() const
+			{
+				return size() == 0;
 			}
 
 			reference operator[] (size_type n)
