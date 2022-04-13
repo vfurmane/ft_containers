@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/12 15:39:40 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/13 12:08:08 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -533,6 +533,55 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.back() = 6;
 		std::cout << " >> " << obj.back() << std::endl;
+	}
+	std::cout << "assign()" << std::endl;
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.assign(4, 2);
+		std::cout << obj.size() << std::endl;
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.assign(5, 2);
+		std::cout << obj.size() << std::endl;
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.assign(6, 2);
+		std::cout << obj.size() << std::endl;
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		const int src[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(src, src + (sizeof (src) / sizeof (*src)));
+		const int arr[4] = {5, 4, 3, 2};
+		obj.assign(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		std::cout << obj.size() << std::endl;
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		const int src[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(src, src + (sizeof (src) / sizeof (*src)));
+		const int arr[5] = {5, 4, 3, 2, 1};
+		obj.assign(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		std::cout << obj.size() << std::endl;
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		const int src[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(src, src + (sizeof (src) / sizeof (*src)));
+		const int arr[6] = {6, 5, 4, 3, 2, 1};
+		obj.assign(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		std::cout << obj.size() << std::endl;
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 }
 int	main(void)

@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/12 15:34:38 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/13 11:59:36 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,16 @@ namespace ft
 				_capacity = n;
 			}
 
+			template <class InputIterator>
+			void assign(InputIterator first, InputIterator last)
+			{
+				_dispatch_assign(first, last, typename ft::is_integral<InputIterator>::type());
+			}
+			void assign(size_type n, const value_type& val = value_type())
+			{
+				_dispatch_assign(n, val, typename ft::false_type());
+			}
+
 			reference operator[] (size_type n)
 			{
 				return _arr[n];
@@ -198,6 +208,50 @@ namespace ft
 				size_type i = 0;
 				for (InputIterator it = first; it != last; it++)
 					_arr[i++] = *it;
+			}
+
+			template <class InputIterator>
+			void	_dispatch_assign(InputIterator first, InputIterator last, ft::false_type sub)
+			{
+				(void)sub;
+				T* current_arr;
+				size_t	n = 0;
+
+				for (InputIterator it = first; it != last; it++)
+					n++;
+				if (n > capacity())
+					current_arr = _alloc.allocate(n);
+				else
+					current_arr = _arr;
+				size_t	i = 0;
+				for (InputIterator it = first; it != last; it++)
+					current_arr[i++] = *it;
+				if (n > capacity())
+				{
+					_alloc.deallocate(_arr, capacity());
+					_capacity = n;
+				}
+				_arr = current_arr;
+				_n = n;
+			}
+			void	_dispatch_assign(size_type n, const value_type &val, ft::true_type sub)
+			{
+				(void)sub;
+				T* current_arr;
+
+				if (n > capacity())
+					current_arr = _alloc.allocate(n);
+				else
+					current_arr = _arr;
+				for (size_type i = 0; i < n; i++)
+					current_arr[i] = val;
+				if (n > capacity())
+				{
+					_alloc.deallocate(_arr, capacity());
+					_capacity = n;
+				}
+				_arr = current_arr;
+				_n = n;
 			}
 	};
 };
