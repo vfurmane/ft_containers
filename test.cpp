@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/13 12:08:08 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/19 10:36:13 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -582,6 +582,29 @@ void	vector_testing(void)
 		std::cout << obj.size() << std::endl;
 		std::cout << obj.capacity() << std::endl;
 		print_container_access_operator(obj, obj.size());
+	}
+	std::cout << "push_back()" << std::endl;
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.push_back(42);
+		std::cout << "size: " << obj.size() << std::endl;
+		std::cout << "capacity: " <<obj.capacity() << std::endl;
+		std::cout << "back: " <<obj.back() << std::endl;
+	}
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.reserve(6);
+		obj.push_back(42);
+		std::cout << "size: " << obj.size() << std::endl;
+		std::cout << "capacity: " <<obj.capacity() << std::endl;
+		std::cout << "back: " <<obj.back() << std::endl;
+	}
+	{
+		NAMESPACE::vector<int> obj;
+		obj.push_back(42);
+		std::cout << "size: " << obj.size() << std::endl;
+		std::cout << "capacity: " <<obj.capacity() << std::endl;
+		std::cout << "back: " <<obj.back() << std::endl;
 	}
 }
 int	main(void)

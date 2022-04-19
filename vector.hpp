@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/13 11:59:36 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/19 10:36:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,24 @@ namespace ft
 			void assign(size_type n, const value_type& val = value_type())
 			{
 				_dispatch_assign(n, val, typename ft::false_type());
+			}
+			void push_back (const value_type& val)
+			{
+				if (size() >= capacity())
+				{
+					T* 			new_arr;
+					size_type	new_cap = capacity() * 2;
+
+					if (new_cap == 0) new_cap = 1;
+					new_arr = _alloc.allocate(new_cap);
+					for (size_type i = 0; i < size(); i++)
+						new_arr[i] = _arr[i];
+					_alloc.deallocate(_arr, capacity());
+					_capacity = new_cap;
+					_arr = new_arr;
+				}
+				_arr[size()] = val;
+				_n++;
 			}
 
 			reference operator[] (size_type n)
