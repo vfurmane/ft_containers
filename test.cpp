@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/19 10:36:13 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/19 11:20:34 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -602,6 +602,21 @@ void	vector_testing(void)
 	{
 		NAMESPACE::vector<int> obj;
 		obj.push_back(42);
+		std::cout << "size: " << obj.size() << std::endl;
+		std::cout << "capacity: " <<obj.capacity() << std::endl;
+		std::cout << "back: " <<obj.back() << std::endl;
+	}
+	std::cout << "pop_back()" << std::endl;
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.pop_back();
+		std::cout << "size: " << obj.size() << std::endl;
+		std::cout << "capacity: " <<obj.capacity() << std::endl;
+	}
+	{
+		NAMESPACE::vector<int> obj(5);
+		obj.push_back(42);
+		obj.pop_back();
 		std::cout << "size: " << obj.size() << std::endl;
 		std::cout << "capacity: " <<obj.capacity() << std::endl;
 		std::cout << "back: " <<obj.back() << std::endl;
