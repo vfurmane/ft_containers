@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/19 11:19:38 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/22 16:44:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,119 @@ namespace ft
 {
 	template <class T>
 	class _vector_iterator {
+		public:
+			_vector_iterator(void) : _ptr(NULL)
+			{
+			}
+			~_vector_iterator(void)
+			{
+			}
+			_vector_iterator(const _vector_iterator &obj) : _ptr(NULL)
+			{
+				*this = obj;
+			}
+			_vector_iterator(T *ptr) : _ptr(ptr)
+			{
+			}
+
+			_vector_iterator	&operator=(const _vector_iterator &rhs)
+			{
+				_ptr = rhs._ptr;
+				return *this;
+			}
+			bool	operator==(const _vector_iterator &rhs)
+			{
+				return _ptr == rhs._ptr;
+			}
+			bool	operator!=(const _vector_iterator &rhs)
+			{
+				return _ptr != rhs._ptr;
+			}
+			T	&operator*()
+			{
+				return *_ptr;
+			}
+			T	*operator->()
+			{
+				return _ptr;
+			}
+			_vector_iterator	operator++()
+			{
+				_ptr++;
+				return *this;
+			}
+			_vector_iterator	operator++(int)
+			{
+				_vector_iterator tmp(*this);
+				_ptr++;
+				return tmp;
+			}
+			_vector_iterator	operator--()
+			{
+				_ptr--;
+				return *this;
+			}
+			_vector_iterator	operator--(int)
+			{
+				_vector_iterator tmp(*this);
+				_ptr--;
+				return tmp;
+			}
+			_vector_iterator	operator+(int n)
+			{
+				_vector_iterator tmp(*this);
+				tmp._ptr += n;
+				return tmp;
+			}
+			friend _vector_iterator	operator+(int n, const _vector_iterator &rhs)
+			{
+				_vector_iterator tmp(rhs);
+				tmp._ptr += n;
+				return tmp;
+			}
+			_vector_iterator	operator-(int n)
+			{
+				_vector_iterator tmp(*this);
+				tmp._ptr -= n;
+				return tmp;
+			}
+			int	operator-(const _vector_iterator &rhs)
+			{
+				return _ptr - rhs._ptr;
+			}
+			bool				operator<(const _vector_iterator &rhs)
+			{
+				return _ptr < rhs._ptr;
+			}
+			bool				operator>(const _vector_iterator &rhs)
+			{
+				return _ptr > rhs._ptr;
+			}
+			bool				operator<=(const _vector_iterator &rhs)
+			{
+				return _ptr <= rhs._ptr;
+			}
+			bool				operator>=(const _vector_iterator &rhs)
+			{
+				return _ptr >= rhs._ptr;
+			}
+			_vector_iterator	operator+=(int n)
+			{
+				_ptr += n;
+				return *this;
+			}
+			_vector_iterator	operator-=(int n)
+			{
+				_ptr -= n;
+				return *this;
+			}
+			T	&operator[](int n)
+			{
+				return _ptr[n];
+			}
+
+		private:
+			T*	_ptr;
 	};
 
 	template < class T, class Alloc = std::allocator<T> >
@@ -68,6 +181,23 @@ namespace ft
 				_alloc = x._alloc;
 				_dispatch_ctr(x._arr, x._arr + x._n, ft::false_type());
 				return *this;
+			}
+
+			iterator begin()
+			{
+				return &front();
+			}
+			const_iterator begin() const
+			{
+				return &front();
+			}
+			iterator end()
+			{
+				return &back();
+			}
+			const_iterator end() const
+			{
+				return &back();
 			}
 
 			size_type size() const

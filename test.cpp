@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/19 11:20:34 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/04/22 16:44:28 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,13 +221,15 @@ class TestHelper
 		typedef TestHelper pointer;
 		typedef TestHelper const_pointer;
 
-		TestHelper(void)
+		TestHelper(void) : nbr(42)
 		{
 		}
 		void greet(void) const
 		{
 			std::cout << "greetings" << std::endl;
 		}
+		
+		int nbr;
 };
 
 void	vector_testing(void)
@@ -375,6 +377,11 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> copy(obj);
 		(void)copy;
 		std::cout << " (const vector &)                : OK" << std::endl;
+	}
+	std::cout << "begin() and end()" << std::endl;
+	{
+		NAMESPACE::vector<int> src(5, 0);
+		std::cout << src.size() << std::endl;
 	}
 	std::cout << "size()" << std::endl;
 	{
@@ -622,10 +629,224 @@ void	vector_testing(void)
 		std::cout << "back: " <<obj.back() << std::endl;
 	}
 }
+
+void vector_random_access_iterator_testing(void)
+{
+	std::cout << "====== RANDOM ACCESS ITERATOR ======" << std::endl;
+	std::cout << " default constructor: ";
+	{
+		NAMESPACE::vector<int>::iterator	obj;
+		(void)obj;
+		std::cout << "OK" << std::endl;
+	}
+	std::cout << " copy constructor: ";
+	{
+		NAMESPACE::vector<int>::iterator	src;
+		NAMESPACE::vector<int>::iterator	obj(src);
+		(void)obj;
+		std::cout << "OK" << std::endl;
+	}
+	std::cout << " assign operator: ";
+	{
+		NAMESPACE::vector<int>::iterator	src;
+		NAMESPACE::vector<int>::iterator	obj = src;
+		(void)obj;
+		std::cout << "OK" << std::endl;
+	}
+	std::cout << " == operator: ";
+	{
+		NAMESPACE::vector<int>::iterator	src;
+		NAMESPACE::vector<int>::iterator	obj(src);
+		if (obj == src)
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	std::cout << " != operator: ";
+	{
+		NAMESPACE::vector<int>::iterator	src;
+		NAMESPACE::vector<int>::iterator	obj(src);
+		if (obj != src)
+			std::cout << "KO" << std::endl;
+		else
+			std::cout << "OK" << std::endl;
+	}
+	std::cout << " *x operator: ";
+	{
+		int	nbr = 42;
+		NAMESPACE::vector<int>::iterator	obj(&nbr);
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " -> operator: ";
+	{
+		TestHelper	src;
+		NAMESPACE::vector<TestHelper>::iterator	obj(&src);
+		std::cout << obj->nbr << std::endl;
+	}
+	std::cout << " *x = operator: ";
+	{
+		int	nbr = 42;
+		NAMESPACE::vector<int>::iterator	obj(&nbr);
+		std::cout << (*obj = 21) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " ++x operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		std::cout << *(++obj) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " x++ operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		std::cout << *(obj++) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " *x++ operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		std::cout << *obj++ << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " --x operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(&nbr[1]);
+		std::cout << *(--obj) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " x-- operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(&nbr[1]);
+		std::cout << *(obj--) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " x + n operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		std::cout << *(obj + 1) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " n + x operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		std::cout << *(1 + obj) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " x - n operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(&nbr[1]);
+		std::cout << *(obj - 1) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " x - y operator: ";
+	{
+		int	nbr[] = {42, 21, 1337};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		NAMESPACE::vector<int>::iterator	obj1(&nbr[1]);
+		NAMESPACE::vector<int>::iterator	obj2(&nbr[2]);
+		std::cout << obj - obj2 << " | ";
+		std::cout << obj - obj1 << " | ";
+		std::cout << obj - obj << " | ";
+		std::cout << obj1 - obj << " | ";
+		std::cout << obj2 - obj << std::endl;
+	}
+	std::cout << " x < y operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		NAMESPACE::vector<int>::iterator	obj1(&nbr[1]);
+		if (obj < obj1)
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	std::cout << " x > y operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		NAMESPACE::vector<int>::iterator	obj1(&nbr[1]);
+		if (obj1 > obj)
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	std::cout << " x <= y (is inf) operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		NAMESPACE::vector<int>::iterator	obj1(&nbr[1]);
+		if (obj <= obj1)
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	std::cout << " x <= y (is eq) operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		NAMESPACE::vector<int>::iterator	obj1(nbr);
+		if (obj <= obj1)
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	std::cout << " x >= y (is grt) operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		NAMESPACE::vector<int>::iterator	obj1(&nbr[1]);
+		if (obj1 >= obj)
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	std::cout << " x >= y (is eq) operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		NAMESPACE::vector<int>::iterator	obj1(nbr);
+		if (obj1 >= obj)
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	std::cout << " x += n operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		std::cout << *(obj += 1) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " x -= n operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(&nbr[1]);
+		std::cout << *(obj -= 1) << " | ";
+		std::cout << *obj << std::endl;
+	}
+	std::cout << " x[n] operator: ";
+	{
+		int	nbr[] = {42, 21};
+		NAMESPACE::vector<int>::iterator	obj(nbr);
+		obj[1] = 1337;
+		std::cout << obj[0] << " | ";
+		std::cout << obj[1] << std::endl;
+	}
+}
+
 int	main(void)
 {
 	integral_contant_testing();
 	is_integral_testing();
 	vector_testing();
+	vector_random_access_iterator_testing();
 	return 0;
 }
