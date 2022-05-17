@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
+/*   iterator_tag.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/12 09:49:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/17 11:26:23 by vfurmane         ###   ########.fr       */
+/*   Created: 2022/05/17 10:35:08 by vfurmane          #+#    #+#             */
+/*   Updated: 2022/05/17 10:37:43 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REVERSE_ITERATOR_HPP
-# define REVERSE_ITERATOR_HPP
-
-# include "iterator.hpp"
-# include "iterator_tag.hpp"
+#ifndef ITERATOR_TAG_HPP
+# define ITERATOR_TAG_HPP
 
 namespace ft
 {
-	template <class Iter>
-	class reverse_iterator : public iterator<ft::random_access_iterator_tag, Iter>
-	{
-	};
+	struct input_iterator_tag {};
+	struct output_iterator_tag {};
+	struct forward_iterator_tag : public input_iterator_tag {};
+	struct bidirectional_iterator_tag : public forward_iterator_tag {};
+	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 };
 
 #endif
