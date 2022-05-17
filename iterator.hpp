@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
+/*   iterator.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/12 09:49:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/17 11:26:23 by vfurmane         ###   ########.fr       */
+/*   Created: 2022/05/17 10:46:17 by vfurmane          #+#    #+#             */
+/*   Updated: 2022/05/17 11:06:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REVERSE_ITERATOR_HPP
-# define REVERSE_ITERATOR_HPP
-
-# include "iterator.hpp"
-# include "iterator_tag.hpp"
+#ifndef ITERATOR_HPP
+# define ITERATOR_HPP
 
 namespace ft
 {
-	template <class Iter>
-	class reverse_iterator : public iterator<ft::random_access_iterator_tag, Iter>
+	template <class Category, class T, class Distance = std::ptrdiff_t, class Pointer = T *, class Reference = T &>
+	class iterator
 	{
+		public:
+			typedef T			value_type;
+			typedef Distance	difference_type;
+			typedef Pointer		pointer;
+			typedef Reference	reference;
+			typedef Category	iterator_category;
 	};
-};
+}
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/04/22 16:44:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/05/17 11:00:45 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define VECTOR_HPP
 
 # include <stdexcept>
+# include "iterator.hpp"
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 
 namespace ft
 {
 	template <class T>
-	class _vector_iterator {
+	class _vector_iterator : public iterator<ft::random_access_iterator_tag, T> {
 		public:
 			_vector_iterator(void) : _ptr(NULL)
 			{
