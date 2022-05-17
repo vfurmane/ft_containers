@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/17 11:24:30 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/05/17 11:50:12 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,117 @@ void iterator_testing(void)
 	{
 		std::cout << " iterator_category : ";
 		if (typeid(NAMESPACE::iterator<NAMESPACE::random_access_iterator_tag, int>::iterator_category) == typeid(NAMESPACE::random_access_iterator_tag))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+}
+
+void iterator_traits_testing(void)
+{
+	std::cout << "========== ITERATOR TRAITS =========" << std::endl;
+	std::cout << "Member types" << std::endl;
+	{
+		std::cout << " difference_type : ";
+		if (typeid(NAMESPACE::iterator_traits< NAMESPACE::iterator<NAMESPACE::random_access_iterator_tag, int, float> >::difference_type) == typeid(float))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " difference_type (T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<int *>::difference_type) == typeid(std::ptrdiff_t))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " difference_type (const T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<const int *>::difference_type) == typeid(std::ptrdiff_t))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " value_type : ";
+		if (typeid(NAMESPACE::iterator_traits< NAMESPACE::iterator<NAMESPACE::random_access_iterator_tag, int> >::value_type) == typeid(int))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " value_type (T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<int *>::value_type) == typeid(int))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " value_type (const T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<const int *>::value_type) == typeid(int))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " pointer : ";
+		if (typeid(NAMESPACE::iterator_traits< NAMESPACE::iterator<NAMESPACE::random_access_iterator_tag, int> >::pointer) == typeid(int *))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " pointer (T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<int *>::pointer) == typeid(int *))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " pointer (const T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<const int *>::pointer) == typeid(const int *))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " reference : ";
+		if (typeid(NAMESPACE::iterator_traits< NAMESPACE::iterator<NAMESPACE::random_access_iterator_tag, int> >::reference) == typeid(int &))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " reference (T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<int *>::reference) == typeid(int &))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " reference (const T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<const int *>::reference) == typeid(const int &))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " iterator_category : ";
+		if (typeid(NAMESPACE::iterator_traits< NAMESPACE::iterator<NAMESPACE::output_iterator_tag, int> >::iterator_category) == typeid(NAMESPACE::output_iterator_tag))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " iterator_category (T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<int *>::iterator_category) == typeid(NAMESPACE::random_access_iterator_tag))
+			std::cout << "OK" << std::endl;
+		else
+			std::cout << "KO" << std::endl;
+	}
+	{
+		std::cout << " iterator_category (const T *) : ";
+		if (typeid(NAMESPACE::iterator_traits<const int *>::iterator_category) == typeid(NAMESPACE::random_access_iterator_tag))
 			std::cout << "OK" << std::endl;
 		else
 			std::cout << "KO" << std::endl;
@@ -911,6 +1022,7 @@ int	main(void)
 	integral_contant_testing();
 	is_integral_testing();
 	iterator_testing();
+	iterator_traits_testing();
 	vector_testing();
 	vector_random_access_iterator_testing();
 	return 0;
