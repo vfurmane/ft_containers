@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/17 11:50:12 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:10:10 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,15 +396,20 @@ class TestHelper
 		typedef TestHelper pointer;
 		typedef TestHelper const_pointer;
 
-		TestHelper(void) : nbr(42)
+		TestHelper(void) : nbr(42), ptr(new int)
 		{
+		}
+		~TestHelper(void)
+		{
+			delete ptr;
 		}
 		void greet(void) const
 		{
 			std::cout << "greetings" << std::endl;
 		}
 		
-		int nbr;
+		int	nbr;
+		int	*ptr;
 };
 
 void	vector_testing(void)
@@ -578,6 +583,18 @@ void	vector_testing(void)
 		std::cout << src.max_size() << std::endl;
 	}
 	std::cout << "resize()" << std::endl;
+	{
+		const int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		obj.resize(0);
+		std::cout << obj.size() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		NAMESPACE::vector<TestHelper> obj(3);
+		obj.resize(0);
+		std::cout << obj.size() << std::endl;
+	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
