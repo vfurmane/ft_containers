@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/23 10:47:00 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/05/23 15:16:50 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -410,6 +410,11 @@ class TestHelper
 
 		TestHelper(void) : nbr(42), ptr(new int)
 		{
+			*ptr = 21;
+		}
+		TestHelper(TestHelper const &src) : nbr(src.nbr), ptr(new int)
+		{
+			*ptr = *src.ptr;
 		}
 		~TestHelper(void)
 		{
@@ -423,6 +428,12 @@ class TestHelper
 		int	nbr;
 		int	*ptr;
 };
+
+std::ostream	&operator<<(std::ostream &os, const TestHelper &rhs)
+{
+	os << "(nbr : " << rhs.nbr << ", ptr : " << *rhs.ptr << ")";
+	return os;
+}
 
 void	reverse_iterator_testing(void)
 {
@@ -893,12 +904,12 @@ void	vector_testing(void)
 	{
 		NAMESPACE::vector<TestHelper>::difference_type var;
 		(void)var;
-		std::cout << " difference_type        : not working yet" << std::endl;
+		std::cout << " difference_type        : exists" << std::endl;
 	}
 	{
 		NAMESPACE::vector<TestHelper>::size_type var;
 		(void)var;
-		std::cout << " size_type              : not working yet" << std::endl;
+		std::cout << " size_type              : exists" << std::endl;
 	}
 	std::cout << "Constructors" << std::endl;
 	{
@@ -983,112 +994,124 @@ void	vector_testing(void)
 	std::cout << "size()" << std::endl;
 	{
 		NAMESPACE::vector<int> src(5, 0);
-		std::cout << src.size() << std::endl;
+		std::cout << " with five zeros : " << src.size() << std::endl;
 	}
 	{
-		const int arr[5] = {1, 2, 3, 4, 5};
-		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
-		std::cout << " >> " << obj.size() << std::endl;
+		const int src[7] = {1, 2, 3, 4, 5, 6, 7};
+		NAMESPACE::vector<int> obj(src, src + (sizeof (src) / sizeof (*src)));
+		std::cout << " with int[7]     : " << obj.size() << std::endl;
 	}
 	std::cout << "max_size()" << std::endl;
 	{
 		NAMESPACE::vector<int> src;
-		std::cout << src.max_size() << std::endl;
+		std::cout << " <int>    : " << src.max_size() << std::endl;
 	}
 	{
 		NAMESPACE::vector<double> src;
-		std::cout << src.max_size() << std::endl;
+		std::cout << " <double> : " << src.max_size() << std::endl;
 	}
 	std::cout << "resize()" << std::endl;
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.resize(0);
-		std::cout << obj.size() << std::endl;
+		std::cout << " size : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
 		NAMESPACE::vector<TestHelper> obj(3);
 		obj.resize(0);
-		std::cout << obj.size() << std::endl;
+		obj.push_back(TestHelper());
+		std::cout << " size : " << obj.size() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.resize(3);
-		std::cout << obj.size() << std::endl;
+		std::cout << " size : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.resize(5);
-		std::cout << obj.size() << std::endl;
+		std::cout << " size : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.resize(8);
-		std::cout << obj.size() << std::endl;
+		std::cout << " size : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "capacity()" << std::endl;
 	{
 		NAMESPACE::vector<int> obj(5, 0);
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " size     : " << obj.size() << std::endl;
+		std::cout << " capacity : " << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	{
 		NAMESPACE::vector<int> obj(5, 0);
 		obj.resize(16, 3);
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " size     : " << obj.size() << std::endl;
+		std::cout << " capacity : " << obj.capacity() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
 		NAMESPACE::vector<int> obj(5, 0);
 		obj.resize(3, 3);
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " size     : " << obj.size() << std::endl;
+		std::cout << " capacity : " << obj.capacity() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "empty()" << std::endl;
 	{
 		NAMESPACE::vector<int> obj;
+		std::cout << " is ";
 		if (obj.empty())
 			std::cout << "empty" << std::endl;
 		else
 			std::cout << "not empty" << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	{
 		NAMESPACE::vector<int> obj(0);
+		std::cout << " is ";
 		if (obj.empty())
 			std::cout << "empty" << std::endl;
 		else
 			std::cout << "not empty" << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	{
 		NAMESPACE::vector<int> obj(5);
+		std::cout << " is ";
 		if (obj.empty())
 			std::cout << "empty" << std::endl;
 		else
 			std::cout << "not empty" << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "reserve()" << std::endl;
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.reserve(3);
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " capacity : " << obj.capacity() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.reserve(5);
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " capacity : " << obj.capacity() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.reserve(16);
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " capacity : " << obj.capacity() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "Assignation operator" << std::endl;
@@ -1119,57 +1142,69 @@ void	vector_testing(void)
 	}
 	{
 		NAMESPACE::vector<int> src(5, 0);
+		std::cout << " at(4) >> ";
 		try {
 			src.at(5) = 6;
 			std::cout << "Did not throw" << std::endl;
 		} catch (std::exception &error) {
-			std::cout << " >> Did throw" << std::endl;
+			std::cout << "Did throw" << std::endl;
+		}
+	}
+	{
+		NAMESPACE::vector<int> src(5, 0);
+		std::cout << " at(5) >> ";
+		try {
+			src.at(5) = 6;
+			std::cout << "Did not throw" << std::endl;
+		} catch (std::exception &error) {
+			std::cout << "Did throw" << std::endl;
 		}
 	}
 	std::cout << "front()" << std::endl;
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
-		std::cout << " >> " << obj.front() << std::endl;
+		std::cout << " front() == " << obj.front() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.front() = 6;
-		std::cout << " >> " << obj.front() << std::endl;
+		std::cout << " front() == " << obj.front() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "back()" << std::endl;
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
-		std::cout << " >> " << obj.back() << std::endl;
+		std::cout << " back() == " << obj.back() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	{
 		const int arr[5] = {1, 2, 3, 4, 5};
 		NAMESPACE::vector<int> obj(arr, arr + (sizeof (arr) / sizeof (*arr)));
 		obj.back() = 6;
-		std::cout << " >> " << obj.back() << std::endl;
+		std::cout << " back() == " << obj.back() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "assign()" << std::endl;
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.assign(4, 2);
-		std::cout << obj.size() << std::endl;
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " size     : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.assign(5, 2);
-		std::cout << obj.size() << std::endl;
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " size     : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.assign(6, 2);
-		std::cout << obj.size() << std::endl;
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " size     : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
@@ -1177,8 +1212,7 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> obj(src, src + (sizeof (src) / sizeof (*src)));
 		const int arr[4] = {5, 4, 3, 2};
 		obj.assign(arr, arr + (sizeof (arr) / sizeof (*arr)));
-		std::cout << obj.size() << std::endl;
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " size     : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
@@ -1186,8 +1220,7 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> obj(src, src + (sizeof (src) / sizeof (*src)));
 		const int arr[5] = {5, 4, 3, 2, 1};
 		obj.assign(arr, arr + (sizeof (arr) / sizeof (*arr)));
-		std::cout << obj.size() << std::endl;
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " size     : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	{
@@ -1195,47 +1228,52 @@ void	vector_testing(void)
 		NAMESPACE::vector<int> obj(src, src + (sizeof (src) / sizeof (*src)));
 		const int arr[6] = {6, 5, 4, 3, 2, 1};
 		obj.assign(arr, arr + (sizeof (arr) / sizeof (*arr)));
-		std::cout << obj.size() << std::endl;
-		std::cout << obj.capacity() << std::endl;
+		std::cout << " size     : " << obj.size() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
 	std::cout << "push_back()" << std::endl;
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.push_back(42);
-		std::cout << "size: " << obj.size() << std::endl;
-		std::cout << "capacity: " <<obj.capacity() << std::endl;
-		std::cout << "back: " <<obj.back() << std::endl;
+		std::cout << " >> 42" << std::endl;
+		std::cout << "size     : " << obj.size() << std::endl;
+		std::cout << "capacity : " << obj.capacity() << std::endl;
+		std::cout << "back     : " << obj.back() << std::endl;
 	}
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.reserve(6);
 		obj.push_back(42);
-		std::cout << "size: " << obj.size() << std::endl;
-		std::cout << "capacity: " <<obj.capacity() << std::endl;
-		std::cout << "back: " <<obj.back() << std::endl;
+		std::cout << " >> 42" << std::endl;
+		std::cout << "size     : " << obj.size() << std::endl;
+		std::cout << "capacity : " << obj.capacity() << std::endl;
+		std::cout << "back     : " << obj.back() << std::endl;
 	}
 	{
 		NAMESPACE::vector<int> obj;
 		obj.push_back(42);
-		std::cout << "size: " << obj.size() << std::endl;
-		std::cout << "capacity: " <<obj.capacity() << std::endl;
-		std::cout << "back: " <<obj.back() << std::endl;
+		std::cout << " >> 42" << std::endl;
+		std::cout << "size     : " << obj.size() << std::endl;
+		std::cout << "capacity : " << obj.capacity() << std::endl;
+		std::cout << "back     : " << obj.back() << std::endl;
 	}
 	std::cout << "pop_back()" << std::endl;
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.pop_back();
-		std::cout << "size: " << obj.size() << std::endl;
-		std::cout << "capacity: " <<obj.capacity() << std::endl;
+		std::cout << " <<" << std::endl;
+		std::cout << "size     : " << obj.size() << std::endl;
+		std::cout << "capacity : " << obj.capacity() << std::endl;
+		std::cout << "back     : " << obj.back() << std::endl;
 	}
 	{
 		NAMESPACE::vector<int> obj(5);
 		obj.push_back(42);
 		obj.pop_back();
-		std::cout << "size: " << obj.size() << std::endl;
-		std::cout << "capacity: " <<obj.capacity() << std::endl;
-		std::cout << "back: " <<obj.back() << std::endl;
+		std::cout << " <<" << std::endl;
+		std::cout << "size     : " << obj.size() << std::endl;
+		std::cout << "capacity : " << obj.capacity() << std::endl;
+		std::cout << "back     : " << obj.back() << std::endl;
 	}
 }
 
