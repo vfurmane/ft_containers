@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/19 11:03:26 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:48:34 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,22 @@ namespace ft
 			const_iterator end() const
 			{
 				return &back() + 1;
+			}
+			reverse_iterator rbegin()
+			{
+				return reverse_iterator(end());
+			}
+			const_reverse_iterator rbegin() const
+			{
+				return reverse_iterator(end());
+			}
+			reverse_iterator rend()
+			{
+				return reverse_iterator(begin());
+			}
+			const_reverse_iterator rend() const
+			{
+				return reverse_iterator(begin());
 			}
 
 			size_type size() const

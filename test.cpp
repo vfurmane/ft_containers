@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/20 15:12:35 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:47:00 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,18 @@ void print_container_at(T obj, size_type n)
 	std::cout << " { ";
 	for (size_type i = 0; i < n; i++)
 		std::cout << obj.at(i) << (i < n - 1 ? ", " : "");
+	std::cout << " }" << std::endl;
+}
+
+template <class Iterator>
+void print_container_iter(Iterator begin, Iterator end)
+{
+	std::cout << " { ";
+	while (begin != end)
+	{
+		std::cout << *begin << (begin < end - 1 ? ", " : "");
+		begin++;
+	}
 	std::cout << " }" << std::endl;
 }
 
@@ -958,8 +970,15 @@ void	vector_testing(void)
 	}
 	std::cout << "begin() and end()" << std::endl;
 	{
-		NAMESPACE::vector<int> src(5, 0);
-		std::cout << src.size() << std::endl;
+		int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> src(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		print_container_iter(src.begin(), src.end());
+	}
+	std::cout << "rbegin() and rend()" << std::endl;
+	{
+		int arr[5] = {1, 2, 3, 4, 5};
+		NAMESPACE::vector<int> src(arr, arr + (sizeof (arr) / sizeof (*arr)));
+		print_container_iter(src.rbegin(), src.rend());
 	}
 	std::cout << "size()" << std::endl;
 	{
