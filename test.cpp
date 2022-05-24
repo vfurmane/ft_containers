@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/23 15:16:50 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:54:42 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 #include <typeinfo>
 
 template <class T, typename size_type>
-void print_container_access_operator(T obj, size_type n)
+void print_container_access_operator(const T &obj, size_type n)
 {
 	std::cout << " { ";
 	for (size_type i = 0; i < n; i++)
@@ -43,7 +43,7 @@ void print_container_access_operator(T obj, size_type n)
 }
 
 template <class T, typename size_type>
-void print_container_at(T obj, size_type n)
+void print_container_at(const T &obj, size_type n)
 {
 	std::cout << " { ";
 	for (size_type i = 0; i < n; i++)
@@ -414,6 +414,7 @@ class TestHelper
 		}
 		TestHelper(TestHelper const &src) : nbr(src.nbr), ptr(new int)
 		{
+			std::cout << "Copy constructor" << std::endl;
 			*ptr = *src.ptr;
 		}
 		~TestHelper(void)
