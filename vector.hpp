@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/24 11:38:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:35:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,39 +281,6 @@ namespace ft
 				_capacity = n;
 			}
 
-			template <class InputIterator>
-			void assign(InputIterator first, InputIterator last)
-			{
-				_dispatch_assign(first, last, typename ft::is_integral<InputIterator>::type());
-			}
-			void assign(size_type n, const value_type& val = value_type())
-			{
-				_dispatch_assign(n, val, typename ft::false_type());
-			}
-			void push_back (const value_type& val)
-			{
-				if (size() >= capacity())
-				{
-					T* 			new_arr;
-					size_type	new_cap = capacity() * 2;
-
-					if (new_cap == 0) new_cap = 1;
-					new_arr = _alloc.allocate(new_cap);
-					for (size_type i = 0; i < size(); i++)
-						new_arr[i] = _arr[i];
-					_alloc.deallocate(_arr, capacity());
-					_capacity = new_cap;
-					_arr = new_arr;
-				}
-				_alloc.construct(&_arr[size()], val);
-				_n++;
-			}
-
-			void pop_back()
-			{
-				_n--;
-			}
-
 			reference operator[] (size_type n)
 			{
 				return _arr[n];
@@ -350,6 +317,39 @@ namespace ft
 			const_reference back() const
 			{
 				return (*this)[_n - 1];
+			}
+
+			template <class InputIterator>
+			void assign(InputIterator first, InputIterator last)
+			{
+				_dispatch_assign(first, last, typename ft::is_integral<InputIterator>::type());
+			}
+			void assign(size_type n, const value_type& val = value_type())
+			{
+				_dispatch_assign(n, val, typename ft::false_type());
+			}
+			void push_back (const value_type& val)
+			{
+				if (size() >= capacity())
+				{
+					T* 			new_arr;
+					size_type	new_cap = capacity() * 2;
+
+					if (new_cap == 0) new_cap = 1;
+					new_arr = _alloc.allocate(new_cap);
+					for (size_type i = 0; i < size(); i++)
+						new_arr[i] = _arr[i];
+					_alloc.deallocate(_arr, capacity());
+					_capacity = new_cap;
+					_arr = new_arr;
+				}
+				_alloc.construct(&_arr[size()], val);
+				_n++;
+			}
+
+			void pop_back()
+			{
+				_n--;
 			}
 
 		private:
