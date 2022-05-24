@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/23 10:48:34 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/05/24 11:38:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ namespace ft
 			}
 			~vector()
 			{
+				for (size_type i = 0; i < size(); i++)
+					_alloc.destroy(&_arr[i]);
 				_alloc.deallocate(_arr, capacity());
 			}
 
@@ -219,7 +221,7 @@ namespace ft
 
 			size_type size() const
 			{
-				return _n;
+				return difference_type(end() - begin());
 			}
 
 			size_type max_size() const
@@ -303,7 +305,7 @@ namespace ft
 					_capacity = new_cap;
 					_arr = new_arr;
 				}
-				_arr[size()] = val;
+				_alloc.construct(&_arr[size()], val);
 				_n++;
 			}
 
