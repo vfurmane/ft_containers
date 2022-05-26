@@ -6,35 +6,25 @@
 #    By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/11 09:51:12 by vfurmane          #+#    #+#              #
-#    Updated: 2022/03/23 14:17:58 by vfurmane         ###   ########.fr        #
+#    Updated: 2022/05/26 16:00:51 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= containers
-SRCS			= test.cpp
+SRCS			= $(addprefix tests/, $(addprefix integral_constant/, value_type-bool-true-11.cpp))
+TESTS			= $(SRCS:.cpp=)
 CC				= c++
 CFLAGS			= -Wall -Wextra -Werror
+RM				= rm -f
 
-all:			std_$(NAME) ft_$(NAME)
+n				= std
+cpp				= 98
 
-ft_$(NAME):		CFLAGS+= -std=c++98
-ft_$(NAME):		$(SRCS)
-				$(CC) $(CFLAGS) -D USE_STD=0 $^ -o ft_$(NAME)
+%:				CFLAGS+=--std=c++$(cpp)
+%:				%.cpp
+				$(CC) $(CFLAGS) -I. -D NAMESPACE=$(n) $^ -o $@_$(n)
 
-std_$(NAME):	$(SRCS)
-				$(CC) $(CFLAGS) -D USE_STD=1 $^ -o std_$(NAME)
+clean:
+				$(RM) $(TESTS)
 
-test: 			SHELL:=/bin/bash
-test:			all
-				diff -y --width=80 <(./ft_$(NAME)) <(./std_$(NAME))
-
-leak_test:		SHELL:=/bin/bash
-leak_test:		all
-				diff -y --width=80 <(valgrind ./ft_$(NAME)) <(./std_$(NAME))
-
-fclean:
-				$(RM) ft_$(NAME) std_$(NAME)
-
-re: 			fclean all
-
-.PHONY:			all test fclean re
+.PHONY:			clean
