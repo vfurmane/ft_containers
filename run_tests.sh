@@ -7,6 +7,8 @@ YELLOW="\033[33m"
 BLUE="\033[34m"
 MAGENTA="\033[35m"
 
+fails=0
+
 for directory in tests/*
 do
 	basename_dir=$(basename $directory)
@@ -29,13 +31,20 @@ do
 		if ! make $directory/${basename_file}_ft n=ft cpp=$cpp > logs/$basename_dir/${basename_file}_ft_compilation 2>&1
 		then
 			printf "\r %-64s: [${RED}COMPILATION${NC}]\n" $basename_file
+			fails=$(($fails + 1))
 			continue
 		fi
 		if ! diff -y --width=80 <(./$directory/${basename_file}_ft) <(./$directory/${basename_file}_std) > logs/$basename_dir/${basename_file}_test 2>&1
 		then
 			printf "\r %-64s: [${RED}KO${NC}]\n" $basename_file
+			fails=$(($fails + 1))
 			continue
 		fi
 		printf "\r %-64s: [${GREEN}OK${NC}]\n" $basename_file
 	done
 done
+
+if [ $fails -gt 0 ]
+then
+	exit 1
+fi
