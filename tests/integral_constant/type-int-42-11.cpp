@@ -1,0 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   type-int-42-11.cpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/30 11:02:03 by vfurmane          #+#    #+#             */
+/*   Updated: 2022/05/30 15:15:59 by vfurmane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <iostream>
+#include <typeinfo>
+#include "type_traits.hpp"
+
+int	main(void)
+{
+	std::cout << "type <int, 42> : ";
+	if (typeid(NAMESPACE::integral_constant<int, 42>::type) == typeid(NAMESPACE::integral_constant<int, 42>))
+		std::cout << "OK" << std::endl;
+	else
+		std::cout << "KO" << std::endl;
+}

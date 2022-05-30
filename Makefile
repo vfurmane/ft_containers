@@ -6,35 +6,48 @@
 #    By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/11 09:51:12 by vfurmane          #+#    #+#              #
-#    Updated: 2022/03/23 14:17:58 by vfurmane         ###   ########.fr        #
+#    Updated: 2022/05/30 15:10:24 by vfurmane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			= containers
-SRCS			= test.cpp
+SRCS			= $(addprefix tests/, \
+					$(addprefix integral_constant/, \
+					value_type-bool-true-11.cpp value_type-int-42-11.cpp \
+					type-bool-true-11.cpp value-bool-true-11.cpp \
+					value-bool-false-11.cpp value-int-42-11.cpp \
+					'value_type()-bool-true-11.cpp' \
+					'value_type()-bool-false-11.cpp' \
+					'value_type()-int-42-11.cpp' true_type-11.cpp \
+					false_type-11.cpp) \
+					$(addprefix is_integral/, value_type-int-11.cpp \
+					value-double-11.cpp value-bool-11.cpp value-char-11.cpp \
+					value-double-11.cpp value-int-11.cpp \
+					value-long__int-11.cpp value-long__long__int-11.cpp \
+					value-short__int-11.cpp value-signed__char-11.cpp \
+					value_type-int-11.cpp value-unsigned__char-11.cpp \
+					value-unsigned__int-11.cpp \
+					value-unsigned__long__int-11.cpp \
+					value-unsigned__long__long__int-11.cpp \
+					value-unsigned__short__int-11.cpp value-wchar_t-11.cpp \
+					'value_type()-double-11' 'value_type()-bool-11' \
+					'value_type()-int-11'))
+TESTS			= $(SRCS:.cpp=)
 CC				= c++
 CFLAGS			= -Wall -Wextra -Werror
+RM				= rm -f
 
-all:			std_$(NAME) ft_$(NAME)
+n				= std
+cpp				= 98
 
-ft_$(NAME):		CFLAGS+= -std=c++98
-ft_$(NAME):		$(SRCS)
-				$(CC) $(CFLAGS) -D USE_STD=0 $^ -o ft_$(NAME)
+%_$(n):			CFLAGS+=--std=c++$(cpp)
+%_$(n):			%.cpp
+				$(CC) $(CFLAGS) -I. -D NAMESPACE=$(n) '$<' -o '$@'
 
-std_$(NAME):	$(SRCS)
-				$(CC) $(CFLAGS) -D USE_STD=1 $^ -o std_$(NAME)
+%:				%.cpp
+				@echo "No namespace given in rule name"
+				@exit 1
 
-test: 			SHELL:=/bin/bash
-test:			all
-				diff -y --width=80 <(./ft_$(NAME)) <(./std_$(NAME))
+clean:
+				$(RM) $(addsuffix _ft, $(TESTS)) $(addsuffix _std, $(TESTS))
 
-leak_test:		SHELL:=/bin/bash
-leak_test:		all
-				diff -y --width=80 <(valgrind ./ft_$(NAME)) <(./std_$(NAME))
-
-fclean:
-				$(RM) ft_$(NAME) std_$(NAME)
-
-re: 			fclean all
-
-.PHONY:			all test fclean re
+.PHONY:			clean
