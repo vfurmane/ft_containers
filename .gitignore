@@ -2,3 +2,6 @@
 ft_containers
 std_containers
 logs
+
+tests/**/*_std
+tests/**/*_ft
