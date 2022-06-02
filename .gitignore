@@ -1,4 +1,6 @@
 .*.swp
+*.dep
+*.o
 ft_containers
 std_containers
 logs
