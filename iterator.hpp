@@ -6,12 +6,15 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 10:46:17 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/17 11:06:57 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:50:55 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
+
+#include "iterator_traits.hpp"
+#include "type_traits.hpp"
 
 namespace ft
 {
@@ -26,5 +29,7 @@ namespace ft
 			typedef Category	iterator_category;
 	};
 }
+
+#include "reverse_iterator.hpp"
 
 #endif

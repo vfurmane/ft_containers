@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/24 13:35:54 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:50:27 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ namespace ft
 			{
 				_dispatch_ctr(first, last, typename ft::is_integral<InputIterator>::type());
 			}
-			vector (const vector &x) : _n(x._n), _capacity(0), _arr(NULL), _alloc(x._alloc)
+			vector (const vector &x) : _n(0), _capacity(0), _arr(NULL), _alloc(x._alloc)
 			{
 				_dispatch_ctr(x._arr, x._arr + x._n, ft::false_type());
 			}
@@ -182,7 +182,8 @@ namespace ft
 			{
 				_alloc.deallocate(_arr, _n);
 				_alloc = x._alloc;
-				_dispatch_ctr(x._arr, x._arr + x._n, ft::false_type());
+				_n = 0;
+				_dispatch_ctr(x.begin(), x.end(), ft::false_type());
 				return *this;
 			}
 
@@ -349,6 +350,7 @@ namespace ft
 
 			void pop_back()
 			{
+				_alloc.destroy(&this->back());
 				_n--;
 			}
 
@@ -366,7 +368,7 @@ namespace ft
 				_arr = _alloc.allocate(_n);
 				for (size_type i = 0; i < _n; i++)
 				{
-					_arr[i] = val;
+					_alloc.construct(&_arr[i], val);
 				}
 			}
 			template <class InputIterator>
@@ -379,7 +381,7 @@ namespace ft
 				_capacity = _n;
 				size_type i = 0;
 				for (InputIterator it = first; it != last; it++)
-					_arr[i++] = *it;
+					_alloc.construct(&_arr[i++], *it);
 			}
 
 			template <class InputIterator>
