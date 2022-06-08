@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/08 12:24:20 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:06:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,6 +405,15 @@ namespace ft
 			{
 				_dispatch_insert(position, first, last, typename ft::is_integral<InputIterator>::type());
 			}
+
+			iterator	erase(iterator position)
+			{
+				std::copy(position + 1, end(), position);
+				_alloc.destroy(&back());
+				_n--;
+				return position;
+			}
+			//iterator	erase(iterator first, iterator last);
 
 
 		private:
