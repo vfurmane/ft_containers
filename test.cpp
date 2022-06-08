@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/24 13:36:43 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:03:44 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "vector.hpp"
 #else
 # define NAMESPACE std
-# include <iterator>
+# include <vector>
 #endif
 
 #include <iostream>
@@ -1115,6 +1115,23 @@ void	vector_testing(void)
 		std::cout << " capacity : " << obj.capacity() << std::endl;
 		print_container_access_operator(obj, obj.size());
 	}
+	std::cout << "capacity()" << std::endl;
+	{
+		NAMESPACE::vector<int> obj(5, 0);
+		std::cout << obj.capacity() << std::endl;
+	}
+	{
+		NAMESPACE::vector<int> obj(5, 0);
+		obj.resize(16, 3);
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		NAMESPACE::vector<int> obj(5, 0);
+		obj.resize(3, 3);
+		std::cout << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
 	std::cout << "Assignation operator" << std::endl;
 	{
 		NAMESPACE::vector<int> src(5, 0);
@@ -1285,6 +1302,31 @@ void	vector_testing(void)
 		std::cout << "size     : " << obj.size() << std::endl;
 		std::cout << "capacity : " << obj.capacity() << std::endl;
 		std::cout << "back     : " << obj.back() << std::endl;
+	}
+	std::cout << "insert()" << std::endl;
+	{
+		NAMESPACE::vector<int> obj(5);
+		NAMESPACE::vector<int>::iterator pos = obj.insert(obj.begin(), 42);
+		std::cout << "position : " << *pos << std::endl;
+		std::cout << "size     : " << obj.size() << std::endl;
+		std::cout << "capacity : " << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		NAMESPACE::vector<int> obj(5);
+		NAMESPACE::vector<int>::iterator pos = obj.insert(obj.begin() + 2, 42);
+		std::cout << "position : " << *pos << std::endl;
+		std::cout << "size     : " << obj.size() << std::endl;
+		std::cout << "capacity : " << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
+	}
+	{
+		NAMESPACE::vector<int> obj(5);
+		NAMESPACE::vector<int>::iterator pos = obj.insert(obj.end(), 42);
+		std::cout << "position : " << *pos << std::endl;
+		std::cout << "size     : " << obj.size() << std::endl;
+		std::cout << "capacity : " << obj.capacity() << std::endl;
+		print_container_access_operator(obj, obj.size());
 	}
 }
 

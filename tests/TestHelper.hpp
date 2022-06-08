@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:46:53 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/06 11:18:39 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:21:56 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ class TestHelper
 
 		TestHelper(void) : nbr(42), ptr(new int)
 		{
+			std::cout << "Default constructor" << std::endl;
 			*ptr = 21;
 		}
 		TestHelper(TestHelper const &src) : nbr(src.nbr), ptr(new int)
@@ -32,6 +33,7 @@ class TestHelper
 		}
 		~TestHelper(void)
 		{
+			std::cout << "Destructor" << std::endl;
 			delete ptr;
 		}
 		void greet(void) const

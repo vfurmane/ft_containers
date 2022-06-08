@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operator_equal(vector)--deep-copy.cpp              :+:      :+:    :+:   */
+/*   insert.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 14:26:50 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/07 16:37:33 by vfurmane         ###   ########.fr       */
+/*   Created: 2022/06/07 17:30:03 by vfurmane          #+#    #+#             */
+/*   Updated: 2022/06/07 17:32:55 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include <tests/TestHelper.hpp>
-#include <tests/print.hpp>
+#include "tests/print.hpp"
 #ifdef USE_STD
 # include <vector>
 #else
@@ -21,12 +20,11 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper> src(5);
-	NAMESPACE::vector<TestHelper> copy(3);
-	copy = src;
-	std::cout << copy.size() << std::endl;
-	src[2].nbr = 1336;
-	copy[2].nbr = 21;
-	print_container_iter(src.begin(), src.end());
-	print_container_iter(copy.begin(), copy.end());
+	NAMESPACE::vector<int>	obj(5);
+	int arr[5] = {1, 2, 3, 4, 5};
+	NAMESPACE::vector<int> src(arr, arr + (sizeof (arr) / sizeof (*arr)));
+	obj.insert(obj.begin() + 2, src.begin(), src.begin() + 2);
+	std::cout << "capacity : " << obj.capacity() << std::endl;
+	std::cout << "size     : " << obj.size() << std::endl;
+	print_container_iter(obj.begin(), obj.end());
 }

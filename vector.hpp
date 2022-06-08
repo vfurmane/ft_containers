@@ -6,14 +6,14 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/07 14:50:27 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:24:20 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include <stdexcept>
+# include <cstring>
 # include "iterator.hpp"
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
@@ -180,10 +180,13 @@ namespace ft
 
 			vector &operator=(const vector &x)
 			{
-				_alloc.deallocate(_arr, _n);
+				// for (iterator it = begin(); it != end(); ++it)
+				// 	_alloc.destroy(&(*it));
+				// _alloc.deallocate(_arr, _n);
+				// _n = 0;
+				// _dispatch_ctr(x.begin(), x.end(), ft::false_type());
 				_alloc = x._alloc;
-				_n = 0;
-				_dispatch_ctr(x.begin(), x.end(), ft::false_type());
+				_dispatch_assign(x.begin(), x.end(), ft::false_type());
 				return *this;
 			}
 
@@ -244,8 +247,10 @@ namespace ft
 					current_arr[i] = _arr[i];
 					i++;
 				}
+				while (i < size())
+					_alloc.destroy(&current_arr[i++]);
 				while (i < n)
-					current_arr[i++] = val;
+					_alloc.construct(&current_arr[i++], val);
 				if (n > capacity())
 				{
 					_alloc.deallocate(_arr, capacity());
@@ -274,7 +279,7 @@ namespace ft
 
 				while (i < size())
 				{
-					current_arr[i] = _arr[i];
+					_alloc.construct(&current_arr[i], _arr[i]);
 					i++;
 				}
 				_alloc.deallocate(_arr, capacity());
@@ -354,6 +359,54 @@ namespace ft
 				_n--;
 			}
 
+			// WHEN THE CAPACITY IS SUFFICIENT ???
+			iterator insert(iterator position, const value_type& val)
+			{
+				if (position == end())
+				{
+					push_back(val);
+					return end() - 1;
+				}
+				if (size() >= capacity())
+				{
+					T* 			new_arr;
+					size_type	new_cap = capacity() * 2;
+
+					if (new_cap == 0) new_cap = 1;
+					new_arr = _alloc.allocate(new_cap);
+					size_type i = 0;
+					for (iterator it = begin(); it != end(); ++it)
+					{
+						if (it == position)
+						{
+							_alloc.construct(&new_arr[i], val);
+							position = &new_arr[i];
+							it--;
+						}
+						else
+							new_arr[i] = *it;
+						i++;
+					}
+					_alloc.deallocate(_arr, capacity());
+					_capacity = new_cap;
+					_arr = new_arr;
+					_n++;
+				}
+				return position;
+			}
+			// inserting 0 element
+			// inserting 0 element on a size 0 vector
+			void insert(iterator position, size_type n, const value_type& val)
+			{
+				_dispatch_insert(position, n, val, typename ft::true_type());
+			}
+			template <class InputIterator>
+			void insert(iterator position, InputIterator first, InputIterator last)
+			{
+				_dispatch_insert(position, first, last, typename ft::is_integral<InputIterator>::type());
+			}
+
+
 		private:
 			size_type		_n;
 			size_type		_capacity;
@@ -375,8 +428,7 @@ namespace ft
 			void	_dispatch_ctr(InputIterator first, InputIterator last, ft::false_type sub)
 			{
 				(void)sub;
-				for (InputIterator it = first; it != last; it++)
-					_n++;
+				_n += last - first;
 				_arr = _alloc.allocate(_n);
 				_capacity = _n;
 				size_type i = 0;
@@ -389,19 +441,18 @@ namespace ft
 			{
 				(void)sub;
 				T* current_arr;
-				size_t	n = 0;
-
-				for (InputIterator it = first; it != last; it++)
-					n++;
+				size_t	n = last - first;
 				if (n > capacity())
 					current_arr = _alloc.allocate(n);
 				else
 					current_arr = _arr;
 				size_t	i = 0;
 				for (InputIterator it = first; it != last; it++)
-					current_arr[i++] = *it;
+					_alloc.construct(&current_arr[i++], *it);
 				if (n > capacity())
 				{
+					for (iterator it = begin(); it != end(); ++it)
+						_alloc.destroy(&(*it));
 					_alloc.deallocate(_arr, capacity());
 					_capacity = n;
 				}
@@ -426,6 +477,92 @@ namespace ft
 				}
 				_arr = current_arr;
 				_n = n;
+			}
+
+			void	_dispatch_insert(iterator position, size_type n, const value_type &val, ft::true_type sub)
+			{
+				(void)sub;
+				if (n == 0)
+					return ;
+				else if (n == 1)
+					return static_cast<void>(insert(position, val));
+				if (size() + n > capacity())
+				{
+					T* 			new_arr;
+					size_type	new_cap = capacity() * 2;
+
+					if (new_cap < size() + n)
+						new_cap = size() + n;
+					new_arr = _alloc.allocate(new_cap);
+					size_type i = 0;
+					for (iterator it = begin(); it != end(); ++it)
+					{
+						if (it == position)
+						{
+							for (size_type j = 0; j < n; j++)
+								_alloc.construct(&new_arr[i++], val);
+							position = &new_arr[i]; // wrong : i has moved
+							it--;
+						}
+						else
+							_alloc.construct(&new_arr[i++], *it);
+					}
+					for (iterator it = begin(); it != end(); ++it)
+						_alloc.destroy(&(*it));
+					_alloc.deallocate(_arr, capacity());
+					_capacity = new_cap;
+					_arr = new_arr;
+				}
+				else
+				{
+					std::copy_backward(position, end(), end() + n);
+					for (size_type i = 0; i < n; i++)
+						_alloc.construct(&position[i], val);
+				}
+				_n += n;
+			}
+			template <class InputIterator>
+			void	_dispatch_insert(iterator position, InputIterator first, InputIterator last, ft::false_type sub)
+			{
+				(void)sub;
+				size_type	range = last - first;
+				if (range == 1)
+					return static_cast<void>(insert(position, *first));
+				if (size() + range > capacity())
+				{
+					T* 			new_arr;
+					size_type	new_cap = capacity() * 2;
+
+					if (new_cap < size() + range)
+						new_cap = size() + range;
+					new_arr = _alloc.allocate(new_cap);
+					size_type i = 0;
+					for (iterator it = begin(); it != end(); ++it)
+					{
+						if (it == position)
+						{
+							for (InputIterator input_it = first; input_it != last; ++input_it)
+								_alloc.construct(&new_arr[i++], *input_it);
+							position = &new_arr[i];
+							it--;
+						}
+						else
+							_alloc.construct(&new_arr[i++], *it);
+					}
+					for (iterator it = begin(); it != end(); ++it)
+						_alloc.destroy(&(*it));
+					_alloc.deallocate(_arr, capacity());
+					_capacity = new_cap;
+					_arr = new_arr;
+				}
+				else
+				{
+					std::copy_backward(position, end(), end() + range);
+					size_t	i = 0;
+					for (InputIterator it = first; it != last; ++it)
+						_alloc.construct(&position[i++], *it);
+				}
+				_n += range;
 			}
 	};
 };
