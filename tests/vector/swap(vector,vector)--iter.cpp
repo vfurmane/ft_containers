@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap()--iter.cpp                                   :+:      :+:    :+:   */
+/*   swap(vector,vector)--iter.cpp                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 13:24:20 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/09 15:36:35 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:36:23 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 {
 	NAMESPACE::vector<int>	obj1(3, 42);
 	NAMESPACE::vector<int>	obj2(5, 21);
-	obj1.swap(obj2);
+	swap(obj1, obj2);
 	print_container_iter(obj1.begin(), obj1.end());
 	print_container_iter(obj2.begin(), obj2.end());
 	std::cout << "size     : " << obj1.size() << " | " << obj2.size() << std::endl;
