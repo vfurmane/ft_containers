@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/09 11:30:37 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:08:31 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -437,6 +437,12 @@ namespace ft
 				x._capacity = tmp_capacity;
 			}
 
+			void clear()
+			{
+				for (iterator it = begin(); it != end(); ++it)
+					_alloc.destroy(&(*it));
+				_n = 0;
+			}
 
 		private:
 			size_type		_n;
