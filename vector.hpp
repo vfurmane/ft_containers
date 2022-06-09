@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/09 15:33:37 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:44:37 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,11 +180,6 @@ namespace ft
 
 			vector &operator=(const vector &x)
 			{
-				// for (iterator it = begin(); it != end(); ++it)
-				// 	_alloc.destroy(&(*it));
-				// _alloc.deallocate(_arr, _n);
-				// _n = 0;
-				// _dispatch_ctr(x.begin(), x.end(), ft::false_type());
 				_alloc = x._alloc;
 				_dispatch_assign(x.begin(), x.end(), ft::false_type());
 				return *this;
@@ -359,7 +354,6 @@ namespace ft
 				_n--;
 			}
 
-			// WHEN THE CAPACITY IS SUFFICIENT ???
 			iterator insert(iterator position, const value_type& val)
 			{
 				if (position == end())
@@ -394,8 +388,6 @@ namespace ft
 				}
 				return position;
 			}
-			// inserting 0 element
-			// inserting 0 element on a size 0 vector
 			void insert(iterator position, size_type n, const value_type& val)
 			{
 				_dispatch_insert(position, n, val, typename ft::true_type());
@@ -543,7 +535,7 @@ namespace ft
 						{
 							for (size_type j = 0; j < n; j++)
 								_alloc.construct(&new_arr[i++], val);
-							position = &new_arr[i]; // wrong : i has moved
+							position = &new_arr[i];
 							it--;
 						}
 						else
