@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/08 12:24:20 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/09 10:37:11 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -404,6 +404,22 @@ namespace ft
 			void insert(iterator position, InputIterator first, InputIterator last)
 			{
 				_dispatch_insert(position, first, last, typename ft::is_integral<InputIterator>::type());
+			}
+
+			iterator	erase(iterator position)
+			{
+				std::copy(position + 1, end(), position);
+				_alloc.destroy(&back());
+				_n--;
+				return position;
+			}
+			iterator	erase(iterator first, iterator last)
+			{
+				iterator position = std::copy(last, end(), first);
+				for (iterator it = position; it != end(); ++it)
+					_alloc.destroy(&(*it));
+				_n -= last - first;
+				return first;
 			}
 
 

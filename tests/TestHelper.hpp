@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:46:53 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/07 15:21:56 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:29:53 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,16 @@ class TestHelper
 		{
 			std::cout << "Destructor" << std::endl;
 			delete ptr;
+			std::cout << "Done destructor" << std::endl;
 		}
+
+		TestHelper	operator=(const TestHelper &rhs)
+		{
+			nbr = rhs.nbr;
+			*ptr = *rhs.ptr;
+			return *this;
+		}
+
 		void greet(void) const
 		{
 			std::cout << "greetings" << std::endl;
