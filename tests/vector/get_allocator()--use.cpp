@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:15:46 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/09 13:49:44 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:54:16 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ int	main(void)
 	int	*ptr;
 	ptr = alloc.allocate(1);
 	*ptr = 42;
-	alloc.deallocate(ptr);
+	alloc.deallocate(ptr, 1);
 }
