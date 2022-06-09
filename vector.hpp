@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/09 10:37:11 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:30:37 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -420,6 +420,21 @@ namespace ft
 					_alloc.destroy(&(*it));
 				_n -= last - first;
 				return first;
+			}
+
+			void	swap(vector& x)
+			{
+				T	*tmp_arr = _arr;
+				_arr = x._arr;
+				x._arr = tmp_arr;
+
+				size_type	tmp_n = _n;
+				_n = x._n;
+				x._n = tmp_n;
+
+				size_type tmp_capacity = _capacity;
+				_capacity = x._capacity;
+				x._capacity = tmp_capacity;
 			}
 
 

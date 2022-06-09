@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:46:53 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/08 14:29:53 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:34:35 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ class TestHelper
 		typedef TestHelper const_pointer;
 
 		TestHelper(void) : nbr(42), ptr(new int)
+		{
+			std::cout << "Default constructor" << std::endl;
+			*ptr = 21;
+		}
+		TestHelper(int nbr) : nbr(nbr), ptr(new int)
 		{
 			std::cout << "Default constructor" << std::endl;
 			*ptr = 21;
