@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/09 12:15:22 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:47:11 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -607,6 +607,63 @@ namespace ft
 				_n += range;
 			}
 	};
+
+	template<class T, class Alloc>
+	bool	operator==(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return false;
+		typename ft::vector<T,Alloc>::const_iterator	l_it = lhs.begin();
+		typename ft::vector<T,Alloc>::const_iterator	r_it = rhs.begin();
+		typename ft::vector<T,Alloc>::const_iterator	l_end = lhs.end();
+		typename ft::vector<T,Alloc>::const_iterator	r_end = rhs.end();
+		while (l_it != l_end && r_it != r_end)
+		{
+			l_it++;
+			r_it++;
+			if (*l_it != *r_it)
+				return false;
+		}
+		return true;
+	}
+	template<class T, class Alloc>
+	bool	operator!=(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+	{
+		return !(lhs == rhs);
+	}
+	template<class T, class Alloc>
+	bool	operator<(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return lhs.size() < rhs.size();
+		typename ft::vector<T,Alloc>::const_iterator	l_it = lhs.begin();
+		typename ft::vector<T,Alloc>::const_iterator	r_it = rhs.begin();
+		typename ft::vector<T,Alloc>::const_iterator	l_end = lhs.end();
+		typename ft::vector<T,Alloc>::const_iterator	r_end = rhs.end();
+		while (l_it != l_end && r_it != r_end)
+		{
+			l_it++;
+			r_it++;
+			if (*l_it < *r_it)
+				return true;
+		}
+		return false;
+	}
+	template<class T, class Alloc>
+	bool	operator<=(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+	{
+		return !(lhs > rhs);
+	}
+	template<class T, class Alloc>
+	bool	operator>(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+	{
+		return rhs < lhs;
+	}
+	template<class T, class Alloc>
+	bool	operator>=(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+	{
+		return !(lhs < rhs);
+	}
 };
 
 #endif
