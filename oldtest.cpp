@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.cpp                                           :+:      :+:    :+:   */
+/*   oldtest.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 09:32:02 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/24 13:36:43 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:53:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,7 @@ void iterator_testing(void)
 			std::cout << "KO" << std::endl;
 	}
 	{
-		std::cout << " reference (set to float *) : ";
+		std::cout << " reference (set to float &) : ";
 		if (typeid(NAMESPACE::iterator<NAMESPACE::random_access_iterator_tag, int, std::ptrdiff_t, int *, float &>::reference) == typeid(float &))
 			std::cout << "OK" << std::endl;
 		else
@@ -731,7 +731,7 @@ void	reverse_iterator_testing(void)
 			std::cout << "KO" << std::endl;
 	}
 	{
-		std::cout << " x < y operator (with copy) : ";
+		std::cout << " x > y operator (with copy) : ";
 		int	nbr[] = {42, 21, 1337, 125};
 		NAMESPACE::vector<int>::iterator	src(&nbr[3]);
 		NAMESPACE::vector<int>::reverse_iterator	obj1(src);
@@ -743,7 +743,7 @@ void	reverse_iterator_testing(void)
 			std::cout << "KO" << std::endl;
 	}
 	{
-		std::cout << " x < y operator (false ==) : ";
+		std::cout << " x > y operator (false ==) : ";
 		int	nbr[] = {42, 21, 1337, 125};
 		NAMESPACE::vector<int>::iterator	src(&nbr[3]);
 		NAMESPACE::vector<int>::reverse_iterator	obj1(src);
@@ -754,7 +754,7 @@ void	reverse_iterator_testing(void)
 			std::cout << "OK" << std::endl;
 	}
 	{
-		std::cout << " x < y operator (false >) : ";
+		std::cout << " x > y operator (false <) : ";
 		int	nbr[] = {42, 21, 1337, 125};
 		NAMESPACE::vector<int>::iterator	src(&nbr[3]);
 		NAMESPACE::vector<int>::reverse_iterator	obj1(src);
@@ -766,7 +766,7 @@ void	reverse_iterator_testing(void)
 			std::cout << "OK" << std::endl;
 	}
 	{
-		std::cout << " x <= y operator : ";
+		std::cout << " x >= y operator : ";
 		int	nbr[] = {42, 21, 1337, 125};
 		NAMESPACE::vector<int>::iterator	src(&nbr[3]);
 		NAMESPACE::vector<int>::reverse_iterator	obj1(src);
@@ -778,7 +778,7 @@ void	reverse_iterator_testing(void)
 			std::cout << "KO" << std::endl;
 	}
 	{
-		std::cout << " x <= y operator (with copy) : ";
+		std::cout << " x >= y operator (with copy) : ";
 		int	nbr[] = {42, 21, 1337, 125};
 		NAMESPACE::vector<int>::iterator	src(&nbr[3]);
 		NAMESPACE::vector<int>::reverse_iterator	obj1(src);
@@ -790,7 +790,7 @@ void	reverse_iterator_testing(void)
 			std::cout << "KO" << std::endl;
 	}
 	{
-		std::cout << " x <= y operator (is equal) : ";
+		std::cout << " x >= y operator (is equal) : ";
 		int	nbr[] = {42, 21, 1337, 125};
 		NAMESPACE::vector<int>::iterator	src(&nbr[3]);
 		NAMESPACE::vector<int>::reverse_iterator	obj1(src);
@@ -801,7 +801,7 @@ void	reverse_iterator_testing(void)
 			std::cout << "KO" << std::endl;
 	}
 	{
-		std::cout << " x <= y operator (false >) : ";
+		std::cout << " x >= y operator (false <) : ";
 		int	nbr[] = {42, 21, 1337, 125};
 		NAMESPACE::vector<int>::iterator	src(&nbr[3]);
 		NAMESPACE::vector<int>::reverse_iterator	obj1(src);
