@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/09 15:44:37 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/13 14:14:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 # define VECTOR_HPP
 
 # include <cstring>
+# include <memory>
+# include <stdexcept>
 # include "iterator.hpp"
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
+# include "type_traits.hpp"
 
 namespace ft
 {
@@ -29,7 +32,11 @@ namespace ft
 			~_vector_iterator(void)
 			{
 			}
-			_vector_iterator(const _vector_iterator &obj) : _ptr(NULL)
+			_vector_iterator(const _vector_iterator< const typename remove_const<T>::type > &obj) : _ptr(NULL)
+			{
+				*this = obj;
+			}
+			_vector_iterator(const _vector_iterator< typename remove_const<T>::type > &obj) : _ptr(NULL)
 			{
 				*this = obj;
 			}
