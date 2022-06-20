@@ -6,9 +6,12 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:29:47 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/03/23 20:27:53 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/20 12:45:44 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef TYPE_TRAITS_HPP
+# define TYPE_TRAITS_HPP
 
 namespace ft
 {
@@ -54,4 +57,28 @@ namespace ft
 	struct is_integral<unsigned long int> : public true_type {};
 	template<>
 	struct is_integral<unsigned long long int> : public true_type {};
+
+	// template<bool B, class T = void>
+	// struct enable_if
+	// {
+	// };
+
+	// template<class T>
+	// struct enable_if<true, T>
+	// {
+	// 	typedef T type;
+	// };
+
+	template<class T>
+	struct remove_const
+	{
+		typedef T type;
+	};
+	template<class T>
+	struct remove_const<const T>
+	{
+		typedef T type;
+	};
 };
+
+#endif

@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS			= $(wildcard tests/**/*.cpp)
+SRCS			= $(wildcard tests/**/*.cpp) $(wildcard tests/**/**/*.cpp)
 DEPS			= $(SRCS:.cpp=.dep)
 OBJS			= $(SRCS:.cpp=.o)
 TESTS			= $(OBJS:.o=)

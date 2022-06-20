@@ -6,34 +6,68 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/09 15:44:37 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:34:35 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+# include <algorithm>
 # include <cstring>
+# include <memory>
+# include <stdexcept>
 # include "iterator.hpp"
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
+# include "type_traits.hpp"
 
 namespace ft
 {
-	template <class T>
-	class _vector_iterator : public iterator<ft::random_access_iterator_tag, T> {
+	template<bool B, class T = void>
+	struct enable_if {};
+	 
+	template<class T>
+	struct enable_if<true, T> { typedef T type; };
+
+	template<typename, typename>
+    struct is_same
+    {
+      enum { value = 0 };
+      typedef false_type type;
+    };
+
+	template<typename _Tp>
+    struct is_same<_Tp, _Tp>
+    {
+      enum { value = 1 };
+      typedef true_type type;
+    };
+	template <class Iterator, class Container>
+	class _vector_iterator : public iterator<ft::random_access_iterator_tag, typename Container::value_type> {
 		public:
+			typedef typename iterator_traits<Iterator>::value_type			value_type;
+			typedef typename iterator_traits<Iterator>::difference_type		difference_type;
+			typedef typename iterator_traits<Iterator>::pointer				pointer;
+			typedef typename iterator_traits<Iterator>::reference			reference;
+			typedef typename iterator_traits<Iterator>::iterator_category	iterator_category;
+
 			_vector_iterator(void) : _ptr(NULL)
 			{
 			}
 			~_vector_iterator(void)
 			{
 			}
-			_vector_iterator(const _vector_iterator &obj) : _ptr(NULL)
+			template <class Iter>
+			_vector_iterator(const _vector_iterator<Iter, typename enable_if<
+					is_same<
+						Iter,
+						typename Container::pointer
+					>::value, Container
+			>::type> &iter) : _ptr(iter.base())
 			{
-				*this = obj;
 			}
-			_vector_iterator(T *ptr) : _ptr(ptr)
+			_vector_iterator(Iterator ptr) : _ptr(ptr)
 			{
 			}
 
@@ -50,11 +84,11 @@ namespace ft
 			{
 				return _ptr != rhs._ptr;
 			}
-			T	&operator*()
+			reference	operator*()
 			{
 				return *_ptr;
 			}
-			T	*operator->()
+			pointer		operator->()
 			{
 				return _ptr;
 			}
@@ -128,13 +162,18 @@ namespace ft
 				_ptr -= n;
 				return *this;
 			}
-			T	&operator[](int n)
+			typename Container::value_type	&operator[](int n)
 			{
 				return _ptr[n];
 			}
 
+			const Iterator	&base(void) const
+			{
+				return _ptr;
+			}
+
 		private:
-			T*	_ptr;
+			Iterator	_ptr;
 	};
 
 	template < class T, class Alloc = std::allocator<T> >
@@ -147,8 +186,8 @@ namespace ft
 			typedef value_type												const &const_reference;
 			typedef value_type												*pointer;
 			typedef value_type												const *const_pointer;
-			typedef _vector_iterator<T>										iterator;
-			typedef _vector_iterator<const T>								const_iterator;
+			typedef _vector_iterator<pointer, vector>						iterator;
+			typedef _vector_iterator<const_pointer, vector>			const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
@@ -187,19 +226,19 @@ namespace ft
 
 			iterator begin()
 			{
-				return &front();
+				return iterator(&front());
 			}
 			const_iterator begin() const
 			{
-				return &front();
+				return const_iterator(&front());
 			}
 			iterator end()
 			{
-				return &back() + 1;
+				return iterator(&back() + 1);
 			}
 			const_iterator end() const
 			{
-				return &back() + 1;
+				return const_iterator(&back() + 1);
 			}
 			reverse_iterator rbegin()
 			{
@@ -327,7 +366,7 @@ namespace ft
 			}
 			void assign(size_type n, const value_type& val = value_type())
 			{
-				_dispatch_assign(n, val, typename ft::false_type());
+				_dispatch_assign(n, val, ft::true_type());
 			}
 			void push_back (const value_type& val)
 			{
