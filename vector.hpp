@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/20 15:34:35 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:34:08 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,7 +368,7 @@ namespace ft
 			{
 				_dispatch_assign(n, val, ft::true_type());
 			}
-			void push_back (const value_type& val)
+			void push_back(const value_type& val)
 			{
 				if (size() >= capacity())
 				{
@@ -378,12 +378,16 @@ namespace ft
 					if (new_cap == 0) new_cap = 1;
 					new_arr = _alloc.allocate(new_cap);
 					for (size_type i = 0; i < size(); i++)
-						new_arr[i] = _arr[i];
+						_alloc.construct(&new_arr[i], _arr[i]);
+					_alloc.construct(&new_arr[size()], val);
+					for (size_type i = 0; i < size(); i++)
+						_alloc.destroy(&_arr[i]);
 					_alloc.deallocate(_arr, capacity());
 					_capacity = new_cap;
 					_arr = new_arr;
 				}
-				_alloc.construct(&_arr[size()], val);
+				else
+					_alloc.construct(&_arr[size()], val);
 				_n++;
 			}
 
@@ -520,7 +524,7 @@ namespace ft
 				else
 					current_arr = _arr;
 				size_t	i = 0;
-				for (InputIterator it = first; it != last; it++)
+				for (InputIterator it = first; it != last; ++it)
 					_alloc.construct(&current_arr[i++], *it);
 				if (n > capacity())
 				{
