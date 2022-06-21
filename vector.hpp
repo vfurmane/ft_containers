@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/21 14:18:06 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:27:22 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,7 @@ namespace ft
 				if (n > capacity())
 					current_arr = _alloc.allocate(n);
 				else
-					current_arr = _arr;
+					current_arr = _alloc.allocate(capacity());
 				while (i < size() && i < n)
 				{
 					_alloc.construct(&current_arr[i], _arr[i]);
@@ -283,6 +283,7 @@ namespace ft
 				}
 				while (i < n)
 					_alloc.construct(&current_arr[i++], val);
+				i = 0;
 				if (n > capacity())
 				{
 					while (i < size())
@@ -294,6 +295,7 @@ namespace ft
 				{
 					while (i < size())
 						_alloc.destroy(&_arr[i++]);
+					_alloc.deallocate(_arr, capacity());
 				}
 				_arr = current_arr;
 				_n = n;
@@ -309,7 +311,7 @@ namespace ft
 				return size() == 0;
 			}
 
-			void reserve (size_type n)
+			void reserve(size_type n)
 			{
 				if (n <= capacity()) return ;
 
@@ -321,6 +323,9 @@ namespace ft
 					_alloc.construct(&current_arr[i], _arr[i]);
 					i++;
 				}
+				i = 0;
+				while (i < size())
+					_alloc.destroy(&_arr[i++]);
 				_alloc.deallocate(_arr, capacity());
 				_arr = current_arr;
 				_capacity = n;
@@ -524,20 +529,19 @@ namespace ft
 				(void)sub;
 				T* current_arr;
 				size_t	n = last - first;
+
 				if (n > capacity())
 					current_arr = _alloc.allocate(n);
 				else
-					current_arr = _arr;
+					current_arr = _alloc.allocate(capacity());
 				size_t	i = 0;
 				for (InputIterator it = first; it != last; ++it)
 					_alloc.construct(&current_arr[i++], *it);
+				for (iterator it = begin(); it != end(); ++it)
+					_alloc.destroy(&(*it));
+				_alloc.deallocate(_arr, capacity());
 				if (n > capacity())
-				{
-					for (iterator it = begin(); it != end(); ++it)
-						_alloc.destroy(&(*it));
-					_alloc.deallocate(_arr, capacity());
 					_capacity = n;
-				}
 				_arr = current_arr;
 				_n = n;
 			}
@@ -549,16 +553,14 @@ namespace ft
 				if (n > capacity())
 					current_arr = _alloc.allocate(n);
 				else
-					current_arr = _arr;
+					current_arr = _alloc.allocate(capacity());
 				for (size_type i = 0; i < n; i++)
 					_alloc.construct(&current_arr[i], val);
+				for (size_type i = 0; i < size(); i++)
+					_alloc.destroy(&_arr[i]);
+				_alloc.deallocate(_arr, capacity());
 				if (n > capacity())
-				{
-					for (size_type i = 0; i < size(); i++)
-						_alloc.destroy(&_arr[i]);
-					_alloc.deallocate(_arr, capacity());
 					_capacity = n;
-				}
 				_arr = current_arr;
 				_n = n;
 			}
