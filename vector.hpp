@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/21 11:53:15 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/21 11:59:25 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,12 +281,12 @@ namespace ft
 					_alloc.construct(&current_arr[i], _arr[i]);
 					i++;
 				}
-				while (i < size())
-					_alloc.destroy(&_arr[i++]);
 				while (i < n)
 					_alloc.construct(&current_arr[i++], val);
 				if (n > capacity())
 				{
+					while (i < size())
+						_alloc.destroy(&_arr[i++]);
 					_alloc.deallocate(_arr, capacity());
 					_capacity = n;
 				}
