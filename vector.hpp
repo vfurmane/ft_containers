@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/20 19:34:08 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/21 11:37:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ namespace ft
 
 			size_type size() const
 			{
-				return difference_type(end() - begin());
+				return size_type(_n);
 			}
 
 			size_type max_size() const
@@ -546,9 +546,11 @@ namespace ft
 				else
 					current_arr = _arr;
 				for (size_type i = 0; i < n; i++)
-					current_arr[i] = val;
+					_alloc.construct(&current_arr[i], val);
 				if (n > capacity())
 				{
+					for (size_type i = 0; i < size(); i++)
+						_alloc.destroy(&_arr[i]);
 					_alloc.deallocate(_arr, capacity());
 					_capacity = n;
 				}
@@ -654,10 +656,10 @@ namespace ft
 		typename ft::vector<T,Alloc>::const_iterator	r_end = rhs.end();
 		while (l_it != l_end && r_it != r_end)
 		{
-			l_it++;
-			r_it++;
 			if (*l_it != *r_it)
 				return false;
+			l_it++;
+			r_it++;
 		}
 		return true;
 	}
@@ -677,10 +679,10 @@ namespace ft
 		typename ft::vector<T,Alloc>::const_iterator	r_end = rhs.end();
 		while (l_it != l_end && r_it != r_end)
 		{
-			l_it++;
-			r_it++;
 			if (*l_it < *r_it)
 				return true;
+			l_it++;
+			r_it++;
 		}
 		return false;
 	}
