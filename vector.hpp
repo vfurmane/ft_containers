@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/21 16:27:22 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:10:36 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,7 @@ namespace ft
 				size_type i = 0;
 
 				if (n > capacity())
-					current_arr = _alloc.allocate(n);
+					current_arr = _alloc.allocate(n < capacity() * 2 ? capacity() * 2 : n);
 				else
 					current_arr = _alloc.allocate(capacity());
 				while (i < size() && i < n)
@@ -289,7 +289,7 @@ namespace ft
 					while (i < size())
 						_alloc.destroy(&_arr[i++]);
 					_alloc.deallocate(_arr, capacity());
-					_capacity = n;
+					_capacity = n < capacity() * 2 ? capacity() * 2 : n;
 				}
 				else
 				{
@@ -422,7 +422,7 @@ namespace ft
 					if (new_cap == 0) new_cap = 1;
 					new_arr = _alloc.allocate(new_cap);
 					size_type i = 0;
-					for (iterator it = begin(); it != end(); ++it)
+					for (iterator it = begin(); it != end() + 1; ++it)
 					{
 						if (it == position)
 						{
@@ -430,15 +430,20 @@ namespace ft
 							position = &new_arr[i];
 							it--;
 						}
-						else
+						else if (it != end())
 							new_arr[i] = *it;
 						i++;
 					}
 					_alloc.deallocate(_arr, capacity());
 					_capacity = new_cap;
 					_arr = new_arr;
-					_n++;
 				}
+				else
+				{
+					std::copy_backward(position, end(), end() + 1);
+					_alloc.construct(&(*position), val);
+				}
+				_n++;
 				return position;
 			}
 			void insert(iterator position, size_type n, const value_type& val)
@@ -575,13 +580,13 @@ namespace ft
 				if (size() + n > capacity())
 				{
 					T* 			new_arr;
-					size_type	new_cap = capacity() * 2;
+					size_type	new_cap = size() * 2;
 
 					if (new_cap < size() + n)
 						new_cap = size() + n;
 					new_arr = _alloc.allocate(new_cap);
 					size_type i = 0;
-					for (iterator it = begin(); it != end(); ++it)
+					for (iterator it = begin(); it != end() + 1; ++it)
 					{
 						if (it == position)
 						{
@@ -590,7 +595,7 @@ namespace ft
 							position = &new_arr[i];
 							it--;
 						}
-						else
+						else if (it != end())
 							_alloc.construct(&new_arr[i++], *it);
 					}
 					for (iterator it = begin(); it != end(); ++it)
@@ -617,13 +622,13 @@ namespace ft
 				if (size() + range > capacity())
 				{
 					T* 			new_arr;
-					size_type	new_cap = capacity() * 2;
+					size_type	new_cap = size() * 2;
 
 					if (new_cap < size() + range)
 						new_cap = size() + range;
 					new_arr = _alloc.allocate(new_cap);
 					size_type i = 0;
-					for (iterator it = begin(); it != end(); ++it)
+					for (iterator it = begin(); it != end() + 1; ++it)
 					{
 						if (it == position)
 						{
@@ -632,7 +637,7 @@ namespace ft
 							position = &new_arr[i];
 							it--;
 						}
-						else
+						else if (it != end())
 							_alloc.construct(&new_arr[i++], *it);
 					}
 					for (iterator it = begin(); it != end(); ++it)
