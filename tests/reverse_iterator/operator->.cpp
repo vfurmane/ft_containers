@@ -21,8 +21,8 @@
 int	main(void)
 {
 	std::cout << "x->n operator : ";
-	TestHelper	test_helper;
-	TestHelper	*src = &test_helper;
-	NAMESPACE::reverse_iterator<TestHelper *>	obj(src);
+	TestHelper<>	test_helper;
+	TestHelper<>	*src = &test_helper;
+	NAMESPACE::reverse_iterator<TestHelper<> *>	obj(src);
 	obj->greet();
 }

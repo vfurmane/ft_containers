@@ -21,7 +21,7 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper>::size_type var;
+	NAMESPACE::vector< TestHelper<> >::size_type var;
 	(void)var;
 	std::cout << "size_type : exists" << std::endl;
 }

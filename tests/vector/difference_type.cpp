@@ -21,7 +21,7 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper>::difference_type var;
+	NAMESPACE::vector< TestHelper<> >::difference_type var;
 	(void)var;
 	std::cout << "difference_type : exists" << std::endl;
 }

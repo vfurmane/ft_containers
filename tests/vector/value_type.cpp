@@ -22,7 +22,7 @@
 int	main(void)
 {
 	std::cout << "value_type : ";
-	if (typeid(NAMESPACE::vector<TestHelper>::value_type) == typeid(TestHelper))
+	if (typeid(NAMESPACE::vector< TestHelper<> >::value_type) == typeid(TestHelper<>))
 		std::cout << "OK" << std::endl;
 	else
 		std::cout << "KO" << std::endl;

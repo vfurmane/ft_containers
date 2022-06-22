@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   insert(begin(),6,TestHelper)--iter.cpp             :+:      :+:    :+:   */
+/*   insert(begin(),6,TestHelper<>)--iter.cpp             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -21,8 +21,8 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper> obj(5);
-	obj.insert(obj.begin(), 6, TestHelper());
+	NAMESPACE::vector< TestHelper<> > obj(5);
+	obj.insert(obj.begin(), 6, TestHelper<>());
 	std::cout << "size     : " << obj.size() << std::endl;
 	std::cout << "capacity : " << obj.capacity() << std::endl;
 	print_container_iter(obj.begin(), obj.end());

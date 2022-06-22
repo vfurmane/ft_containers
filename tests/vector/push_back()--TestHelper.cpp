@@ -20,9 +20,9 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper> obj(5);
-	obj.push_back(TestHelper());
-	obj.push_back(TestHelper());
+	NAMESPACE::vector< TestHelper<> > obj(5);
+	obj.push_back(TestHelper<>());
+	obj.push_back(TestHelper<>());
 	std::cout << "size     : " << obj.size() << std::endl;
 	std::cout << "capacity : " << obj.capacity() << std::endl;
 	std::cout << "back     : " << obj.back() << std::endl;

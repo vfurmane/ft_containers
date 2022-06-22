@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   <TestHelper>.cpp                                   :+:      :+:    :+:   */
+/*   < TestHelper<> >.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -18,7 +18,7 @@
 # include "vector.hpp"
 #endif
 
-typedef NAMESPACE::vector<TestHelper> test_type;
+typedef NAMESPACE::vector< TestHelper<> > test_type;
 
 int	main(void)
 {

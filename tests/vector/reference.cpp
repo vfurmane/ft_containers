@@ -22,7 +22,7 @@
 int	main(void)
 {
 	std::cout << "reference : ";
-	if (typeid(NAMESPACE::vector<TestHelper>::reference) == typeid(TestHelper &))
+	if (typeid(NAMESPACE::vector< TestHelper<> >::reference) == typeid(TestHelper<> &))
 		std::cout << "OK" << std::endl;
 	else
 		std::cout << "KO" << std::endl;

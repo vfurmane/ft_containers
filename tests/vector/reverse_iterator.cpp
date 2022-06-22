@@ -21,7 +21,7 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper>::reverse_iterator var;
+	NAMESPACE::vector< TestHelper<> >::reverse_iterator var;
 	(void)var;
 	std::cout << "reverse_iterator : exists" << std::endl;
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assign(4,TestHelper).cpp                           :+:      :+:    :+:   */
+/*   assign(4,TestHelper<>).cpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -21,7 +21,7 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper> obj(3);
-	obj.assign(4, TestHelper());
+	NAMESPACE::vector< TestHelper<> > obj(3);
+	obj.assign(4, TestHelper<>());
 	print_container_iter(obj.begin(), obj.end());
 }

@@ -20,8 +20,8 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper>	obj(5);
-	NAMESPACE::vector<TestHelper>::iterator pos = obj.erase(obj.begin() + 2);
+	NAMESPACE::vector< TestHelper<> >	obj(5);
+	NAMESPACE::vector< TestHelper<> >::iterator pos = obj.erase(obj.begin() + 2);
 	std::cout << "position : " << *pos << std::endl;
 	std::cout << "size     : " << obj.size() << std::endl;
 	std::cout << "capacity : " << obj.capacity() << std::endl;

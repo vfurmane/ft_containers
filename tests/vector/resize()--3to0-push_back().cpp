@@ -21,9 +21,9 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper> obj(3);
+	NAMESPACE::vector< TestHelper<> > obj(3);
 	obj.resize(0);
-	obj.push_back(TestHelper());
+	obj.push_back(TestHelper<>());
 	std::cout << "size : " << obj.size() << std::endl;
 	print_container_iter(obj.begin(), obj.end());
 }

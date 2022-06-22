@@ -21,8 +21,8 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper>	obj1(3);
-	NAMESPACE::vector<TestHelper>	obj2(5, TestHelper(1337));
+	NAMESPACE::vector< TestHelper<> >	obj1(3);
+	NAMESPACE::vector< TestHelper<> >	obj2(5, TestHelper<>(1337));
 	obj1.swap(obj2);
 	print_container_iter(obj1.begin(), obj1.end());
 	print_container_iter(obj2.begin(), obj2.end());

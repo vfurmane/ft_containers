@@ -21,7 +21,7 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper>::const_iterator var;
+	NAMESPACE::vector< TestHelper<> >::const_iterator var;
 	(void)var;
 	std::cout << "const_iterator : exists" << std::endl;
 }

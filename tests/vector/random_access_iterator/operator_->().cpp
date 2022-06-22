@@ -20,7 +20,7 @@
 
 int	main(void)
 {
-	TestHelper	src;
-	NAMESPACE::vector<TestHelper>::iterator	obj(&src);
+	TestHelper<>	src;
+	NAMESPACE::vector< TestHelper<> >::iterator	obj(&src);
 	std::cout << obj->nbr << std::endl;
 }

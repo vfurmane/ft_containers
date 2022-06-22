@@ -20,7 +20,7 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper>	obj(5);
+	NAMESPACE::vector< TestHelper<> >	obj(5);
 	obj.clear();
 	std::cout << "size     : " << obj.size() << std::endl;
 	std::cout << "capacity : " << obj.capacity() << std::endl;

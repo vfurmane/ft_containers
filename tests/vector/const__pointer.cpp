@@ -22,7 +22,7 @@
 int	main(void)
 {
 	std::cout << "const_pointer : ";
-	if (typeid(NAMESPACE::vector<TestHelper>::const_pointer) == typeid(const TestHelper *))
+	if (typeid(NAMESPACE::vector< TestHelper<> >::const_pointer) == typeid(const TestHelper<> *))
 		std::cout << "OK" << std::endl;
 	else
 		std::cout << "KO" << std::endl;

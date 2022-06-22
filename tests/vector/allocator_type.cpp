@@ -22,7 +22,7 @@
 int	main(void)
 {
 	std::cout << "allocator_type : ";
-	if (typeid(NAMESPACE::vector< TestHelper, std::allocator<TestHelper> >::allocator_type::value_type) == typeid(TestHelper))
+	if (typeid(NAMESPACE::vector< TestHelper<>, std::allocator< TestHelper<> > >::allocator_type::value_type) == typeid(TestHelper<>))
 		std::cout << "OK" << std::endl;
 	else
 		std::cout << "KO" << std::endl;

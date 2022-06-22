@@ -21,8 +21,8 @@
 
 int	main(void)
 {
-	NAMESPACE::vector<TestHelper> src(5);
-	NAMESPACE::vector<TestHelper> copy(3);
+	NAMESPACE::vector< TestHelper<> > src(5);
+	NAMESPACE::vector< TestHelper<> > copy(3);
 	copy = src;
 	std::cout << copy.size() << std::endl;
 	src[2].nbr = 1336;
