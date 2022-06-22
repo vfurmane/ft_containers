@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/22 14:11:04 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:20:44 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -698,8 +698,6 @@ namespace ft
 	template<class T, class Alloc>
 	bool	operator<(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
 	{
-		if (lhs.size() != rhs.size())
-			return lhs.size() < rhs.size();
 		typename ft::vector<T,Alloc>::const_iterator	l_it = lhs.begin();
 		typename ft::vector<T,Alloc>::const_iterator	r_it = rhs.begin();
 		typename ft::vector<T,Alloc>::const_iterator	l_end = lhs.end();
