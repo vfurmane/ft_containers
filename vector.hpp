@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/21 22:19:29 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:11:04 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -441,7 +441,11 @@ namespace ft
 				}
 				else
 				{
-					std::copy_backward(position, end(), end() + 1);
+					if (!empty())
+					{
+						_alloc.construct(&(*end()), *(end() - 1));
+						std::copy_backward(position, end(), end() + 1);
+					}
 					_alloc.construct(&(*position), val);
 				}
 				_n++;
@@ -607,7 +611,12 @@ namespace ft
 				}
 				else
 				{
-					std::copy_backward(position, end(), end() + n);
+					if (!empty())
+					{
+						for (iterator it = end(); it != end() + n; ++it)
+							_alloc.construct(&(*it), *(end() - 1));
+						std::copy_backward(position, end(), end() + n);
+					}
 					for (size_type i = 0; i < n; i++)
 						_alloc.construct(&position[i], val);
 				}
@@ -615,7 +624,7 @@ namespace ft
 			}
 			template <class InputIterator>
 			void	_dispatch_insert(iterator position, InputIterator first, InputIterator last, ft::false_type sub)
-			{
+			{	(void)sub;
 				(void)sub;
 				size_type	range = last - first;
 				if (range == 1)
@@ -649,7 +658,12 @@ namespace ft
 				}
 				else
 				{
-					std::copy_backward(position, end(), end() + range);
+					if (!empty())
+					{
+						for (iterator it = end(); it != end() + range; ++it)
+							_alloc.construct(&(*it), *(end() - 1));
+						std::copy_backward(position, end(), end() + range);
+					}
 					size_t	i = 0;
 					for (InputIterator it = first; it != last; ++it)
 						_alloc.construct(&position[i++], *it);
