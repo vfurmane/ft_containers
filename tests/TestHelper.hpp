@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:46:53 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/22 21:04:40 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/22 21:44:01 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 typedef enum	helper_mode
 {
-	NORMAL
+	NORMAL,
+	STACK
 }				e_helper_mode;
 
 template <e_helper_mode Mode = NORMAL, class T = int>
@@ -66,6 +67,44 @@ class TestHelper
 		
 		T	nbr;
 		T	*ptr;
+};
+
+template <class T>
+class TestHelper<STACK, T>
+{
+	public:
+		typedef	T		value_type;
+		typedef	size_t	size_type;
+		typedef	T		&reference;
+		typedef	const T	&const_reference;
+
+    	bool	empty(void)
+		{
+			std::cout << "Calling empty" << std::endl;
+			return false;
+		}
+		
+		size_type	size(void)
+		{
+			std::cout << "Calling size" << std::endl;
+			return 42;
+		};
+
+    	T	back(void)
+		{
+			std::cout << "Calling back" << std::endl;
+			return T();
+		}
+
+    	void	push_back(void)
+		{
+			std::cout << "Calling push_back" << std::endl;
+		}
+
+    	void	pop_back(void)
+		{
+			std::cout << "Calling pop_back" << std::endl;
+		}
 };
 
 std::ostream	&operator<<(std::ostream &os, const TestHelper<> &rhs)
