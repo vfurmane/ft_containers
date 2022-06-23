@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:26:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/23 11:44:34 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/23 11:46:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ namespace ft {
 	class stack
 	{
 		public:
-			typedef Container 						container_type;
-			typedef typename Container::value_type	value_type;
-			typedef typename Container::size_type	size_type;
-			typedef typename Container::reference	reference;
+			typedef Container 							container_type;
+			typedef typename Container::value_type		value_type;
+			typedef typename Container::size_type		size_type;
+			typedef typename Container::reference		reference;
+			typedef typename Container::const_reference	const_reference;
 
 			stack(const Container& cont = Container()) : c(cont)
 			{
