@@ -62,6 +62,7 @@ perform_test_in_folder()
 		fi
 		printf '%*s%-*s:  []' $(($level + 1)) "" $((64 - $level)) "$basename_file"
 		already_printed=0
+		rm "logs/$basename_dir/${basename_file}_"*
 		if ! make "$directory/${basename_file}_std" n=std cpp=$cpp > "logs/$basename_dir/${basename_file}_std_compilation" 2>&1
 		then
 			printf "\r%*s%-*s: [${RED}INTERNAL${NC}]\n" $(($level + 1)) "" $((64 - $level)) $basename_file
