@@ -24,7 +24,7 @@ test_case()
 {
 	if [ $NO_LEAK_CHECK -eq 0 ]
 	then
-		valgrind --leak-check=full --track-origins=yes --log-file=$memcheck_log_file --error-exitcode=$LEAK_CODE "$@"
+		valgrind --leak-check=full --track-origins=yes --log-file="$memcheck_log_file" --error-exitcode=$LEAK_CODE "$@"
 	else
 		"$@"
 	fi
@@ -73,7 +73,7 @@ perform_test_in_folder()
 			fails=$(($fails + 1))
 			continue
 		fi
-		memcheck_log_file=logs/$basename_dir/${basename_file}_std_leaks
+		memcheck_log_file="logs/$basename_dir/${basename_file}_std_leaks"
 		test_case "./$directory/${basename_file}_std" > "logs/$basename_dir/${basename_file}_std_test" 2>&1
 		exit_code=$?
 		if [ $exit_code -gt 0 ]
