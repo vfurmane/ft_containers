@@ -7,11 +7,27 @@ YELLOW="\033[33m"
 BLUE="\033[34m"
 MAGENTA="\033[35m"
 
+LEAK_CODE=148
+NO_LEAK_CHECK=0
+
 fails=0
+
+print_usage()
+{
+	printf "Usage:	$0 [-hl]\n"
+	printf "\n"
+	printf "\t-h\tprint this message and exit\n"
+	printf "\t-l\tdisable leak check\n"
+}
 
 test_case()
 {
-	"$@"
+	if [ $NO_LEAK_CHECK -eq 0 ]
+	then
+		valgrind --leak-check=full --track-origins=yes --log-file=$memcheck_log_file --error-exitcode=$LEAK_CODE "$@"
+	else
+		"$@"
+	fi
 	return $?
 }
 
@@ -24,6 +40,7 @@ perform_test_in_folder()
 	local directory=$1
 	local basename_dir=$2
 	local level=$(awk -F'/' '{print NF-1}' <<< "$basename_dir")
+	local memcheck_log_file
 	printf "%*s>>> %s\n" $level "" ${basename_dir^^}
 	mkdir -p logs/$basename_dir
 	for file in $directory/*
@@ -56,6 +73,7 @@ perform_test_in_folder()
 			fails=$(($fails + 1))
 			continue
 		fi
+		memcheck_log_file=logs/$basename_dir/${basename_file}_std_leaks
 		test_case "./$directory/${basename_file}_std" > "logs/$basename_dir/${basename_file}_std_test" 2>&1
 		exit_code=$?
 		if [ $exit_code -gt 0 ]
@@ -64,9 +82,15 @@ perform_test_in_folder()
 			already_printed=1
 		fi
 		printf "exited with code %d\n" $exit_code > "logs/$basename_dir/${basename_file}_std_exit"
+		memcheck_log_file=logs/$basename_dir/${basename_file}_ft_leaks
 		test_case "./$directory/${basename_file}_ft" > "logs/$basename_dir/${basename_file}_ft_test" 2>&1
 		exit_code=$?
-		if [ $exit_code -gt 0 ]
+		if [ $exit_code -eq $LEAK_CODE ]
+		then
+			[ $already_printed -eq 0 ] && printf "\r%*s%-*s: [${RED}LEAKS${NC}]\n" $(($level + 1)) "" $((64 - $level)) $basename_file
+			already_printed=1
+			fails=$(($fails + 1))
+		elif [ $exit_code -gt 0 ]
 		then
 			[ $already_printed -eq 0 ] && printf "\r%*s%-*s: [${RED}KO${NC}]\n" $(($level + 1)) "" $((64 - $level)) $basename_file
 			already_printed=1
@@ -82,6 +106,18 @@ perform_test_in_folder()
 		[ $already_printed -eq 0 ] && printf "\r%*s%-*s: [${GREEN}OK${NC}]\n" $(($level + 1)) "" $((64 - $level)) "$basename_file"
 	done
 }
+
+while getopts "hl" arg
+do
+	case $arg in
+		h)
+			print_usage
+			exit 0
+			;;
+		l)
+			NO_LEAK_CHECK=1;;
+	esac
+done
 
 for directory in tests/*
 do
