@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:26:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/24 14:36:05 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/24 15:57:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ namespace ft {
 			bool empty() const
 			{
 				return c.empty();
+			}
+
+			size_type size() const
+			{
+				return c.size();
 			}
 	
 		protected:
