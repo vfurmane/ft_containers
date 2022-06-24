@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:46:53 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/24 14:21:33 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/24 14:44:36 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,13 @@ class TestHelper<STACK, T>
 			std::cout << "greetings" << std::endl;
 		}
 
-    	bool	empty(void)
+    	bool	empty(void) const
 		{
 			std::cout << "Calling empty" << std::endl;
 			return false;
 		}
 		
-		size_type	size(void)
+		size_type	size(void) const
 		{
 			std::cout << "Calling size" << std::endl;
 			return 42;
