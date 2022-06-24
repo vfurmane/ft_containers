@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:26:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/24 16:32:19 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/24 16:44:02 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ namespace ft {
 			void push(const value_type& value)
 			{
 				c.push_back(value);
+			}
+
+			void pop()
+			{
+				c.pop_back();
 			}
 	
 		protected:
