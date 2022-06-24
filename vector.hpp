@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/22 14:20:44 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/24 11:40:04 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -528,9 +528,7 @@ namespace ft
 				_n += last - first;
 				_arr = _alloc.allocate(_n);
 				_capacity = _n;
-				size_type i = 0;
-				for (InputIterator it = first; it != last; it++)
-					_alloc.construct(&_arr[i++], *it);
+				std::uninitialized_copy(first, last, _arr);
 			}
 
 			template <class InputIterator>
