@@ -68,12 +68,6 @@ perform_test_in_folder()
 			printf "\r%*s%-*s: [${RED}INTERNAL${NC}]\n" $(($level + 1)) "" $((64 - $level)) $basename_file
 			continue
 		fi
-		if ! make "$directory/${basename_file}_ft" n=ft cpp=98 > "logs/$basename_dir/${basename_file}_ft_compilation" 2>&1
-		then
-			printf "\r%*s%-*s: [${RED}COMPILATION${NC}]\n" $(($level + 1)) "" $((64 - $level)) "$basename_file"
-			fails=$(($fails + 1))
-			continue
-		fi
 		memcheck_log_file="logs/$basename_dir/${basename_file}_std_leaks"
 		test_case "./$directory/${basename_file}_std" > "logs/$basename_dir/${basename_file}_std_test" 2>&1
 		exit_code=$?
@@ -83,6 +77,12 @@ perform_test_in_folder()
 			already_printed=1
 		fi
 		printf "exited with code %d\n" $exit_code > "logs/$basename_dir/${basename_file}_std_exit"
+		if ! make "$directory/${basename_file}_ft" n=ft cpp=98 > "logs/$basename_dir/${basename_file}_ft_compilation" 2>&1
+		then
+			[ $already_printed -eq 0 ] && printf "\r%*s%-*s: [${RED}COMPILATION${NC}]\n" $(($level + 1)) "" $((64 - $level)) "$basename_file"
+			fails=$(($fails + 1))
+			continue
+		fi
 		memcheck_log_file=logs/$basename_dir/${basename_file}_ft_leaks
 		test_case "./$directory/${basename_file}_ft" > "logs/$basename_dir/${basename_file}_ft_test" 2>&1
 		exit_code=$?
