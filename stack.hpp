@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:26:49 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/24 16:44:02 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/25 14:42:32 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,42 @@ namespace ft {
 			{
 				c.pop_back();
 			}
+
+			template<class T1, class Container1>
+			friend bool	operator==(const ft::stack<T1,Container1>& lhs, const ft::stack<T1,Container1>& rhs )
+			{
+				return lhs.c == rhs.c;
+			}
+			template<class T1, class Container1>
+			friend bool	operator!=(const ft::stack<T1,Container1>& lhs, const ft::stack<T1,Container1>& rhs )
+			{
+				return lhs.c != rhs.c;
+			}
+			template<class T1, class Container1>
+			friend bool	operator<(const ft::stack<T1,Container1>& lhs, const ft::stack<T1,Container1>& rhs )
+			{
+				return lhs.c < rhs.c;
+			}
+			template<class T1, class Container1>
+			friend bool	operator<=(const ft::stack<T1,Container1>& lhs, const ft::stack<T1,Container1>& rhs )
+			{
+				return lhs.c <= rhs.c;
+			}
+			template<class T1, class Container1>
+			friend bool	operator>(const ft::stack<T1,Container1>& lhs, const ft::stack<T1,Container1>& rhs )
+			{
+				return lhs.c > rhs.c;
+			}
+			template<class T1, class Container1>
+			friend bool	operator>=(const ft::stack<T1,Container1>& lhs, const ft::stack<T1,Container1>& rhs )
+			{
+				return lhs.c >= rhs.c;
+			}
 	
 		protected:
 			Container	c;
 	};
+
 }
 
 #endif
