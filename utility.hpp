@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 22:08:55 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/25 22:16:56 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:24:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,17 @@ namespace ft {
 		T1	first;
 		T2	second;
 
-		pair(void)
+		pair(void) : first(), second()
+		{
+		}
+		pair(const T1& x, const T2& y) : first(x), second(y)
+		{
+		}
+		template<class U1, class U2>
+		pair(const pair<U1, U2>& p) : first(p.first), second(p.second)
+		{
+		}
+		~pair(void)
 		{
 		}
 	};
