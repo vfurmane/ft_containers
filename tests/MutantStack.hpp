@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 13:32:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/25 13:44:01 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/25 14:39:10 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ class MutantStack : public NAMESPACE::stack<T, Container>
 	public:
 		typedef typename Container::iterator iterator;
 		typedef typename Container::const_iterator const_iterator;
+
+		MutantStack(const Container& cont = Container()) : NAMESPACE::stack<T, Container>(cont)
+		{
+		}
+		~MutantStack()
+		{
+		}
 
 		iterator		begin()
 		{
