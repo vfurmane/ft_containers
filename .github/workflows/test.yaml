@@ -4,6 +4,7 @@ on:
     branches:
       - '*'
       - '!*WIP'
+      - '!*-tests'
 jobs:
   linux-compilation:
     runs-on: ubuntu-latest
