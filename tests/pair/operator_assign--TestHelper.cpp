@@ -20,8 +20,8 @@
 
 int	main(void)
 {
-	std::pair< int, TestHelper<> >	src(42, TestHelper<>());
-	std::pair< int, TestHelper<> >	obj;
+	NAMESPACE::pair< int, TestHelper<> >	src(42, TestHelper<>());
+	NAMESPACE::pair< int, TestHelper<> >	obj;
 	obj = src;
 	std::cout << "(" << obj.first << ", " << obj.second << ")" << std::endl;
 }

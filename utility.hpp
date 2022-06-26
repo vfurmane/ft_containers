@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 22:08:55 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/26 12:04:07 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/26 12:10:23 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ namespace ft {
 		{
 			first = other.first;
 			second = other.second;
+			return *this;
 		}
 	};
 

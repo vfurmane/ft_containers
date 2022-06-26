@@ -19,6 +19,6 @@
 
 int	main(void)
 {
-	std::pair<int, float>	obj = std::make_pair(42, 3.1415f);
+	NAMESPACE::pair<int, float>	obj = NAMESPACE::make_pair(42, 3.1415f);
 	std::cout << "(" << obj.first << ", " << obj.second << ")" << std::endl;
 }
