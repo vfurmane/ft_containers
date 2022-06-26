@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 22:08:55 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/26 12:10:23 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/26 12:16:51 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,41 @@ namespace ft {
 	ft::pair<T1,T2>	make_pair(T1 t, T2 u)
 	{
 		return ft::pair<T1, T2>(t, u);
+	}
+
+	template<class T1, class T2>
+	bool	operator==(const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+	{
+		return (lhs.first == rhs.first
+				&& lhs.second == rhs.second);
+	}
+	template<class T1, class T2>
+	bool operator!=(const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+	{
+		return !(lhs == rhs);
+	}
+	template<class T1, class T2>
+	bool	operator<(const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+	{
+		if (lhs.first < rhs.first
+			|| lhs.second < rhs.second)
+			return true;
+		return false;
+	}
+	template<class T1, class T2>
+	bool	operator<=(const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+	{
+		return !(lhs > rhs);
+	}
+	template<class T1, class T2>
+	bool	operator>(const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+	{
+		return rhs < lhs;
+	}
+	template<class T1, class T2>
+	bool	operator>=(const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+	{
+		return !(lhs < rhs);
 	}
 }
 
