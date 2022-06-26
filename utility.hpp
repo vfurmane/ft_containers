@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 22:08:55 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/26 11:57:31 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/26 12:04:07 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ namespace ft {
 			second = other.second;
 		}
 	};
+
+	template<class T1, class T2>
+	ft::pair<T1,T2>	make_pair(T1 t, T2 u)
+	{
+		return ft::pair<T1, T2>(t, u);
+	}
 }
 
 #endif
