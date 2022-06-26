@@ -14,10 +14,12 @@ fails=0
 
 print_usage()
 {
-	printf "Usage:	$0 [-hl]\n"
+	printf "Usage:	$0 [-hl] [test_directory...]\n"
 	printf "\n"
 	printf "\t-h\tprint this message and exit\n"
 	printf "\t-l\tdisable leak check\n"
+	printf "\n"
+	printf "\ttest_directory\tdirectories to test (default: all)\n"
 }
 
 test_case()
@@ -120,14 +122,22 @@ do
 	esac
 done
 
-for directory in tests/*
+shift $(($OPTIND - 1))
+if [ $# -gt 0 ]
+then
+	directories=$@
+else
+	directories=tests/*
+fi
+for directory in $directories
 do
-	if [ -f $directory ]
+	directory=$(basename $directory)
+	if [ -d tests/$directory ]
 	then
-		continue
+		perform_test_in_folder tests/$directory $directory
+	else
+		[ -f tests/$directory ] || printf "${RED}%s: No such tests directory${NC}\n" $directory
 	fi
-	basename_dir=$(basename $directory)
-	perform_test_in_folder $directory $basename_dir
 done
 
 if [ $fails -gt 0 ]
