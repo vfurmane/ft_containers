@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 22:08:55 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/25 22:24:07 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/26 11:57:31 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ namespace ft {
 		}
 		~pair(void)
 		{
+		}
+
+		pair& operator=(const pair& other)
+		{
+			first = other.first;
+			second = other.second;
 		}
 	};
 }
