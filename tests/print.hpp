@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:58:12 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/06 11:18:35 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/06/27 17:24:34 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ void print_container_iter(Iterator begin, Iterator end)
 		begin++;
 	}
 	std::cout << " }" << std::endl;
+}
+
+template <typename T1, typename T2>
+std::ostream	&operator<<(std::ostream &os, const NAMESPACE::pair<T1, T2> rhs)
+{
+	os << "(" << rhs.first << ", " << rhs.second << ")";
+	return os;
 }
 
 #endif
