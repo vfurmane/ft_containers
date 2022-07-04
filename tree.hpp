@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/04 13:27:56 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:01:36 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ namespace ft
 
 		rb_tree(void) : root(NULL), header(new value_type)
 		{
-			header->color = RED;
+			header->color = BLACK;
 			header->parent = root;
 			header->left = header;
 			header->right = header;
@@ -222,11 +222,94 @@ namespace ft
 			return const_iterator(header);
 		}
 
+		void	left_rotate_tree(node_type &node)
+		{
+			node_type	old_root = node;
+			node = node->right;
+			header->parent = node;
+			node->parent = header;
+			node_type	y = node->left;
+			node->left = old_root;
+			old_root->right = y;
+			old_root->parent = node;
+		}
+
+		void	right_rotate_tree(node_type &node)
+		{
+			node_type	old_root = node;
+			node = node->left;
+			header->parent = node;
+			node->parent = header;
+			node_type	y = node->right;
+			node->right = old_root;
+			old_root->left = y;
+			old_root->parent = node;
+		}
+
+		void	balance_tree(node_type node)
+		{
+			while (node->parent->color == RED)
+			{
+				if (node->parent == node->parent->parent->left)
+				{
+					node_type	y = node->parent->parent->right;
+					if (y != NULL && y->color == RED)
+					{
+						node->parent->color = BLACK;
+						y->color = BLACK;
+						node->parent->parent->color = RED;
+						node = node->parent->parent;
+					}
+					else
+					{
+						if (node == node->parent->right)
+						{
+							node = node->parent;
+							left_rotate_tree(node);
+						}
+						else
+						{
+							node->parent->color = BLACK;
+							node->parent->parent->color = RED;
+							right_rotate_tree(node->parent->parent);
+						}
+					}
+				}
+				else
+				{
+					node_type	y = node->parent->parent->left;
+					if (y != NULL && y->color == RED)
+					{
+						node->parent->color = BLACK;
+						y->color = BLACK;
+						node->parent->parent->color = RED;
+						node = node->parent->parent;
+					}
+					else
+					{
+						if (node == node->parent->left)
+						{
+							node = node->parent;
+							right_rotate_tree(node);
+						}
+						else
+						{
+							node->parent->color = BLACK;
+							node->parent->parent->color = RED;
+							left_rotate_tree(node->parent->parent);
+						}
+					}
+				}
+			}
+			root->color = BLACK;
+		}
+
 		void	insert(const T& value)
 		{
 			if (root == NULL)
 			{
 				root = new value_type(value);
+				root->color = BLACK;
 				root->parent = header;
 				header->parent = root;
 				header->left = root;
@@ -251,6 +334,7 @@ namespace ft
 				header->left = header->left->left;
 			if (header->right->right != NULL)
 				header->right = header->right->right;
+			balance_tree(node);
 		}
 
 		iterator	lower_bound(const T& key)

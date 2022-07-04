@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 10:43:46 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/04 13:20:39 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/04 14:36:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,12 @@ int	main(void)
 	ft::rb_tree< int, std::less<int> >	obj;
 	obj.insert(42);
 	obj.insert(47);
+	obj.insert(7);
+	obj.insert(21);
 	obj.insert(0);
 	obj.insert(1337);
-	auto it = obj.begin();
-	for (; it != obj.end(); ++it)
+	obj.insert(54);
+	obj.insert(36);
+	for (auto it = obj.begin(); it != obj.end(); ++it)
 		std::cout << *it << std::endl;
-	std::cout << "---" << std::endl;
-	std::cout << *(it--) << std::endl;
-	std::cout << *(it--) << std::endl;
-	std::cout << *(it--) << std::endl;
-	std::cout << *(it--) << std::endl;
-	std::cout << "---" << std::endl;
-	std::cout << *obj.lower_bound(54) << std::endl;
-	std::cout << *obj.lower_bound(42) << std::endl;
-	std::cout << *obj.lower_bound(45) << std::endl;
 }
