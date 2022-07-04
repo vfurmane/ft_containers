@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/04 12:08:12 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/04 13:27:56 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,39 @@ namespace ft
 				header->left = header->left->left;
 			if (header->right->right != NULL)
 				header->right = header->right->right;
+		}
+
+		iterator	lower_bound(const T& key)
+		{
+			node_type	node = root;
+			node_type	greater = node->parent;
+			while (node != NULL)
+			{
+				if (key_compare(node->value, key))
+					node = node->right;
+				else
+				{
+					greater = node;
+					node = node->left;
+				}
+			}
+			return iterator(greater);
+		}
+		const_iterator	lower_bound(const T& key) const
+		{
+			node_type	node = root;
+			node_type	greater = node->parent;
+			while (node != NULL)
+			{
+				if (key_compare(node->value, key))
+					node = node->right;
+				else
+				{
+					greater = node;
+					node = node->left;
+				}
+			}
+			return const_iterator(greater);
 		}
 
 		node_type	leftmost()

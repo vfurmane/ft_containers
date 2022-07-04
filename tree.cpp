@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 10:43:46 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/04 11:08:15 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/04 13:20:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,8 @@ int	main(void)
 	std::cout << *(it--) << std::endl;
 	std::cout << *(it--) << std::endl;
 	std::cout << *(it--) << std::endl;
+	std::cout << "---" << std::endl;
+	std::cout << *obj.lower_bound(54) << std::endl;
+	std::cout << *obj.lower_bound(42) << std::endl;
+	std::cout << *obj.lower_bound(45) << std::endl;
 }
