@@ -6,26 +6,27 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 10:43:46 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/30 15:17:17 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/04 11:08:15 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <functional>
 #include <iostream>
 #include "tree.hpp"
 
-template <class T>
-std::ostream	&operator<<(std::ostream &os, const ft::_rb_tree_node<T> &obj)
+template<typename T>
+std::ostream	&operator<<(std::ostream &os, const ft::rb_tree_node<T> &rhs)
 {
-	if (obj._left->_color != ft::NIL)
-		os << obj._left->_value;
+	if (rhs.left != NULL)
+		os << rhs.left->value;
 	else
 		os << "nil";
 	os << " <-- ";
-	os << obj._value;
-	os << " (" << (obj._color ? "BLACK" : "RED") << ")";
+	os << rhs.value;
+	// os << " (" << (rhs._color ? "BLACK" : "RED") << ")";
 	os << " --> ";
-	if (obj._right->_color != ft::NIL)
-		os << obj._right->_value;
+	if (rhs.right != NULL)
+		os << rhs.right->value;
 	else
 		os << "nil";
 	return os;
@@ -33,11 +34,17 @@ std::ostream	&operator<<(std::ostream &os, const ft::_rb_tree_node<T> &obj)
 
 int	main(void)
 {
-	ft::_rb_tree<int>	obj;
+	ft::rb_tree< int, std::less<int> >	obj;
 	obj.insert(42);
 	obj.insert(47);
 	obj.insert(0);
 	obj.insert(1337);
-	for (auto it = obj.begin(); it != obj.end(); ++it)
+	auto it = obj.begin();
+	for (; it != obj.end(); ++it)
 		std::cout << *it << std::endl;
+	std::cout << "---" << std::endl;
+	std::cout << *(it--) << std::endl;
+	std::cout << *(it--) << std::endl;
+	std::cout << *(it--) << std::endl;
+	std::cout << *(it--) << std::endl;
 }
