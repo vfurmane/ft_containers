@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/04 16:01:36 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/05 13:21:19 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <cstddef>
 # include <memory>
 # include "iterator.hpp"
+#include "reverse_iterator.hpp"
+#include "utility.hpp"
 
 namespace ft
 {
@@ -24,115 +26,6 @@ namespace ft
 		RED,
 		BLACK
 	}				t_color;
-
-	template <class Iterator, class Container>
-	class _tree_iterator: public ft::iterator<ft::random_access_iterator_tag, typename Container::value_type>
-	{
-		public:
-			typedef typename iterator_traits<Iterator>::value_type			value_type;
-			typedef typename iterator_traits<Iterator>::difference_type		difference_type;
-			typedef typename iterator_traits<Iterator>::pointer				pointer;
-			typedef typename iterator_traits<Iterator>::reference			reference;
-			typedef typename iterator_traits<Iterator>::iterator_category	iterator_category;
-
-			_tree_iterator(Iterator ptr) : _node(ptr)
-			{
-			}
-			_tree_iterator(const _tree_iterator& obj) : _node()
-			{
-				*this = obj;
-			}
-			~_tree_iterator(void)
-			{
-			}
-
-			_tree_iterator	&operator=(const _tree_iterator &obj)
-			{
-				_node = obj._node;
-				return *this;
-			}
-
-			bool		operator==(const _tree_iterator &rhs)
-			{
-				return _node == rhs._node;
-			}
-
-			bool		operator!=(const _tree_iterator &rhs)
-			{
-				return !(*this == rhs);
-			}
-
-			reference	&operator*()
-			{
-				return *_node;
-			}
-
-			pointer	operator->(void)
-			{
-				return _node;
-			}
-
-			_tree_iterator	&operator++()
-			{
-				if (_node->right != NULL)
-				{
-					_node = _node->right;
-					while (_node->left != NULL)
-						_node = _node->left;
-				}
-				else
-				{
-					Iterator	y = _node->parent;
-					while (_node == y->right)
-					{
-						_node = y;
-						y = y->parent;
-					}
-					if (_node->right != y)
-						_node = y;
-				}
-				return *this;
-			}
-			_tree_iterator	operator++(int)
-			{
-				_tree_iterator	tmp(*this);
-				++(*this);
-				return tmp;
-			}
-
-			_tree_iterator& operator--()
-			{
-				if (_node->color == RED && _node->parent->parent == _node)  
-					_node = _node->right;
-				else if (_node->left != NULL)
-				{
-					Iterator y = _node->left;
-					while (y->right != NULL)
-						y = y->right;
-					_node = y;
-				}
-				else
-				{
-					Iterator y = _node->parent;
-					while (_node == y->left)
-					{
-						_node = y;
-						y = y->parent;
-					}
-					_node = y;
-				}
-				return *this;
-			}
-			_tree_iterator	operator--(int)
-			{
-				_tree_iterator	tmp(*this);
-				--(*this);
-				return tmp;
-			}
-
-		private:
-			Iterator	_node;
-	};
 
 	template <typename T>
 	struct	rb_tree_node
@@ -167,17 +60,134 @@ namespace ft
 		}
 	};
 
+	template <class T>
+	class _tree_iterator
+	{
+		private:
+			typedef ft::rb_tree_node<T> *		_base_ptr;
+
+		public:
+			typedef T							value_type;
+			typedef ptrdiff_t					difference_type;
+			typedef value_type *				pointer;
+			typedef value_type &				reference;
+			typedef bidirectional_iterator_tag	iterator_category;
+
+			_tree_iterator(void) : _node()
+			{
+			}
+			_tree_iterator(_base_ptr ptr) : _node(ptr)
+			{
+			}
+			_tree_iterator(const _tree_iterator& obj) : _node()
+			{
+				*this = obj;
+			}
+			~_tree_iterator(void)
+			{
+			}
+
+			_tree_iterator	&operator=(const _tree_iterator &obj)
+			{
+				_node = obj._node;
+				return *this;
+			}
+
+			bool		operator==(const _tree_iterator &rhs)
+			{
+				return _node == rhs._node;
+			}
+
+			bool		operator!=(const _tree_iterator &rhs)
+			{
+				return !(*this == rhs);
+			}
+
+			reference	operator*()
+			{
+				return _node->value;
+			}
+
+			pointer	operator->(void)
+			{
+				return &_node->value;
+			}
+
+			_tree_iterator	&operator++()
+			{
+				if (_node->right != NULL)
+				{
+					_node = _node->right;
+					while (_node->left != NULL)
+						_node = _node->left;
+				}
+				else
+				{
+					_base_ptr	y = _node->parent;
+					while (_node == y->right)
+					{
+						_node = y;
+						y = y->parent;
+					}
+					if (_node->right != y)
+						_node = y;
+				}
+				return *this;
+			}
+			_tree_iterator	operator++(int)
+			{
+				_tree_iterator	tmp(*this);
+				++(*this);
+				return tmp;
+			}
+
+			_tree_iterator& operator--()
+			{
+				if (_node->color == RED && _node->parent->parent == _node)  
+					_node = _node->right;
+				else if (_node->left != NULL)
+				{
+					_base_ptr y = _node->left;
+					while (y->right != NULL)
+						y = y->right;
+					_node = y;
+				}
+				else
+				{
+					_base_ptr y = _node->parent;
+					while (_node == y->left)
+					{
+						_node = y;
+						y = y->parent;
+					}
+					_node = y;
+				}
+				return *this;
+			}
+			_tree_iterator	operator--(int)
+			{
+				_tree_iterator	tmp(*this);
+				--(*this);
+				return tmp;
+			}
+
+		private:
+			_base_ptr	_node;
+	};
+
 	template < class T, class Compare, class Allocator = std::allocator< rb_tree_node<T> > >
 	struct rb_tree
 	{
-		typedef rb_tree_node<T>								value_type;
-		typedef	std::allocator<value_type>					allocator;
-		typedef value_type 									&reference;
-		typedef const value_type							&const_reference;
-		typedef typename allocator::pointer					node_type;
-		typedef typename allocator::const_pointer			const_node_type;
-		typedef	_tree_iterator<node_type, rb_tree>			iterator;
-		typedef	_tree_iterator<const_node_type, rb_tree>	const_iterator;
+		typedef rb_tree_node<T>							value_type;
+		typedef	std::allocator<value_type>				allocator;
+		typedef value_type 								&reference;
+		typedef const value_type						&const_reference;
+		typedef typename allocator::pointer				node_type;
+		typedef typename allocator::const_pointer		const_node_type;
+		typedef	_tree_iterator<T>				iterator;
+		typedef	_tree_iterator<const T>		const_iterator;
+		typedef ft::reverse_iterator<iterator>			reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		Compare				key_compare;
 		node_type			root;
@@ -190,7 +200,7 @@ namespace ft
 			header->left = header;
 			header->right = header;
 		}
-		rb_tree(const rb_tree &obj) : rb_tree()
+		rb_tree(const rb_tree &obj) : root(), header()
 		{
 			*this = obj;
 		}
