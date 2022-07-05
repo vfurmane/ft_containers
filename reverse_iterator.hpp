@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 09:49:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/05 11:03:01 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/05 11:07:21 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 namespace ft
 {
 	template <class Iterator>
-	class reverse_iterator : public iterator<ft::random_access_iterator_tag, Iterator>
+	class reverse_iterator : public iterator<typename ft::iterator_traits<Iterator>::iterator_category, Iterator>
 	{
 		public:
 			typedef Iterator												iterator_type;
