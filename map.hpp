@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/05 13:04:31 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/05 14:05:22 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,26 @@ namespace ft
 			typedef typename _rep_type::const_iterator			const_iterator;
 			typedef typename _rep_type::reverse_iterator		reverse_iterator;
 			typedef typename _rep_type::const_reverse_iterator	const_reverse_iterator;
+
+			class value_compare
+			{
+				public:
+					typedef bool		result_type;
+					typedef value_type	first_argument_type;
+					typedef value_type	second_argument_type;
+
+					bool	operator()(const value_type& lhs, const value_type& rhs) const
+					{
+						return comp(lhs.first, rhs.first);
+					}
+
+				protected:
+					Compare	comp;
+
+					value_compare(Compare c) : comp(c)
+					{
+					}
+			};
 	
 			map(void)
 			{
