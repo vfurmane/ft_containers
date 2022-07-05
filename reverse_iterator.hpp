@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 09:49:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/05/23 10:23:41 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/05 11:03:01 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace ft
 			reference operator*() const
 			{
 				Iterator tmp = _iterator;
-				return *(tmp - 1);
+				return *(--tmp);
 			}
 			reverse_iterator	operator+(difference_type n) const
 			{
