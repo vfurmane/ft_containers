@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/05 13:21:19 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:23:23 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,14 +193,21 @@ namespace ft
 		node_type			root;
 		node_type			header;
 
-		rb_tree(void) : root(NULL), header(new value_type)
+		rb_tree(void) : key_compare(), root(NULL), header(new value_type)
 		{
 			header->color = BLACK;
 			header->parent = root;
 			header->left = header;
 			header->right = header;
 		}
-		rb_tree(const rb_tree &obj) : root(), header()
+		rb_tree(const Compare &comp) : key_compare(comp), root(NULL), header(new value_type)
+		{
+			header->color = BLACK;
+			header->parent = root;
+			header->left = header;
+			header->right = header;
+		}
+		rb_tree(const rb_tree &obj) : key_compare(), root(), header()
 		{
 			*this = obj;
 		}
@@ -232,28 +239,44 @@ namespace ft
 			return const_iterator(header);
 		}
 
-		void	left_rotate_tree(node_type &node)
+		node_type	left_rotate_tree(node_type node, node_type parent)
 		{
 			node_type	old_root = node;
 			node = node->right;
 			header->parent = node;
-			node->parent = header;
+			node->parent = old_root->parent;
 			node_type	y = node->left;
 			node->left = old_root;
 			old_root->right = y;
 			old_root->parent = node;
+			if (parent != header)
+			{
+				if (parent->left == old_root)
+					parent->left = node;
+				else
+					parent->right = node;
+			}
+			return node;
 		}
 
-		void	right_rotate_tree(node_type &node)
+		node_type	right_rotate_tree(node_type node, node_type parent)
 		{
 			node_type	old_root = node;
 			node = node->left;
 			header->parent = node;
-			node->parent = header;
+			node->parent = old_root->parent;
 			node_type	y = node->right;
 			node->right = old_root;
 			old_root->left = y;
 			old_root->parent = node;
+			if (parent != header)
+			{
+				if (parent->left == old_root)
+					parent->left = node;
+				else
+					parent->right = node;
+			}
+			return node;
 		}
 
 		void	balance_tree(node_type node)
@@ -275,13 +298,13 @@ namespace ft
 						if (node == node->parent->right)
 						{
 							node = node->parent;
-							left_rotate_tree(node);
+							node = left_rotate_tree(node, node->parent);
 						}
 						else
 						{
 							node->parent->color = BLACK;
 							node->parent->parent->color = RED;
-							right_rotate_tree(node->parent->parent);
+							node = right_rotate_tree(node->parent->parent, node->parent->parent->parent);
 						}
 					}
 				}
@@ -300,13 +323,13 @@ namespace ft
 						if (node == node->parent->left)
 						{
 							node = node->parent;
-							right_rotate_tree(node);
+							node = right_rotate_tree(node, node->parent);
 						}
 						else
 						{
 							node->parent->color = BLACK;
 							node->parent->parent->color = RED;
-							left_rotate_tree(node->parent->parent);
+							node = left_rotate_tree(node->parent->parent, node->parent->parent->parent);
 						}
 					}
 				}
@@ -331,7 +354,7 @@ namespace ft
 			node_type	node;
 			while (z != NULL)
 			{
-				direction = key_compare(value, z->value);
+				direction = key_compare(value.first, z->value.first);
 				node = direction ? z->left : z->right;
 				if (node == NULL || node == header)
 					break ;

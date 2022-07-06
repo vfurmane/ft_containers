@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:46:53 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/27 15:05:24 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/06 10:48:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,9 +183,7 @@ class TestHelper<COMPARE, T>
 
 		bool	operator()(const T &lhs, const T &rhs) const
 		{
-			(void)lhs;
-			(void)rhs;
-			return true;
+			return lhs < rhs;
 		}
 
 		T	nbr;

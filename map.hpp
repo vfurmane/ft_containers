@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/05 14:05:22 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:28:55 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,41 @@ namespace ft
 					}
 			};
 	
-			map(void)
+			map(void) : _alloc(), _tree()
+			{
+			}
+			explicit map(const Compare &comp, const Allocator &alloc = Allocator()) : _alloc(alloc), _tree(comp)
 			{
 			}
 			map(const map &obj)
 			{
 				*this = obj;
 			}
+			template<class InputIt>
+			map(InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()) : _alloc(alloc), _tree(comp)
+			{
+				while (first != last)
+				{
+					_tree.insert(*first);
+					first++;
+				}
+			}
 			~map(void)
 			{
+				typename _rep_type::node_type	z = _tree.header->left;
+				while (z != _tree.header)
+				{
+					typename _rep_type::node_type	y = z->parent;
+					delete z;
+					if (y != _tree.header && y->right != NULL && y->right != z)
+					{
+						y = y->right;
+						while (y->left != NULL)
+							y = y->left;
+					}
+					z = y;
+				}
+				delete z;
 			}
 	
 			map &operator=(const map &rhs)
@@ -82,8 +108,20 @@ namespace ft
 				(void)rhs;
 				return *this;
 			}
+
+			iterator	begin(void)
+			{
+				return _tree.begin();
+			}
+
+			iterator	end(void)
+			{
+				return _tree.end();
+			}
 	
 		private:
+			Allocator	_alloc;
+			_rep_type	_tree;
 	};
 }
 
