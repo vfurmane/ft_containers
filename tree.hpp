@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/06 20:23:23 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:45:50 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,6 @@ namespace ft
 		{
 			node_type	old_root = node;
 			node = node->right;
-			header->parent = node;
 			node->parent = old_root->parent;
 			node_type	y = node->left;
 			node->left = old_root;
@@ -263,7 +262,6 @@ namespace ft
 		{
 			node_type	old_root = node;
 			node = node->left;
-			header->parent = node;
 			node->parent = old_root->parent;
 			node_type	y = node->right;
 			node->right = old_root;
@@ -306,6 +304,11 @@ namespace ft
 							node->parent->parent->color = RED;
 							node = right_rotate_tree(node->parent->parent, node->parent->parent->parent);
 						}
+						if (node->parent == header)
+						{
+							root = node;
+							header->parent = node;
+						}
 					}
 				}
 				else
@@ -331,13 +334,18 @@ namespace ft
 							node->parent->parent->color = RED;
 							node = left_rotate_tree(node->parent->parent, node->parent->parent->parent);
 						}
+						if (node->parent == header)
+						{
+							root = node;
+							header->parent = node;
+						}
 					}
 				}
 			}
 			root->color = BLACK;
 		}
 
-		void	insert(const T& value)
+		iterator	insert(const T& value)
 		{
 			if (root == NULL)
 			{
@@ -347,7 +355,7 @@ namespace ft
 				header->parent = root;
 				header->left = root;
 				header->right = root;
-				return ;
+				return root;
 			}
 			node_type	z = root;
 			bool		direction;
@@ -368,15 +376,16 @@ namespace ft
 			if (header->right->right != NULL)
 				header->right = header->right->right;
 			balance_tree(node);
+			return node;
 		}
 
-		iterator	lower_bound(const T& key)
+		iterator	lower_bound(const typename T::first_type &key)
 		{
 			node_type	node = root;
 			node_type	greater = node->parent;
 			while (node != NULL)
 			{
-				if (key_compare(node->value, key))
+				if (key_compare(node->value.first, key))
 					node = node->right;
 				else
 				{
@@ -386,13 +395,13 @@ namespace ft
 			}
 			return iterator(greater);
 		}
-		const_iterator	lower_bound(const T& key) const
+		const_iterator	lower_bound(const typename T::first_type &key) const
 		{
 			node_type	node = root;
 			node_type	greater = node->parent;
 			while (node != NULL)
 			{
-				if (key_compare(node->value, key))
+				if (key_compare(node->value.first, key))
 					node = node->right;
 				else
 				{

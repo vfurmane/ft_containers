@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 10:19:17 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:49:49 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <cstddef>
 # include <functional>
+# include <stdexcept>
 # include "tree.hpp"
 # include "utility.hpp"
 
@@ -115,6 +116,29 @@ namespace ft
 			allocator_type	get_allocator(void) const
 			{
 				return _alloc;
+			}
+
+			T	&at(const Key& key)
+			{
+				iterator it = _tree.lower_bound(key);
+				if (it->first != key)
+					throw std::out_of_range("map::at");
+				return it->second;
+			}
+			const T	&at(const Key& key) const
+			{
+				iterator it = _tree.lower_bound(key);
+				if (it->first != key)
+					throw std::out_of_range("map::at");
+				return it->second;
+			}
+
+			T	&operator[](const Key& key)
+			{
+				iterator it = _tree.lower_bound(key);
+				if (it->first != key)
+					return _tree.insert(ft::make_pair(key, T()))->second;
+				return it->second;
 			}
 
 			iterator	begin(void)
