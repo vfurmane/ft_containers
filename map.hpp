@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/06 18:28:55 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/06 22:02:42 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ namespace ft
 	
 			map &operator=(const map &rhs)
 			{
+//				clear();
+//				for (iterator it = begin(); it != end(); ++it)
+//					_tree.insert(*it);
 				(void)rhs;
 				return *this;
 			}
