@@ -6,17 +6,17 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:18:07 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 12:13:26 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:45:20 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include "tests/print.hpp"
 #ifdef USE_STD
 # include <map>
 #else
 # include "map.hpp"
 #endif
-#include "tests/print.hpp"
 
 int	main(void)
 {

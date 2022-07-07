@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:58:12 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/27 17:24:34 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:44:49 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define PRINT_HPP
 
 # include <iostream>
+# ifdef USE_STD
+#  include <map>
+# else
+#  include "map.hpp"
+# endif
 
 template <class Iterator>
 void print_container_iter(Iterator begin, Iterator end)
