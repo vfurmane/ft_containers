@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 14:50:24 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:44:58 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ namespace ft
 			typedef ft::rb_tree_node<T> *		_base_ptr;
 
 		public:
+			template <class, class, class>
+			friend struct rb_tree;
 			typedef T							value_type;
 			typedef ptrdiff_t					difference_type;
 			typedef value_type *				pointer;
@@ -387,8 +389,9 @@ namespace ft
 			return node;
 		}
 
-		void	erase(node_type node)
+		void	erase(iterator _node)
 		{
+			node_type	node = _node._node;
 			// if no child
 			if (node->left == NULL && node->right == NULL)
 			{

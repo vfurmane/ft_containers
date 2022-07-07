@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 14:54:01 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:46:14 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,26 @@ namespace ft
 				_tree.header->parent = NULL;
 				_tree.header->left = _tree.header;
 				_tree.header->right = _tree.header;
+			}
+
+			ft::pair<iterator, bool>	insert(const value_type& value)
+			{
+				size_type	pre_size = size();
+				iterator node = _tree.insert(value);
+				return make_pair(node, size() - pre_size);
+			}
+
+			iterator	insert(iterator hint, const value_type& value)
+			{
+				(void)hint;
+				return insert(value).first;
+			}
+
+			template< class InputIt >
+			void	insert(InputIt first, InputIt last)
+			{
+				while (first != last)
+					insert(*first++);
 			}
 	
 		private:
