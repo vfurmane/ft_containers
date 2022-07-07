@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 11:06:20 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:39:19 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,7 @@ namespace ft
 
 			T	&operator[](const Key& key)
 			{
-				iterator it = _tree.lower_bound(key);
-				if (it->first != key)
-					return _tree.insert(ft::make_pair(key, T()))->second;
-				return it->second;
+				return _tree.insert(ft::make_pair(key, T()))->second;
 			}
 
 			iterator	begin(void)
@@ -175,6 +172,21 @@ namespace ft
 			const_reverse_iterator	rend(void) const
 			{
 				return const_reverse_iterator(begin());
+			}
+
+			bool	empty() const
+			{
+				return size() == 0;
+			}
+
+			size_type	size() const
+			{
+				return _tree.node_count;
+			}
+
+			size_type	max_size() const
+			{
+				return _alloc.max_size();
 			}
 	
 		private:

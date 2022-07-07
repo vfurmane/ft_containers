@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 12:02:50 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:39:54 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,30 +184,32 @@ namespace ft
 		typedef const value_type						&const_reference;
 		typedef typename allocator::pointer				node_type;
 		typedef typename allocator::const_pointer		const_node_type;
-		typedef	_tree_iterator<T>				iterator;
-		typedef	_tree_iterator<const T>		const_iterator;
+		typedef	_tree_iterator<T>						iterator;
+		typedef	_tree_iterator<const T>					const_iterator;
 		typedef ft::reverse_iterator<iterator>			reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+		typedef std::size_t								size_type;
 
 		Compare				key_compare;
 		node_type			root;
 		node_type			header;
+		size_type			node_count;
 
-		rb_tree(void) : key_compare(), root(NULL), header(new value_type)
+		rb_tree(void) : key_compare(), root(NULL), header(new value_type), node_count(0)
 		{
 			header->color = RED;
 			header->parent = root;
 			header->left = header;
 			header->right = header;
 		}
-		rb_tree(const Compare &comp) : key_compare(comp), root(NULL), header(new value_type)
+		rb_tree(const Compare &comp) : key_compare(comp), root(NULL), header(new value_type), node_count(0)
 		{
 			header->color = RED;
 			header->parent = root;
 			header->left = header;
 			header->right = header;
 		}
-		rb_tree(const rb_tree &obj) : key_compare(), root(), header()
+		rb_tree(const rb_tree &obj) : key_compare(), root(), header(), node_count(0)
 		{
 			*this = obj;
 		}
@@ -355,8 +357,12 @@ namespace ft
 				header->parent = root;
 				header->left = root;
 				header->right = root;
+				node_count++;
 				return root;
 			}
+			iterator it = lower_bound(value.first);
+			if (it->first == value.first)
+				return it;
 			node_type	z = root;
 			bool		direction;
 			node_type	node;
@@ -377,6 +383,7 @@ namespace ft
 				header->right = header->right->right;
 			balance_tree(node);
 			header->color = RED;
+			node_count++;
 			return node;
 		}
 
