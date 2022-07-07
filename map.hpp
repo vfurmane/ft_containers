@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/06 22:02:42 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:19:17 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,11 @@ namespace ft
 //					_tree.insert(*it);
 				(void)rhs;
 				return *this;
+			}
+
+			allocator_type	get_allocator(void) const
+			{
+				return _alloc;
 			}
 
 			iterator	begin(void)
