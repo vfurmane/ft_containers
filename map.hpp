@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 10:49:49 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:06:20 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,36 @@ namespace ft
 			{
 				return _tree.begin();
 			}
+			const_iterator	begin(void) const
+			{
+				return _tree.begin();
+			}
 
 			iterator	end(void)
 			{
 				return _tree.end();
+			}
+			const_iterator	end(void) const
+			{
+				return _tree.end();
+			}
+
+			reverse_iterator	rbegin(void)
+			{
+				return reverse_iterator(end());
+			}
+			const_reverse_iterator	rbegin(void) const
+			{
+				return const_reverse_iterator(end());
+			}
+
+			reverse_iterator	rend(void)
+			{
+				return reverse_iterator(begin());
+			}
+			const_reverse_iterator	rend(void) const
+			{
+				return const_reverse_iterator(begin());
 			}
 	
 		private:

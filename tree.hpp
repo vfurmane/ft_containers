@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 10:45:50 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:02:50 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,14 +195,14 @@ namespace ft
 
 		rb_tree(void) : key_compare(), root(NULL), header(new value_type)
 		{
-			header->color = BLACK;
+			header->color = RED;
 			header->parent = root;
 			header->left = header;
 			header->right = header;
 		}
 		rb_tree(const Compare &comp) : key_compare(comp), root(NULL), header(new value_type)
 		{
-			header->color = BLACK;
+			header->color = RED;
 			header->parent = root;
 			header->left = header;
 			header->right = header;
@@ -376,6 +376,7 @@ namespace ft
 			if (header->right->right != NULL)
 				header->right = header->right->right;
 			balance_tree(node);
+			header->color = RED;
 			return node;
 		}
 
