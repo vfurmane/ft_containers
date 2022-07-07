@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 12:39:19 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:54:01 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,28 @@ namespace ft
 			size_type	max_size() const
 			{
 				return _alloc.max_size();
+			}
+
+			void	clear(void)
+			{
+				typename _rep_type::node_type	z = _tree.header->left;
+				while (z != _tree.header)
+				{
+					typename _rep_type::node_type	y = z->parent;
+					delete z;
+					if (y != _tree.header && y->right != NULL && y->right != z)
+					{
+						y = y->right;
+						while (y->left != NULL)
+							y = y->left;
+					}
+					z = y;
+				}
+				_tree.node_count = 0;
+				_tree.root = NULL;
+				_tree.header->parent = NULL;
+				_tree.header->left = _tree.header;
+				_tree.header->right = _tree.header;
 			}
 	
 		private:

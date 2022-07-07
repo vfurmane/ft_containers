@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 12:39:54 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:50:24 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,6 +385,47 @@ namespace ft
 			header->color = RED;
 			node_count++;
 			return node;
+		}
+
+		void	erase(node_type node)
+		{
+			// if no child
+			if (node->left == NULL && node->right == NULL)
+			{
+			}
+			else if (node->right == NULL)
+			{
+				node->left->parent = node->parent;
+				if (node->parent->right == &(*node))
+					node->parent->right = node->left;
+				else
+					node->parent->left = node->left;
+			}
+			else if (node->left == NULL)
+			{
+				node->right->parent = node->parent;
+				if (node->parent->left == &(*node))
+					node->parent->left = node->right;
+				else
+					node->parent->right = node->right;
+			}
+			// if two children
+			else
+			{
+				node_type	smallest_right = node->right;
+				while (smallest_right->left != NULL)
+					smallest_right = smallest_right->left;
+				if (smallest_right != node->right)
+					smallest_right->parent->left = NULL;
+				smallest_right->parent = node->parent;
+				smallest_right->left = node->left;
+				smallest_right->right = node->right;
+				if (node->parent->right == &(*node))
+					node->parent->right = smallest_right;
+				else
+					node->parent->left = smallest_right;
+			}
+			delete &(*node);
 		}
 
 		iterator	lower_bound(const typename T::first_type &key)
