@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 15:44:58 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/08 13:41:25 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,25 +392,51 @@ namespace ft
 		void	erase(iterator _node)
 		{
 			node_type	node = _node._node;
+			if (header->left == node)
+				header->left = node->parent;
+			if (header->right == node)
+				header->right = node->parent;
 			// if no child
 			if (node->left == NULL && node->right == NULL)
 			{
+				if (root == node)
+				{
+					root = NULL;
+					header->left = header;
+					header->right = header;
+				}
+				else if (node->parent->left == node)
+					node->parent->left = NULL;
+				else
+					node->parent->right = NULL;
 			}
 			else if (node->right == NULL)
 			{
-				node->left->parent = node->parent;
-				if (node->parent->right == &(*node))
-					node->parent->right = node->left;
+				if (root == node)
+					root = node->left;
 				else
-					node->parent->left = node->left;
+				{
+					node->left->parent = node->parent;
+					if (node->parent->right == node)
+						node->parent->right = node->left;
+					else
+						node->parent->left = node->left;
+					if (root == node)
+						root = node;
+				}
 			}
 			else if (node->left == NULL)
 			{
-				node->right->parent = node->parent;
-				if (node->parent->left == &(*node))
-					node->parent->left = node->right;
+				if (root == node)
+					root = node->right;
 				else
-					node->parent->right = node->right;
+				{
+					node->right->parent = node->parent;
+					if (node->parent->left == node)
+						node->parent->left = node->right;
+					else
+						node->parent->right = node->right;
+				}
 			}
 			// if two children
 			else
@@ -419,15 +445,27 @@ namespace ft
 				while (smallest_right->left != NULL)
 					smallest_right = smallest_right->left;
 				if (smallest_right != node->right)
+				{
 					smallest_right->parent->left = NULL;
-				smallest_right->parent = node->parent;
+					smallest_right->right = node->right;
+				}
+				node->left->parent = smallest_right;
+				node->right->parent = smallest_right;
 				smallest_right->left = node->left;
-				smallest_right->right = node->right;
-				if (node->parent->right == &(*node))
+				smallest_right->parent = node->parent;
+				if (node == root)
+					root = smallest_right;
+				else if (node->parent->right == node)
 					node->parent->right = smallest_right;
 				else
 					node->parent->left = smallest_right;
 			}
+			header->parent = root;
+			if (header->left->left != NULL)
+				header->left = header->left->left;
+			if (header->right->right != NULL)
+				header->right = header->right->right;
+			node_count--;
 			delete &(*node);
 		}
 

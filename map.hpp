@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/07 15:46:14 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/08 17:01:55 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ namespace ft
 			~map(void)
 			{
 				typename _rep_type::node_type	z = _tree.header->left;
+				while (z != _tree.header && z->right != NULL)
+				{
+					while (z->left != NULL)
+						z = z->left;
+					z = z->right;
+				}
 				while (z != _tree.header)
 				{
 					typename _rep_type::node_type	y = z->parent;
@@ -191,24 +197,7 @@ namespace ft
 
 			void	clear(void)
 			{
-				typename _rep_type::node_type	z = _tree.header->left;
-				while (z != _tree.header)
-				{
-					typename _rep_type::node_type	y = z->parent;
-					delete z;
-					if (y != _tree.header && y->right != NULL && y->right != z)
-					{
-						y = y->right;
-						while (y->left != NULL)
-							y = y->left;
-					}
-					z = y;
-				}
-				_tree.node_count = 0;
-				_tree.root = NULL;
-				_tree.header->parent = NULL;
-				_tree.header->left = _tree.header;
-				_tree.header->right = _tree.header;
+				erase(begin(), end());
 			}
 
 			ft::pair<iterator, bool>	insert(const value_type& value)
@@ -229,6 +218,55 @@ namespace ft
 			{
 				while (first != last)
 					insert(*first++);
+			}
+
+			void	erase(iterator pos)
+			{
+				_tree.erase(pos);
+			}
+			void	erase(iterator first, iterator last)
+			{
+				if (first == begin() && last == end())
+				{
+					typename _rep_type::node_type	z = _tree.header->left;
+					while (z != _tree.header && z->right != NULL)
+					{
+						while (z->left != NULL)
+							z = z->left;
+						z = z->right;
+					}
+					while (z != _tree.header)
+					{
+						typename _rep_type::node_type	y = z->parent;
+						delete z;
+						if (y != _tree.header && y->right != NULL && y->right != z)
+						{
+							y = y->right;
+							while (y->left != NULL)
+								y = y->left;
+						}
+						z = y;
+					}
+					_tree.node_count = 0;
+					_tree.root = NULL;
+					_tree.header->parent = NULL;
+					_tree.header->left = _tree.header;
+					_tree.header->right = _tree.header;
+					return ;
+				}
+				while (first != last)
+					erase(first++);
+			}
+			size_type	erase(const Key& key)
+			{
+				iterator	it = _tree.lower_bound(key);
+				if (it->first == key)
+				{
+					erase(it);
+					return 1;
+				}
+				else
+					return 0;
 			}
 	
 		private:
