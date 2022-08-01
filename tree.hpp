@@ -221,7 +221,10 @@ namespace ft
 
 		rb_tree	&operator=(const rb_tree &rhs)
 		{
-			root = rhs.root; // deep copy plsss
+			key_compare = rhs.key_compare;
+			root = rhs.root;
+			header = rhs.header;
+			node_count = rhs.node_count;
 			return *this;
 		}
 

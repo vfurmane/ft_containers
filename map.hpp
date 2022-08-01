@@ -268,6 +268,13 @@ namespace ft
 				else
 					return 0;
 			}
+
+			void	swap(map& x)
+			{
+				_rep_type	tmp_tree = _tree;
+				_tree = x._tree;
+				x._tree = tmp_tree;
+			}
 	
 		private:
 			Allocator	_alloc;
