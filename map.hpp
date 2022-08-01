@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/08 17:01:55 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/01 20:00:03 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ namespace ft
 			}
 			const T	&at(const Key& key) const
 			{
-				iterator it = _tree.lower_bound(key);
+				const_iterator it = _tree.lower_bound(key);
 				if (it->first != key)
 					throw std::out_of_range("map::at");
 				return it->second;
@@ -274,6 +274,16 @@ namespace ft
 				_rep_type	tmp_tree = _tree;
 				_tree = x._tree;
 				x._tree = tmp_tree;
+			}
+
+			size_type	count(const Key& key) const
+			{
+				try {
+					this->at(key);
+					return 1;
+				} catch (std::out_of_range &error) {
+					return 0;
+				}
 			}
 	
 		private:

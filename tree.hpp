@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/08 13:41:25 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/01 21:35:57 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,25 @@
 
 namespace ft
 {
+	template<bool B, class T = void>
+	struct enable_if {};
+	 
+	template<class T>
+	struct enable_if<true, T> { typedef T type; };
+
+	template<typename, typename>
+    struct is_same
+    {
+      enum { value = 0 };
+      typedef false_type type;
+    };
+
+	template<typename _Tp>
+    struct is_same<_Tp, _Tp>
+    {
+      enum { value = 1 };
+      typedef true_type type;
+    };
 	typedef enum 	e_color
 	{
 		RED,
@@ -184,10 +203,10 @@ namespace ft
 		typedef	std::allocator<value_type>				allocator;
 		typedef value_type 								&reference;
 		typedef const value_type						&const_reference;
-		typedef typename allocator::pointer				node_type;
-		typedef typename allocator::const_pointer		const_node_type;
+		typedef rb_tree_node<T>							*node_type;
+		typedef rb_tree_node<T>					*const_node_type;
 		typedef	_tree_iterator<T>						iterator;
-		typedef	_tree_iterator<const T>					const_iterator;
+		typedef	_tree_iterator<T>					const_iterator;
 		typedef ft::reverse_iterator<iterator>			reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 		typedef std::size_t								size_type;
@@ -490,8 +509,8 @@ namespace ft
 		}
 		const_iterator	lower_bound(const typename T::first_type &key) const
 		{
-			node_type	node = root;
-			node_type	greater = node->parent;
+			const_node_type	node = end()._node->parent;
+			const_node_type	greater = node->parent;
 			while (node != NULL)
 			{
 				if (key_compare(node->value.first, key))
