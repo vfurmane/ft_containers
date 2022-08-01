@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/08/01 20:00:03 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/01 21:41:30 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,6 +284,21 @@ namespace ft
 				} catch (std::out_of_range &error) {
 					return 0;
 				}
+			}
+
+			iterator	find(const Key& key)
+			{
+				iterator ret = _tree.lower_bound(key);
+				if (ret->first == key)
+					return ret;
+				return end();
+			}
+			const_iterator	find(const Key& key) const
+			{
+				const_iterator ret = _tree.lower_bound(key);
+				if (ret->first == key)
+					return ret;
+				return end();
 			}
 	
 		private:
