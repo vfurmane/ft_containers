@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/08/02 14:03:47 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/02 14:04:18 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,6 +398,12 @@ namespace ft
 	bool	operator>=(const ft::map<T,Alloc,Compare,Allocator>& lhs, const ft::map<T,Alloc,Compare,Allocator>& rhs)
 	{
 		return !(lhs < rhs);
+	}
+
+	template<class T, class Alloc, class Compare, class Allocator>
+	void	swap(map<T,Alloc,Compare,Allocator>& x, map<T,Alloc,Compare,Allocator>& y)
+	{
+		x.swap(y);
 	}
 }
 
