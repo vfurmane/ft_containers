@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/08/02 14:04:18 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/02 14:10:32 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ namespace ft
 			{
 				size_type	pre_size = size();
 				iterator node = _tree.insert(value);
-				return make_pair(node, size() - pre_size);
+				return ft::make_pair(node, size() - pre_size);
 			}
 
 			iterator	insert(iterator hint, const value_type& value)
