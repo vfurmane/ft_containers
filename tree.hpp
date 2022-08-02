@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/08/02 14:32:02 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:55:37 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -489,6 +489,8 @@ namespace ft
 					node->parent->left = smallest_right;
 			}
 			header->parent = root;
+			if (root != NULL)
+				root->parent = header;
 			if (header->left->left != NULL)
 				header->left = header->left->left;
 			if (header->right->right != NULL)
