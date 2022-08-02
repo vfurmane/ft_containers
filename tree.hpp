@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/08/02 11:56:56 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/02 14:32:02 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -435,7 +435,10 @@ namespace ft
 			else if (node->right == NULL)
 			{
 				if (root == node)
+				{
 					root = node->left;
+					header->right = root;
+				}
 				else
 				{
 					node->left->parent = node->parent;
@@ -450,7 +453,10 @@ namespace ft
 			else if (node->left == NULL)
 			{
 				if (root == node)
+				{
 					root = node->right;
+					header->left = root;
+				}
 				else
 				{
 					node->right->parent = node->parent;
