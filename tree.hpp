@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:20:44 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/08/02 10:56:57 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:56:56 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -561,8 +561,16 @@ namespace ft
 		{
 			return header->left;
 		}
+		const_node_type	leftmost() const
+		{
+			return header->left;
+		}
 
 		node_type	rightmost()
+		{
+			return header->right;
+		}
+		const_node_type	rightmost() const
 		{
 			return header->right;
 		}

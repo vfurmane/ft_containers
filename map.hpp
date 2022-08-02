@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/08/02 11:04:11 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/02 14:03:47 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ namespace ft
 
 			class value_compare
 			{
+				friend class map<Key, T, Compare, Allocator>;
 				public:
 					typedef bool		result_type;
 					typedef value_type	first_argument_type;
@@ -112,10 +113,9 @@ namespace ft
 	
 			map &operator=(const map &rhs)
 			{
-//				clear();
-//				for (iterator it = begin(); it != end(); ++it)
-//					_tree.insert(*it);
-				(void)rhs;
+				clear();
+				for (iterator it = rhs.begin(); it != rhs.end(); ++it)
+					_tree.insert(*it);
 				return *this;
 			}
 
@@ -327,11 +327,78 @@ namespace ft
 			{
 				return _tree.upper_bound(key);
 			}
+
+			key_compare	key_comp(void) const
+			{
+				return key_compare(_tree.key_compare);
+			}
+
+			value_compare value_comp() const
+			{
+				return value_compare(_tree.key_compare);
+			}
 	
 		private:
 			Allocator	_alloc;
 			_rep_type	_tree;
 	};
+
+	template<class T, class Alloc, class Compare, class Allocator>
+	bool	operator==(const ft::map<T,Alloc,Compare,Allocator>& lhs, const ft::map<T,Alloc,Compare,Allocator>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return false;
+		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	l_it = lhs.begin();
+		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	r_it = rhs.begin();
+		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	l_end = lhs.end();
+		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	r_end = rhs.end();
+		while (l_it != l_end && r_it != r_end)
+		{
+			if (*l_it != *r_it)
+				return false;
+			l_it++;
+			r_it++;
+		}
+		return true;
+	}
+	template<class T, class Alloc, class Compare, class Allocator>
+	bool	operator!=(const ft::map<T,Alloc,Compare,Allocator>& lhs, const ft::map<T,Alloc,Compare,Allocator>& rhs)
+	{
+		return !(lhs == rhs);
+	}
+	template<class T, class Alloc, class Compare, class Allocator>
+	bool	operator<(const ft::map<T,Alloc,Compare,Allocator>& lhs, const ft::map<T,Alloc,Compare,Allocator>& rhs)
+	{
+		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	l_it = lhs.begin();
+		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	r_it = rhs.begin();
+		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	l_end = lhs.end();
+		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	r_end = rhs.end();
+		while (l_it != l_end && r_it != r_end)
+		{
+			if (*l_it < *r_it)
+				return true;
+			l_it++;
+			r_it++;
+		}
+		if (lhs.size() < rhs.size())
+			return true;
+		return false;
+	}
+	template<class T, class Alloc, class Compare, class Allocator>
+	bool	operator<=(const ft::map<T,Alloc,Compare,Allocator>& lhs, const ft::map<T,Alloc,Compare,Allocator>& rhs)
+	{
+		return !(lhs > rhs);
+	}
+	template<class T, class Alloc, class Compare, class Allocator>
+	bool	operator>(const ft::map<T,Alloc,Compare,Allocator>& lhs, const ft::map<T,Alloc,Compare,Allocator>& rhs)
+	{
+		return rhs < lhs;
+	}
+	template<class T, class Alloc, class Compare, class Allocator>
+	bool	operator>=(const ft::map<T,Alloc,Compare,Allocator>& lhs, const ft::map<T,Alloc,Compare,Allocator>& rhs)
+	{
+		return !(lhs < rhs);
+	}
 }
 
 #endif
