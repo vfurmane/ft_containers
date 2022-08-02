@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:27 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/08/01 21:41:30 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:04:11 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,14 +126,14 @@ namespace ft
 
 			T	&at(const Key& key)
 			{
-				iterator it = _tree.lower_bound(key);
+				iterator it = lower_bound(key);
 				if (it->first != key)
 					throw std::out_of_range("map::at");
 				return it->second;
 			}
 			const T	&at(const Key& key) const
 			{
-				const_iterator it = _tree.lower_bound(key);
+				const_iterator it = lower_bound(key);
 				if (it->first != key)
 					throw std::out_of_range("map::at");
 				return it->second;
@@ -259,7 +259,7 @@ namespace ft
 			}
 			size_type	erase(const Key& key)
 			{
-				iterator	it = _tree.lower_bound(key);
+				iterator	it = lower_bound(key);
 				if (it->first == key)
 				{
 					erase(it);
@@ -288,17 +288,44 @@ namespace ft
 
 			iterator	find(const Key& key)
 			{
-				iterator ret = _tree.lower_bound(key);
+				iterator ret = lower_bound(key);
 				if (ret->first == key)
 					return ret;
 				return end();
 			}
 			const_iterator	find(const Key& key) const
 			{
-				const_iterator ret = _tree.lower_bound(key);
+				const_iterator ret = lower_bound(key);
 				if (ret->first == key)
 					return ret;
 				return end();
+			}
+
+			ft::pair<iterator,iterator>	equal_range(const Key& key)
+			{
+				return make_pair(lower_bound(key), upper_bound(key));
+			}
+			ft::pair<const_iterator,const_iterator>	equal_range(const Key& key) const
+			{
+				return make_pair(lower_bound(key), upper_bound(key));
+			}
+
+			iterator	lower_bound(const Key& key)
+			{
+				return _tree.lower_bound(key);
+			}
+			const_iterator	lower_bound(const Key& key) const
+			{
+				return _tree.lower_bound(key);
+			}
+
+			iterator	upper_bound(const Key& key)
+			{
+				return _tree.upper_bound(key);
+			}
+			const_iterator	upper_bound(const Key& key) const
+			{
+				return _tree.upper_bound(key);
 			}
 	
 		private:
