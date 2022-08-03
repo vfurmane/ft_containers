@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 12:05:21 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/24 11:40:04 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/03 20:59:40 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,10 @@ namespace ft
 				tmp._ptr -= n;
 				return tmp;
 			}
-			int	operator-(const _vector_iterator &rhs) const
+			template <class _Iterator, class _Container>
+			int	operator-(const _vector_iterator<_Iterator, _Container> &rhs) const
 			{
-				return _ptr - rhs._ptr;
+				return _ptr - rhs.base();
 			}
 			_vector_iterator	operator+=(int n)
 			{

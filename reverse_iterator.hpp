@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 09:49:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/08/03 20:42:46 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/03 20:54:17 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,8 @@ template <class lit, class rit>
 		return rev_it + n;
 	}
 
-	template <class Iterator>
-	typename reverse_iterator<Iterator>::difference_type	operator-(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+	template <class lit, class rit>
+	typename reverse_iterator<lit>::difference_type	operator-(const reverse_iterator<lit>& lhs, const reverse_iterator<rit>& rhs)
 	{
 		return rhs.base() - lhs.base();
 	}
