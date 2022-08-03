@@ -100,7 +100,7 @@ namespace ft
 				{
 					typename _rep_type::node_type	y = z->parent;
 					delete z;
-					if (y != _tree.header && y->right != NULL && y->right != z)
+					while (y != _tree.header && y->right != NULL && y->right != z)
 					{
 						y = y->right;
 						while (y->left != NULL)
