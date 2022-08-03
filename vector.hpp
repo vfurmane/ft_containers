@@ -506,7 +506,8 @@ namespace ft
 			void	_dispatch_ctr(InputIterator first, InputIterator last, ft::false_type sub)
 			{
 				(void)sub;
-				_n += last - first;
+				for (InputIterator it = first; it != last; ++it)
+					_n++;
 				_arr = _alloc.allocate(_n);
 				_capacity = _n;
 				std::uninitialized_copy(first, last, _arr);
@@ -517,8 +518,10 @@ namespace ft
 			{
 				(void)sub;
 				T* current_arr;
-				size_t	n = last - first;
+				size_t	n = 0;
 
+				for (InputIterator it = first; it != last; ++it)
+					n++;
 				if (n > capacity())
 					current_arr = _alloc.allocate(n);
 				else
@@ -605,7 +608,10 @@ namespace ft
 			void	_dispatch_insert(iterator position, InputIterator first, InputIterator last, ft::false_type sub)
 			{	(void)sub;
 				(void)sub;
-				size_type	range = last - first;
+				size_type	range = 0;
+
+				for (InputIterator it = first; it != last; ++it)
+					range++;
 				if (range == 1)
 					return static_cast<void>(insert(position, *first));
 				if (size() + range > capacity())
