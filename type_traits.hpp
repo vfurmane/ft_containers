@@ -58,27 +58,25 @@ namespace ft
 	template<>
 	struct is_integral<unsigned long long int> : public true_type {};
 
-	// template<bool B, class T = void>
-	// struct enable_if
-	// {
-	// };
-
-	// template<class T>
-	// struct enable_if<true, T>
-	// {
-	// 	typedef T type;
-	// };
-
+	template<bool B, class T = void>
+	struct enable_if {};
+	 
 	template<class T>
-	struct remove_const
-	{
-		typedef T type;
-	};
-	template<class T>
-	struct remove_const<const T>
-	{
-		typedef T type;
-	};
+	struct enable_if<true, T> { typedef T type; };
+
+	template<typename, typename>
+    struct is_same
+    {
+      enum { value = 0 };
+      typedef false_type type;
+    };
+
+	template<typename _Tp>
+    struct is_same<_Tp, _Tp>
+    {
+      enum { value = 1 };
+      typedef true_type type;
+    };
 };
 
 #endif

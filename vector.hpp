@@ -24,25 +24,6 @@
 
 namespace ft
 {
-	template<bool B, class T = void>
-	struct enable_if {};
-	 
-	template<class T>
-	struct enable_if<true, T> { typedef T type; };
-
-	template<typename, typename>
-    struct is_same
-    {
-      enum { value = 0 };
-      typedef false_type type;
-    };
-
-	template<typename _Tp>
-    struct is_same<_Tp, _Tp>
-    {
-      enum { value = 1 };
-      typedef true_type type;
-    };
 	template <class Iterator, class Container>
 	class _vector_iterator : public iterator<ft::random_access_iterator_tag, typename Container::value_type> {
 		public:
