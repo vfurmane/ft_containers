@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 16:03:01 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/04 15:42:14 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:32:43 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ struct TestAllocator : public std::allocator<T>
 	virtual pointer allocate(size_type n, const void * hint = 0)
 	{
 		return std::allocator<T>::allocate(n, hint);
+	}
+
+	virtual size_type	max_size() const
+	{
+		std::cout << "TestAllocator::max_size has been called" << std::endl;
+		return 42;
 	}
 };
 

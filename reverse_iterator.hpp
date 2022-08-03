@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 09:49:43 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/07/05 11:07:21 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/08/02 17:18:20 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ namespace ft
 			}
 			pointer	operator->() const
 			{
-				return &(*base());
+				return &(*--base());
 			}
 			reference	operator[](difference_type n) const
 			{

@@ -6,7 +6,7 @@
 /*   By: vfurmane <vfurmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:46:53 by vfurmane          #+#    #+#             */
-/*   Updated: 2022/06/24 14:44:36 by vfurmane         ###   ########.fr       */
+/*   Updated: 2022/07/06 10:48:39 by vfurmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 typedef enum	helper_mode
 {
 	NORMAL,
-	STACK
+	STACK,
+	COMPARE
 }				e_helper_mode;
 
 template <e_helper_mode Mode = NORMAL, class T = int>
@@ -147,6 +148,44 @@ class TestHelper<STACK, T>
 			std::cout << "Calling pop_back" << std::endl;
 		}
 		
+		T	nbr;
+		T	*ptr;
+};
+
+template <class T>
+class TestHelper<COMPARE, T>
+{
+	public:
+
+		TestHelper(void) : nbr(42), ptr(new T)
+		{
+			std::cout << "Default constructor" << std::endl;
+			*ptr = 21;
+		}
+		TestHelper(TestHelper const &src) : nbr(src.nbr), ptr(new T)
+		{
+			std::cout << "Copy constructor" << std::endl;
+			*ptr = *src.ptr;
+		}
+		~TestHelper(void)
+		{
+			std::cout << "Destructor" << std::endl;
+			delete ptr;
+			std::cout << "Done destructor" << std::endl;
+		}
+
+		TestHelper	operator=(const TestHelper &rhs)
+		{
+			nbr = rhs.nbr;
+			*ptr = *rhs.ptr;
+			return *this;
+		}
+
+		bool	operator()(const T &lhs, const T &rhs) const
+		{
+			return lhs < rhs;
+		}
+
 		T	nbr;
 		T	*ptr;
 };
