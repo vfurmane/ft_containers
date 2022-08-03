@@ -377,6 +377,8 @@ namespace ft
 		{
 			if (*l_it < *r_it)
 				return true;
+			else if (*l_it > *r_it)
+				return false;
 			l_it++;
 			r_it++;
 		}
