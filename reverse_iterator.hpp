@@ -94,7 +94,8 @@ namespace ft
 			}
 			pointer	operator->() const
 			{
-				return &(*--base());
+				iterator_type	tmp = base();
+				return &(*--tmp);
 			}
 			reference	operator[](difference_type n) const
 			{
