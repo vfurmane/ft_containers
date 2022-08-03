@@ -57,11 +57,11 @@ namespace ft
 				_ptr = rhs._ptr;
 				return *this;
 			}
-			bool	operator==(const _vector_iterator &rhs)
+			bool	operator==(const _vector_iterator &rhs) const
 			{
 				return _ptr == rhs._ptr;
 			}
-			bool	operator!=(const _vector_iterator &rhs)
+			bool	operator!=(const _vector_iterator &rhs) const
 			{
 				return _ptr != rhs._ptr;
 			}
@@ -69,7 +69,7 @@ namespace ft
 			{
 				return *_ptr;
 			}
-			pointer		operator->()
+			pointer		operator->() const
 			{
 				return _ptr;
 			}
@@ -95,7 +95,7 @@ namespace ft
 				_ptr--;
 				return tmp;
 			}
-			_vector_iterator	operator+(int n)
+			_vector_iterator	operator+(int n) const
 			{
 				_vector_iterator tmp(*this);
 				tmp._ptr += n;
@@ -107,29 +107,29 @@ namespace ft
 				tmp._ptr += n;
 				return tmp;
 			}
-			_vector_iterator	operator-(int n)
+			_vector_iterator	operator-(int n) const
 			{
 				_vector_iterator tmp(*this);
 				tmp._ptr -= n;
 				return tmp;
 			}
-			int	operator-(const _vector_iterator &rhs)
+			int	operator-(const _vector_iterator &rhs) const
 			{
 				return _ptr - rhs._ptr;
 			}
-			bool				operator<(const _vector_iterator &rhs)
+			bool				operator<(const _vector_iterator &rhs) const
 			{
 				return _ptr < rhs._ptr;
 			}
-			bool				operator>(const _vector_iterator &rhs)
+			bool				operator>(const _vector_iterator &rhs) const
 			{
 				return _ptr > rhs._ptr;
 			}
-			bool				operator<=(const _vector_iterator &rhs)
+			bool				operator<=(const _vector_iterator &rhs) const
 			{
 				return _ptr <= rhs._ptr;
 			}
-			bool				operator>=(const _vector_iterator &rhs)
+			bool				operator>=(const _vector_iterator &rhs) const
 			{
 				return _ptr >= rhs._ptr;
 			}

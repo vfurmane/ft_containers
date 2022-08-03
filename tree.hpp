@@ -95,12 +95,12 @@ namespace ft
 				return *this;
 			}
 
-			bool		operator==(const _tree_iterator &rhs)
+			bool		operator==(const _tree_iterator &rhs) const
 			{
 				return _node == rhs._node;
 			}
 
-			bool		operator!=(const _tree_iterator &rhs)
+			bool		operator!=(const _tree_iterator &rhs) const
 			{
 				return !(*this == rhs);
 			}
@@ -110,7 +110,7 @@ namespace ft
 				return _node->value;
 			}
 
-			pointer	operator->(void)
+			pointer	operator->(void) const
 			{
 				return &_node->value;
 			}
