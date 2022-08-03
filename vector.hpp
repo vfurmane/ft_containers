@@ -57,14 +57,6 @@ namespace ft
 				_ptr = rhs._ptr;
 				return *this;
 			}
-			bool	operator==(const _vector_iterator &rhs) const
-			{
-				return _ptr == rhs._ptr;
-			}
-			bool	operator!=(const _vector_iterator &rhs) const
-			{
-				return _ptr != rhs._ptr;
-			}
 			reference	operator*()
 			{
 				return *_ptr;
@@ -117,22 +109,6 @@ namespace ft
 			{
 				return _ptr - rhs._ptr;
 			}
-			bool				operator<(const _vector_iterator &rhs) const
-			{
-				return _ptr < rhs._ptr;
-			}
-			bool				operator>(const _vector_iterator &rhs) const
-			{
-				return _ptr > rhs._ptr;
-			}
-			bool				operator<=(const _vector_iterator &rhs) const
-			{
-				return _ptr <= rhs._ptr;
-			}
-			bool				operator>=(const _vector_iterator &rhs) const
-			{
-				return _ptr >= rhs._ptr;
-			}
 			_vector_iterator	operator+=(int n)
 			{
 				_ptr += n;
@@ -156,6 +132,36 @@ namespace ft
 		private:
 			Iterator	_ptr;
 	};
+	template <typename lit, typename rit, typename _Container>
+	bool			operator==(const _vector_iterator<lit, _Container> &lhs, const _vector_iterator<rit, _Container> &rhs)
+	{
+		return lhs.base() == rhs.base();
+	}
+	template <typename lit, typename rit, typename _Container>
+	bool			operator!=(const _vector_iterator<lit, _Container> &lhs, const _vector_iterator<rit, _Container> &rhs)
+	{
+		return lhs.base() != rhs.base();
+	}
+	template <typename lit, typename rit, typename _Container>
+	bool			operator<(const _vector_iterator<lit, _Container> &lhs, const _vector_iterator<rit, _Container> &rhs)
+	{
+		return lhs.base() < rhs.base();
+	}
+	template <typename lit, typename rit, typename _Container>
+	bool			operator>(const _vector_iterator<lit, _Container> &lhs, const _vector_iterator<rit, _Container> &rhs)
+	{
+		return lhs.base() > rhs.base();
+	}
+	template <typename lit, typename rit, typename _Container>
+	bool			operator<=(const _vector_iterator<lit, _Container> &lhs, const _vector_iterator<rit, _Container> &rhs)
+	{
+		return lhs.base() <= rhs.base();
+	}
+	template <typename lit, typename rit, typename _Container>
+	bool			operator>=(const _vector_iterator<lit, _Container> &lhs, const _vector_iterator<rit, _Container> &rhs)
+	{
+		return lhs.base() >= rhs.base();
+	}
 
 	template < class T, class Alloc = std::allocator<T> >
 	class vector
