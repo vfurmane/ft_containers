@@ -114,7 +114,7 @@ namespace ft
 			map &operator=(const map &rhs)
 			{
 				clear();
-				for (iterator it = rhs.begin(); it != rhs.end(); ++it)
+				for (const_iterator it = rhs.begin(); it != rhs.end(); ++it)
 					_tree.insert(*it);
 				return *this;
 			}

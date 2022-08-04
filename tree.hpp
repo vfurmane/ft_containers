@@ -173,6 +173,142 @@ namespace ft
 				return tmp;
 			}
 
+			_base_ptr	base(void) const
+			{
+				return _node;
+			}
+
+		private:
+			_base_ptr	_node;
+	};
+
+	template <class T>
+	class _const_tree_iterator
+	{
+		private:
+			typedef ft::rb_tree_node<T> *		_base_ptr;
+
+		public:
+			template <class, class, class>
+			friend struct rb_tree;
+			typedef const T						value_type;
+			typedef ptrdiff_t					difference_type;
+			typedef const value_type *			pointer;
+			typedef const value_type &			reference;
+			typedef bidirectional_iterator_tag	iterator_category;
+
+			_const_tree_iterator(void) : _node()
+			{
+			}
+			_const_tree_iterator(_base_ptr ptr) : _node(ptr)
+			{
+			}
+			_const_tree_iterator(const _tree_iterator<T>& obj) : _node()
+			{
+				*this = obj;
+			}
+			_const_tree_iterator(const _const_tree_iterator& obj) : _node()
+			{
+				*this = obj;
+			}
+			~_const_tree_iterator(void)
+			{
+			}
+
+			_const_tree_iterator	&operator=(const _tree_iterator<T> &obj)
+			{
+				_node = obj.base();
+				return *this;
+			}
+			_const_tree_iterator	&operator=(const _const_tree_iterator &obj)
+			{
+				_node = obj._node;
+				return *this;
+			}
+
+			bool		operator==(const _const_tree_iterator &rhs) const
+			{
+				return _node == rhs._node;
+			}
+
+			bool		operator!=(const _const_tree_iterator &rhs) const
+			{
+				return !(*this == rhs);
+			}
+
+			reference	operator*() const
+			{
+				return _node->value;
+			}
+
+			pointer	operator->(void) const
+			{
+				return &_node->value;
+			}
+
+			_const_tree_iterator	&operator++()
+			{
+				if (_node->right != NULL)
+				{
+					_node = _node->right;
+					while (_node->left != NULL)
+						_node = _node->left;
+				}
+				else
+				{
+					_base_ptr	y = _node->parent;
+					while (_node == y->right)
+					{
+						_node = y;
+						y = y->parent;
+					}
+					if (_node->right != y)
+						_node = y;
+				}
+				return *this;
+			}
+			_const_tree_iterator	operator++(int)
+			{
+				_const_tree_iterator	tmp(*this);
+				++(*this);
+				return tmp;
+			}
+
+			_const_tree_iterator& operator--()
+			{
+				if (_node->color == RED && _node->parent->parent == _node)  
+					_node = _node->right;
+				else if (_node->left != NULL)
+				{
+					_base_ptr y = _node->left;
+					while (y->right != NULL)
+						y = y->right;
+					_node = y;
+				}
+				else
+				{
+					_base_ptr y = _node->parent;
+					while (_node == y->left)
+					{
+						_node = y;
+						y = y->parent;
+					}
+					_node = y;
+				}
+				return *this;
+			}
+			_const_tree_iterator	operator--(int)
+			{
+				_const_tree_iterator	tmp(*this);
+				--(*this);
+				return tmp;
+			}
+
+			_base_ptr	base(void) const
+			{
+				return _node;
+			}
+
 		private:
 			_base_ptr	_node;
 	};
@@ -187,7 +323,7 @@ namespace ft
 		typedef rb_tree_node<T>							*node_type;
 		typedef rb_tree_node<T>					*const_node_type;
 		typedef	_tree_iterator<T>						iterator;
-		typedef	_tree_iterator<T>					const_iterator;
+		typedef	_const_tree_iterator<T>					const_iterator;
 		typedef ft::reverse_iterator<iterator>			reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 		typedef std::size_t								size_type;
