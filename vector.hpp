@@ -76,7 +76,7 @@ namespace ft
 				_ptr++;
 				return tmp;
 			}
-			_vector_iterator	operator--()
+			_vector_iterator	&operator--()
 			{
 				_ptr--;
 				return *this;
