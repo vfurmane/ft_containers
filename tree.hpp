@@ -422,7 +422,7 @@ namespace ft
 
 		void	balance_tree(node_type node)
 		{
-			while (node->parent->color == RED)
+			while (node != root && node->parent != root && node->parent->color == RED)
 			{
 				if (node->parent == node->parent->parent->left)
 				{
@@ -484,8 +484,8 @@ namespace ft
 						}
 					}
 				}
+				root->color = BLACK;
 			}
-			root->color = BLACK;
 		}
 
 		iterator	insert(const T& value)
