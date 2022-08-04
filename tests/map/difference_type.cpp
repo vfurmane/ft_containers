@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <typeinfo>
-#include "tests/type_traits.hpp"
+#include "tests/custom_type_traits.hpp"
 #ifdef USE_STD
 # include <map>
 #else
