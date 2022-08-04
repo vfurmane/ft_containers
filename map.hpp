@@ -16,6 +16,7 @@
 # include <cstddef>
 # include <functional>
 # include <stdexcept>
+# include "algorithm.hpp"
 # include "tree.hpp"
 # include "utility.hpp"
 
@@ -369,22 +370,7 @@ namespace ft
 	template<class T, class Alloc, class Compare, class Allocator>
 	bool	operator<(const ft::map<T,Alloc,Compare,Allocator>& lhs, const ft::map<T,Alloc,Compare,Allocator>& rhs)
 	{
-		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	l_it = lhs.begin();
-		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	r_it = rhs.begin();
-		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	l_end = lhs.end();
-		typename ft::map<T,Alloc,Compare,Allocator>::const_iterator	r_end = rhs.end();
-		while (l_it != l_end && r_it != r_end)
-		{
-			if (*l_it < *r_it)
-				return true;
-			else if (*l_it > *r_it)
-				return false;
-			l_it++;
-			r_it++;
-		}
-		if (lhs.size() < rhs.size())
-			return true;
-		return false;
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	}
 	template<class T, class Alloc, class Compare, class Allocator>
 	bool	operator<=(const ft::map<T,Alloc,Compare,Allocator>& lhs, const ft::map<T,Alloc,Compare,Allocator>& rhs)

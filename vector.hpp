@@ -17,6 +17,7 @@
 # include <cstring>
 # include <memory>
 # include <stdexcept>
+# include "algorithm.hpp"
 # include "iterator.hpp"
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
@@ -690,18 +691,7 @@ namespace ft
 	template<class T, class Alloc>
 	bool	operator<(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
 	{
-		typename ft::vector<T,Alloc>::const_iterator	l_it = lhs.begin();
-		typename ft::vector<T,Alloc>::const_iterator	r_it = rhs.begin();
-		typename ft::vector<T,Alloc>::const_iterator	l_end = lhs.end();
-		typename ft::vector<T,Alloc>::const_iterator	r_end = rhs.end();
-		while (l_it != l_end && r_it != r_end)
-		{
-			if (*l_it < *r_it)
-				return true;
-			l_it++;
-			r_it++;
-		}
-		return false;
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	}
 	template<class T, class Alloc>
 	bool	operator<=(const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
