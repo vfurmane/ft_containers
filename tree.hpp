@@ -390,6 +390,8 @@ namespace ft
 			node_type	y = node->left;
 			node->left = old_root;
 			old_root->right = y;
+			if (old_root->right)
+				old_root->right->parent = old_root;
 			old_root->parent = node;
 			if (parent != header)
 			{
@@ -409,6 +411,8 @@ namespace ft
 			node_type	y = node->right;
 			node->right = old_root;
 			old_root->left = y;
+			if (old_root->left)
+				old_root->left->parent = old_root;
 			old_root->parent = node;
 			if (parent != header)
 			{
@@ -422,7 +426,7 @@ namespace ft
 
 		void	balance_tree(node_type node)
 		{
-			while (node->parent->color == RED)
+			while (node != root && node->parent != root && node->parent->color == RED)
 			{
 				if (node->parent == node->parent->parent->left)
 				{
