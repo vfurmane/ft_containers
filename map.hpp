@@ -48,6 +48,10 @@ namespace ft
 			typedef typename _rep_type::reverse_iterator		reverse_iterator;
 			typedef typename _rep_type::const_reverse_iterator	const_reverse_iterator;
 
+		private: 
+			typedef typename allocator_type::template rebind< rb_tree_node< value_type > >::other node_allocator_type;
+
+		public:
 			class value_compare
 			{
 				friend class map<Key, T, Compare, Allocator>;
@@ -90,17 +94,20 @@ namespace ft
 			}
 			~map(void)
 			{
+				node_allocator_type alloc;
 				typename _rep_type::node_type	z = _tree.header->left;
 				while (z != _tree.header && z->right != NULL)
 				{
 					while (z->left != NULL)
 						z = z->left;
+					if (z->right == NULL)
+						break ;
 					z = z->right;
 				}
 				while (z != _tree.header)
 				{
 					typename _rep_type::node_type	y = z->parent;
-					delete z;
+					alloc.deallocate(z, 1);
 					while (y != _tree.header && y->right != NULL && y->right != z)
 					{
 						y = y->right;
@@ -109,7 +116,7 @@ namespace ft
 					}
 					z = y;
 				}
-				delete z;
+				alloc.deallocate(z, 1);
 			}
 	
 			map &operator=(const map &rhs)
@@ -193,7 +200,8 @@ namespace ft
 
 			size_type	max_size() const
 			{
-				return _alloc.max_size();
+				node_allocator_type	alloc;
+				return alloc.max_size();
 			}
 
 			void	clear(void)
@@ -227,6 +235,7 @@ namespace ft
 			}
 			void	erase(iterator first, iterator last)
 			{
+				node_allocator_type alloc;
 				if (first == begin() && last == end())
 				{
 					typename _rep_type::node_type	z = _tree.header->left;
@@ -239,7 +248,7 @@ namespace ft
 					while (z != _tree.header)
 					{
 						typename _rep_type::node_type	y = z->parent;
-						delete z;
+						alloc.deallocate(z, 1);
 						if (y != _tree.header && y->right != NULL && y->right != z)
 						{
 							y = y->right;

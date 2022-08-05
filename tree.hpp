@@ -42,9 +42,8 @@ namespace ft
 		rb_tree_node(const T &val) : value(val), color(RED), parent(NULL), left(NULL), right(NULL)
 		{
 		}
-		rb_tree_node(const rb_tree_node &obj) : value(), color(), parent(NULL), left(NULL), right(NULL)
+		rb_tree_node(const rb_tree_node &obj) : value(obj.value), color(RED), parent(obj.parent), left(obj.left), right(obj.right)
 		{
-			*this = obj;
 		}
 		~rb_tree_node()
 		{
@@ -328,26 +327,29 @@ namespace ft
 		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 		typedef std::size_t								size_type;
 
+		allocator			alloc;
 		Compare				key_compare;
 		node_type			root;
 		node_type			header;
 		size_type			node_count;
 
-		rb_tree(void) : key_compare(), root(NULL), header(new value_type), node_count(0)
+		rb_tree(void) : alloc(), key_compare(), root(NULL), header(alloc.allocate(1)), node_count(0)
 		{
+			alloc.construct(header, value_type());
 			header->color = RED;
 			header->parent = root;
 			header->left = header;
 			header->right = header;
 		}
-		rb_tree(const Compare &comp) : key_compare(comp), root(NULL), header(new value_type), node_count(0)
+		rb_tree(const Compare &comp) : alloc(), key_compare(comp), root(NULL), header(alloc.allocate(1)), node_count(0)
 		{
+			alloc.construct(header, value_type());
 			header->color = RED;
 			header->parent = root;
 			header->left = header;
 			header->right = header;
 		}
-		rb_tree(const rb_tree &obj) : key_compare(), root(), header(), node_count(0)
+		rb_tree(const rb_tree &obj) : alloc(), key_compare(), root(), header(), node_count(0)
 		{
 			*this = obj;
 		}
@@ -496,7 +498,8 @@ namespace ft
 		{
 			if (root == NULL)
 			{
-				root = new value_type(value);
+				root = alloc.allocate(1);
+				alloc.construct(root, value);
 				root->color = BLACK;
 				root->parent = header;
 				header->parent = root;
@@ -519,8 +522,9 @@ namespace ft
 					break ;
 				z = node;
 			}
-			(direction ? z->left : z->right) = new value_type(value);
+			(direction ? z->left : z->right) = alloc.allocate(1);
 			node = (direction ? z->left : z->right);
+			alloc.construct(node, value);
 			node->parent = z;
 			if (header->left->left != NULL)
 				header->left = header->left->left;
@@ -617,7 +621,7 @@ namespace ft
 			if (header->right->right != NULL)
 				header->right = header->right->right;
 			node_count--;
-			delete &(*node);
+			alloc.deallocate(&(*node), 1);
 		}
 
 		iterator	lower_bound(const typename T::first_type &key)
